@@ -1,0 +1,966 @@
+{
+ "generato_il": "2026-10-21",
+ "database": {
+  "papers.sqlite": {
+   "openalex_llm": {
+    "record": 88059,
+    "periodo": {
+     "min": "2018-01-01",
+     "max": "2026-12-31",
+     "date_future": 7,
+     "per_anno": {
+      "2018": 1043,
+      "2019": 1267,
+      "2020": 1474,
+      "2021": 1846,
+      "2022": 2192,
+      "2023": 4654,
+      "2024": 11330,
+      "2025": 25837,
+      "2026": 38416
+     }
+    },
+    "completezza_pct": {
+     "doi": 95.5,
+     "title": 100.0,
+     "abstract": 85.3,
+     "published_date": 100.0,
+     "language": 84.7,
+     "type": 100.0,
+     "venue": 98.8,
+     "authors": 99.5,
+     "institutions": 80.6,
+     "countries": 79.8,
+     "primary_topic": 100.0,
+     "field": 100.0,
+     "topics": 100.0,
+     "keywords": 99.8,
+     "cited_by_count": 100.0,
+     "oa_url": 76.6,
+     "is_oa": 100.0
+    },
+    "tipo": {
+     "article": 88059
+    },
+    "tipo_fonte": {
+     "(non raccolto)": 88059
+    },
+    "lingua": {
+     "en": 72049,
+     "(nessuna)": 13436,
+     "zh": 390,
+     "ru": 316,
+     "de": 292,
+     "uk": 239,
+     "id": 227,
+     "es": 204,
+     "pt": 125,
+     "fr": 96
+    },
+    "sedi_top": [
+     [
+      "Zenodo (CERN European Organization for Nuclear Research)",
+      4742
+     ],
+     [
+      "IEEE Access",
+      1464
+     ],
+     [
+      "(nessuna)",
+      1077
+     ],
+     [
+      "Scientific Reports",
+      903
+     ],
+     [
+      "Applied Sciences",
+      849
+     ],
+     [
+      "Expert Systems with Applications",
+      672
+     ],
+     [
+      "DOAJ (DOAJ: Directory of Open Access Journals)",
+      597
+     ],
+     [
+      "Electronics",
+      560
+     ],
+     [
+      "Knowledge-Based Systems",
+      426
+     ],
+     [
+      "Journal of Medical Internet Research",
+      419
+     ],
+     [
+      "Neurocomputing",
+      399
+     ],
+     [
+      "Figshare",
+      365
+     ],
+     [
+      "PLoS ONE",
+      352
+     ],
+     [
+      "npj Digital Medicine",
+      352
+     ],
+     [
+      "International Journal for Research in Applied Science and Engineering Technology",
+      347
+     ]
+    ],
+    "sedi_distinte": 16187,
+    "quota_top10_sedi_pct": 13.3,
+    "depositi_senza_revisione_pct": 6.9,
+    "open_access_pct": 76.6,
+    "paesi_top": [
+     [
+      "CN",
+      19506
+     ],
+     [
+      "US",
+      17210
+     ],
+     [
+      "GB",
+      4829
+     ],
+     [
+      "IN",
+      3711
+     ],
+     [
+      "DE",
+      3702
+     ],
+     [
+      "AU",
+      2418
+     ],
+     [
+      "CA",
+      2404
+     ],
+     [
+      "KR",
+      2318
+     ],
+     [
+      "IT",
+      2313
+     ],
+     [
+      "HK",
+      2027
+     ],
+     [
+      "ID",
+      2007
+     ],
+     [
+      "JP",
+      1909
+     ]
+    ],
+    "paper_senza_paese_pct": 20.2,
+    "discipline_top": [
+     [
+      "Computer Science",
+      41740
+     ],
+     [
+      "Medicine",
+      13254
+     ],
+     [
+      "Social Sciences",
+      8420
+     ],
+     [
+      "Engineering",
+      5465
+     ],
+     [
+      "Arts and Humanities",
+      3444
+     ],
+     [
+      "Psychology",
+      3369
+     ],
+     [
+      "Decision Sciences",
+      2367
+     ],
+     [
+      "Biochemistry, Genetics and Molecular Biology",
+      2241
+     ],
+     [
+      "Business, Management and Accounting",
+      1557
+     ],
+     [
+      "Health Professions",
+      1068
+     ]
+    ],
+    "doi_duplicati": 37,
+    "citazioni": {
+     "mediana": 0,
+     "per_anno": {
+      "2018": {
+       "mediana": 8,
+       "media": 33,
+       "zero_pct": 19.9
+      },
+      "2019": {
+       "mediana": 8,
+       "media": 32.8,
+       "zero_pct": 21.7
+      },
+      "2020": {
+       "mediana": 8.0,
+       "media": 32.6,
+       "zero_pct": 21.4
+      },
+      "2021": {
+       "mediana": 7.0,
+       "media": 32.3,
+       "zero_pct": 18.8
+      },
+      "2022": {
+       "mediana": 7.0,
+       "media": 27.0,
+       "zero_pct": 17.9
+      },
+      "2023": {
+       "mediana": 8.0,
+       "media": 41.2,
+       "zero_pct": 18.5
+      },
+      "2024": {
+       "mediana": 6.0,
+       "media": 21.7,
+       "zero_pct": 21.0
+      },
+      "2025": {
+       "mediana": 2,
+       "media": 6.3,
+       "zero_pct": 37.4
+      },
+      "2026": {
+       "mediana": 0.0,
+       "media": 0.7,
+       "zero_pct": 79.0
+      }
+     }
+    },
+    "run": {
+     "partial": 1
+    }
+   }
+  },
+  "emerging.sqlite": {
+   "emerging_cited": {
+    "record": 10000,
+    "periodo": {
+     "min": "2024-01-01",
+     "max": "2026-10-20",
+     "date_future": 0,
+     "per_anno": {
+      "2024": 6254,
+      "2025": 2914,
+      "2026": 832
+     }
+    },
+    "completezza_pct": {
+     "doi": 99.4,
+     "title": 100.0,
+     "abstract": 80.8,
+     "published_date": 100.0,
+     "language": 95.0,
+     "type": 100.0,
+     "venue": 99.3,
+     "authors": 99.6,
+     "institutions": 89.8,
+     "countries": 89.2,
+     "primary_topic": 100.0,
+     "field": 100.0,
+     "topics": 100.0,
+     "keywords": 99.8,
+     "cited_by_count": 100.0,
+     "oa_url": 75.1,
+     "is_oa": 100.0
+    },
+    "tipo": {
+     "article": 9242,
+     "preprint": 422,
+     "review": 336
+    },
+    "tipo_fonte": {
+     "(non raccolto)": 10000
+    },
+    "lingua": {
+     "en": 9087,
+     "(nessuna)": 495,
+     "id": 109,
+     "zh": 85,
+     "pt": 63,
+     "uk": 32,
+     "es": 29,
+     "ru": 28,
+     "tr": 20,
+     "uz": 17
+    },
+    "sedi_top": [
+     [
+      "IEEE Access",
+      281
+     ],
+     [
+      "arXiv (Cornell University)",
+      240
+     ],
+     [
+      "Zenodo (CERN European Organization for Nuclear Research)",
+      168
+     ],
+     [
+      "Scientific Reports",
+      127
+     ],
+     [
+      "Applied Sciences",
+      112
+     ],
+     [
+      "ACM Computing Surveys",
+      94
+     ],
+     [
+      "Expert Systems with Applications",
+      94
+     ],
+     [
+      "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      92
+     ],
+     [
+      "Sensors",
+      79
+     ],
+     [
+      "Sustainability",
+      76
+     ],
+     [
+      "Automation in Construction",
+      74
+     ],
+     [
+      "Electronics",
+      72
+     ],
+     [
+      "(nessuna)",
+      71
+     ],
+     [
+      "ACM Transactions on Graphics",
+      66
+     ],
+     [
+      "Artificial Intelligence Review",
+      63
+     ]
+    ],
+    "sedi_distinte": 2965,
+    "quota_top10_sedi_pct": 13.6,
+    "depositi_senza_revisione_pct": 2.9,
+    "open_access_pct": 75.1,
+    "paesi_top": [
+     [
+      "CN",
+      2941
+     ],
+     [
+      "US",
+      1773
+     ],
+     [
+      "GB",
+      818
+     ],
+     [
+      "IN",
+      504
+     ],
+     [
+      "DE",
+      479
+     ],
+     [
+      "AU",
+      476
+     ],
+     [
+      "CA",
+      372
+     ],
+     [
+      "HK",
+      352
+     ],
+     [
+      "ID",
+      342
+     ],
+     [
+      "IT",
+      324
+     ],
+     [
+      "SA",
+      310
+     ],
+     [
+      "KR",
+      303
+     ]
+    ],
+    "paper_senza_paese_pct": 10.8,
+    "discipline_top": [
+     [
+      "Computer Science",
+      5800
+     ],
+     [
+      "Engineering",
+      2000
+     ],
+     [
+      "Environmental Science",
+      1000
+     ],
+     [
+      "Decision Sciences",
+      600
+     ],
+     [
+      "Physics and Astronomy",
+      200
+     ],
+     [
+      "Materials Science",
+      200
+     ],
+     [
+      "Energy",
+      200
+     ]
+    ],
+    "doi_duplicati": 0,
+    "citazioni": {
+     "mediana": 27.0,
+     "per_anno": {
+      "2024": {
+       "mediana": 35.0,
+       "media": 54.7,
+       "zero_pct": 0.8
+      },
+      "2025": {
+       "mediana": 19.0,
+       "media": 34.0,
+       "zero_pct": 4.7
+      },
+      "2026": {
+       "mediana": 0.0,
+       "media": 9.4,
+       "zero_pct": 55.8
+      }
+     }
+    },
+    "run": {
+     "success": 1
+    }
+   },
+   "emerging_recent": {
+    "record": 10000,
+    "periodo": {
+     "min": "2024-01-01",
+     "max": "2026-10-21",
+     "date_future": 0,
+     "per_anno": {
+      "2024": 74,
+      "2025": 196,
+      "2026": 9730
+     }
+    },
+    "completezza_pct": {
+     "doi": 95.0,
+     "title": 100.0,
+     "abstract": 85.3,
+     "published_date": 100.0,
+     "language": 43.9,
+     "type": 100.0,
+     "venue": 95.7,
+     "authors": 99.0,
+     "institutions": 53.4,
+     "countries": 52.6,
+     "primary_topic": 100.0,
+     "field": 100.0,
+     "topics": 100.0,
+     "keywords": 89.7,
+     "cited_by_count": 100.0,
+     "oa_url": 88.7,
+     "is_oa": 100.0
+    },
+    "tipo": {
+     "article": 6460,
+     "preprint": 3456,
+     "review": 84
+    },
+    "tipo_fonte": {
+     "(non raccolto)": 10000
+    },
+    "lingua": {
+     "(nessuna)": 5615,
+     "en": 3817,
+     "pt": 92,
+     "ru": 65,
+     "es": 55,
+     "id": 46,
+     "zh": 44,
+     "uz": 37,
+     "ar": 37,
+     "de": 37
+    },
+    "sedi_top": [
+     [
+      "arXiv (Cornell University)",
+      2153
+     ],
+     [
+      "Zenodo (CERN European Organization for Nuclear Research)",
+      1787
+     ],
+     [
+      "(nessuna)",
+      426
+     ],
+     [
+      "Research Square",
+      156
+     ],
+     [
+      "Preprints.org",
+      72
+     ],
+     [
+      "Scientific Reports",
+      65
+     ],
+     [
+      "OSF Preprints (OSF Preprints)",
+      59
+     ],
+     [
+      "Figshare",
+      58
+     ],
+     [
+      "Applied Sciences",
+      49
+     ],
+     [
+      "Electronics",
+      40
+     ],
+     [
+      "IMAPSource Proceedings",
+      39
+     ],
+     [
+      "Sensors",
+      35
+     ],
+     [
+      "npj Heritage Science",
+      29
+     ],
+     [
+      "ChemRxiv",
+      29
+     ],
+     [
+      "Pendas Jurnal Ilmiah Pendidikan Dasar",
+      29
+     ]
+    ],
+    "sedi_distinte": 2750,
+    "quota_top10_sedi_pct": 48.6,
+    "depositi_senza_revisione_pct": 23.6,
+    "open_access_pct": 88.7,
+    "paesi_top": [
+     [
+      "CN",
+      1327
+     ],
+     [
+      "US",
+      739
+     ],
+     [
+      "ID",
+      573
+     ],
+     [
+      "IN",
+      349
+     ],
+     [
+      "GB",
+      246
+     ],
+     [
+      "DE",
+      175
+     ],
+     [
+      "BR",
+      154
+     ],
+     [
+      "KR",
+      152
+     ],
+     [
+      "UA",
+      147
+     ],
+     [
+      "RU",
+      124
+     ],
+     [
+      "NG",
+      112
+     ],
+     [
+      "JP",
+      105
+     ]
+    ],
+    "paper_senza_paese_pct": 47.4,
+    "discipline_top": [
+     [
+      "Computer Science",
+      5800
+     ],
+     [
+      "Engineering",
+      2000
+     ],
+     [
+      "Environmental Science",
+      1000
+     ],
+     [
+      "Decision Sciences",
+      600
+     ],
+     [
+      "Physics and Astronomy",
+      200
+     ],
+     [
+      "Materials Science",
+      200
+     ],
+     [
+      "Energy",
+      200
+     ]
+    ],
+    "doi_duplicati": 0,
+    "citazioni": {
+     "mediana": 0.0,
+     "per_anno": {
+      "2024": {
+       "mediana": 0.0,
+       "media": 1.6,
+       "zero_pct": 73.0
+      },
+      "2025": {
+       "mediana": 0.0,
+       "media": 0.7,
+       "zero_pct": 78.6
+      },
+      "2026": {
+       "mediana": 0.0,
+       "media": 0.0,
+       "zero_pct": 98.8
+      }
+     }
+    },
+    "run": {
+     "success": 1
+    }
+   }
+  },
+  "daily.sqlite": {
+   "daily_emerging": {
+    "record": 1125,
+    "periodo": {
+     "min": "2026-10-07",
+     "max": "2026-10-21",
+     "date_future": 0,
+     "per_anno": {
+      "2026": 1125
+     }
+    },
+    "completezza_pct": {
+     "doi": 96.7,
+     "title": 100.0,
+     "abstract": 80.4,
+     "published_date": 100.0,
+     "language": 49.1,
+     "type": 100.0,
+     "venue": 92.5,
+     "authors": 99.2,
+     "institutions": 49.1,
+     "countries": 48.3,
+     "primary_topic": 100.0,
+     "field": 100.0,
+     "topics": 100.0,
+     "keywords": 59.6,
+     "cited_by_count": 100.0,
+     "oa_url": 88.4,
+     "is_oa": 100.0
+    },
+    "tipo": {
+     "article": 754,
+     "preprint": 363,
+     "review": 8
+    },
+    "tipo_fonte": {
+     "(non raccolto)": 1125
+    },
+    "lingua": {
+     "(nessuna)": 573,
+     "en": 502,
+     "ru": 9,
+     "id": 7,
+     "pt": 6,
+     "es": 5,
+     "de": 5,
+     "tr": 3,
+     "ms": 3,
+     "ar": 3
+    },
+    "sedi_top": [
+     [
+      "Zenodo (CERN European Organization for Nuclear Research)",
+      265
+     ],
+     [
+      "arXiv (Cornell University)",
+      134
+     ],
+     [
+      "(nessuna)",
+      84
+     ],
+     [
+      "Research Square",
+      35
+     ],
+     [
+      "Preprints.org",
+      24
+     ],
+     [
+      "Applied Sciences",
+      14
+     ],
+     [
+      "Scientific Reports",
+      13
+     ],
+     [
+      "Elementary School of Education E-Journal",
+      8
+     ],
+     [
+      "Figshare",
+      7
+     ],
+     [
+      "Advances in Economics Management and Political Sciences",
+      7
+     ],
+     [
+      "ChemRxiv",
+      6
+     ],
+     [
+      "Applied and Computational Engineering",
+      6
+     ],
+     [
+      "OSF Preprints (OSF Preprints)",
+      5
+     ],
+     [
+      "Electronics",
+      5
+     ],
+     [
+      "International Journal of Advanced Research in Science Communication and Technology",
+      5
+     ]
+    ],
+    "sedi_distinte": 417,
+    "quota_top10_sedi_pct": 52.5,
+    "depositi_senza_revisione_pct": 31.1,
+    "open_access_pct": 88.4,
+    "paesi_top": [
+     [
+      "CN",
+      147
+     ],
+     [
+      "US",
+      73
+     ],
+     [
+      "ID",
+      65
+     ],
+     [
+      "IN",
+      34
+     ],
+     [
+      "DE",
+      18
+     ],
+     [
+      "JP",
+      17
+     ],
+     [
+      "GB",
+      17
+     ],
+     [
+      "UA",
+      14
+     ],
+     [
+      "RU",
+      14
+     ],
+     [
+      "KR",
+      13
+     ],
+     [
+      "IR",
+      13
+     ],
+     [
+      "BR",
+      12
+     ]
+    ],
+    "paper_senza_paese_pct": 51.7,
+    "discipline_top": [
+     [
+      "Computer Science",
+      698
+     ],
+     [
+      "Engineering",
+      223
+     ],
+     [
+      "Environmental Science",
+      105
+     ],
+     [
+      "Decision Sciences",
+      44
+     ],
+     [
+      "Materials Science",
+      25
+     ],
+     [
+      "Physics and Astronomy",
+      25
+     ],
+     [
+      "Energy",
+      5
+     ]
+    ],
+    "doi_duplicati": 0,
+    "citazioni": {
+     "mediana": 0,
+     "per_anno": {
+      "2026": {
+       "mediana": 0,
+       "media": 0.0,
+       "zero_pct": 99.5
+      }
+     }
+    },
+    "run": {
+     "partial": 1,
+     "success": 2
+    }
+   }
+  }
+ },
+ "trends": {
+  "temi_in_anagrafica": 4516,
+  "temi_con_conteggi": 4423,
+  "paper_con_tema_per_periodo": {
+   "2018": 6167496,
+   "2019": 6449615,
+   "2020": 6828670,
+   "2021": 6425962,
+   "2022": 5950013,
+   "2023": 6237632,
+   "2024": 6788696,
+   "2025": 7950127,
+   "2025-ytd": 6215568,
+   "2026-ytd": 7701581
+  },
+  "domini": {
+   "Physical Sciences": 1571,
+   "Social Sciences": 1487,
+   "Life Sciences": 614,
+   "Health Sciences": 844
+  },
+  "concentrazione_ultimo_anno": {
+   "anno": 2025,
+   "temi": 4409,
+   "quota_top1pct_temi_pct": 8.4,
+   "temi_sotto_50_paper": 102
+  }
+ }
+}
