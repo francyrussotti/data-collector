@@ -13,12 +13,14 @@ import argparse
 import json
 import sqlite3
 import sys
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from emerging import TECH_FIELDS, suspicious  # noqa: E402
+
+RECENT_DAYS = 60
 
 
 def paper(d: dict, chars: int) -> dict:
@@ -38,12 +40,18 @@ def new_today(conn, source: str, day: str) -> list[dict]:
 def llm_section(db: Path, day: str, top: int, chars: int) -> dict:
     conn = sqlite3.connect(db)
     new = new_today(conn, "openalex_llm", day)
-    new.sort(key=lambda d: d.get("published_date") or "", reverse=True)       # prima i più recenti...
-    new.sort(key=lambda d: d.get("cited_by_count") or 0, reverse=True)       # ...a parità di citazioni
+    # Prima i paper usciti negli ultimi RECENT_DAYS giorni (dal più recente), poi gli altri per citazioni:
+    # così il primo giorno o un recupero di storico non riempiono il report di paper vecchi.
+    cutoff = (date.fromisoformat(day) - timedelta(days=RECENT_DAYS)).isoformat()
+    recent = sorted((d for d in new if (d.get("published_date") or "") >= cutoff),
+                    key=lambda d: d.get("published_date") or "", reverse=True)
+    older = sorted((d for d in new if (d.get("published_date") or "") < cutoff),
+                   key=lambda d: d.get("cited_by_count") or 0, reverse=True)
+    new = recent + older
     last = conn.execute("SELECT status, finished_at, fetched, inserted, updated, requests FROM runs "
                         "WHERE source='openalex_llm' ORDER BY id DESC LIMIT 1").fetchone()
     total = conn.execute("SELECT count(*) FROM records WHERE source='openalex_llm'").fetchone()[0]
-    return {"nuovi_oggi": len(new), "totale": total,
+    return {"nuovi_oggi": len(new), "recenti_tra_i_nuovi": len(recent), "totale": total,
             "ultima_raccolta": dict(zip(("stato", "fine", "letti", "nuovi", "aggiornati", "richieste"), last)) if last else None,
             "selezione": [paper(d, chars) for d in new[:top]]}
 

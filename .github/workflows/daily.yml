@@ -40,6 +40,9 @@ jobs:
           ls -la data
       - name: Novità nei temi emergenti
         run: |
+          if [ ! -f data/emerging_topics.json ] && [ -f data/emerging_topics.meta.json ]; then
+            python -c "import json; m=json.load(open('data/emerging_topics.meta.json')); json.dump([t['id'] for t in m], open('data/emerging_topics.json','w'))"
+          fi
           if [ ! -f data/emerging_topics.json ]; then echo "Temi emergenti non ancora calcolati"; exit 0; fi
           TODAY="$(date -u +%F)"
           SINCE="$(date -u -d '14 days ago' +%F)"

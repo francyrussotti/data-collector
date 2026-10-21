@@ -69,4 +69,4 @@ jobs:
           fi
           gzip -k data/trends.sqlite data/emerging.sqlite
           gh release upload "$DATA_TAG" data/trends.sqlite.gz data/trends.json \
-            data/emerging.sqlite.gz data/emerging.parquet data/emerging_topics.meta.json data/emerging_digest.json --clobber
+            data/emerging.sqlite.gz data/emerging.parquet data/emerging_topics.json data/emerging_topics.meta.json data/emerging_digest.json --clobber

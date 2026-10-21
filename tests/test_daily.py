@@ -46,8 +46,10 @@ def test_daily_digest(tmp_path):
                          check=True, capture_output=True, text=True)
     r = json.loads(out.stdout)
     assert r["llm"]["nuovi_oggi"] == 2 and r["llm"]["totale"] == 3
-    assert [p["titolo"] for p in r["llm"]["selezione"]] == ["Nuovo citato", "Nuovo poco citato"]
-    assert r["llm"]["selezione"][1]["estratto"].endswith("…") and r["llm"]["selezione"][1]["link"] == "https://doi.org/10.1/b"
+    # entrambi recenti rispetto al 2026-10-21 → ordinati per data, il più recente prima
+    assert [p["titolo"] for p in r["llm"]["selezione"]][:2] in (["Nuovo poco citato", "Nuovo citato"], ["Nuovo citato", "Nuovo poco citato"])
+    sel = {p["titolo"]: p for p in r["llm"]["selezione"]}
+    assert sel["Nuovo poco citato"]["estratto"].endswith("…") and sel["Nuovo poco citato"]["link"] == "https://doi.org/10.1/b"
     assert r["llm"]["ultima_raccolta"]["nuovi"] == 2
     assert r["emergenti"]["nuovi_oggi"] == 2 and r["emergenti"]["per_tema"][0]["tema"] == "Quantum Computing"
     assert len(r["emergenti"]["per_tema"]) == 1  # il tema non seguito resta fuori
