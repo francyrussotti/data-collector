@@ -1,0 +1,184 @@
+# Segnali di validazione gratuiti (Fase 3): adozione (GitHub, Hacker News, PyPI), attenzione (Wikipedia),
+# finanziamenti pubblici (NSF). Formati verificati con analysis/probe_sources.py il 21/10/2026.
+# Le query sono legate ai cluster della Fase 2 (campo "cluster"); "BASE" sono controlli per normalizzare.
+# Variabili d'ambiente: GITHUB_TOKEN (nei workflow è automatico)
+
+storage:
+  database: data/free_signals.sqlite
+  store_raw: false
+
+http:
+  user_agent: "data-collector/0.1 (mailto:${OPENALEX_MAILTO:-not-set})"
+  requests_per_second: 1
+  timeout: 30
+  max_retries: 5
+  backoff_base: 2.0
+  backoff_max: 120
+  respect_robots: false   # API ufficiali, non pagine web (robots.txt non pertinente)
+
+# Query condivise da GitHub e Hacker News
+x-queries: &queries
+  - {id: s1_mcp, query: "mcp server", cluster: S1}
+  - {id: s1_agent, query: "ai agent", cluster: S1}
+  - {id: s1_multiagent, query: "multi-agent", cluster: S1}
+  - {id: s2_guardrails, query: "llm guardrails", cluster: S2}
+  - {id: s2_eval, query: "llm evaluation", cluster: S2}
+  - {id: s2_governance, query: "ai governance", cluster: S2}
+  - {id: s3_injection, query: "prompt injection", cluster: S3}
+  - {id: s3_llmsec, query: "llm security", cluster: S3}
+  - {id: s4_local, query: "local llm", cluster: S4}
+  - {id: s4_inference, query: "llm inference", cluster: S4}
+  - {id: s5_coding, query: "coding agent", cluster: S5}
+  - {id: s5_review, query: "ai code review", cluster: S5}
+  - {id: s6_humanoid, query: "humanoid robot", cluster: S6}
+  - {id: s6_robotlearn, query: "robot learning", cluster: S6}
+  - {id: s7_docai, query: "document ai", cluster: S7}
+  - {id: s7_multimodal, query: "multimodal llm", cluster: S7}
+  - {id: s8_rag, query: "retrieval augmented generation", cluster: S8}
+  - {id: s8_vectordb, query: "vector database", cluster: S8}
+  - {id: s9_materials, query: "materials machine learning", cluster: S9}
+  - {id: s9_protein, query: "protein design", cluster: S9}
+  - {id: s10_quantum, query: "quantum computing", cluster: S10}
+  - {id: base_ml, query: "machine learning", cluster: BASE}
+
+sources:
+  # L4 – nuovi repository per trimestre (data di creazione)
+  - name: github_repos
+    connector: query_counts
+    base_url: https://api.github.com
+    endpoint: /search/repositories
+    http:
+      user_agent: "data-collector/0.1"
+      requests_per_second: 0.4          # limite autenticato: 30 ricerche al minuto
+      max_retries: 5
+      backoff_base: 5.0
+      backoff_max: 120
+      respect_robots: false
+      headers:
+        Authorization: "Bearer ${GITHUB_TOKEN:-}"
+        Accept: application/vnd.github+json
+    params: {per_page: 1}
+    options:
+      queries: *queries
+      params: {q: "{query} created:{start}..{end}"}
+      count_path: total_count
+      granularity: quarter
+      from: "2022-01"
+    id_field: id
+    fields: &count_fields
+      query_id: query_id
+      query: query
+      cluster: cluster
+      period: period
+      start: start
+      end: end
+      partial: partial
+      count: count
+
+  # L4 – storie su Hacker News per trimestre (conteggio approssimato da Algolia)
+  - name: hn_stories
+    connector: query_counts
+    base_url: https://hn.algolia.com
+    endpoint: /api/v1/search_by_date
+    http:
+      user_agent: "data-collector/0.1"
+      requests_per_second: 2
+      respect_robots: false
+    params: {tags: story, hitsPerPage: 1}
+    options:
+      queries: *queries
+      params: {query: "{query}", numericFilters: "created_at_i>={start_ts},created_at_i<={end_ts}"}
+      count_path: nbHits
+      granularity: quarter
+      from: "2022-01"
+    id_field: id
+    fields: *count_fields
+
+  # L3 – grant NSF per anno di inizio (parole chiave scientifiche, non nomi di prodotto)
+  - name: nsf_awards
+    connector: query_counts
+    base_url: https://api.nsf.gov
+    endpoint: /services/v1/awards.json
+    params: {rpp: 1}
+    options:
+      queries:
+        - {id: s1_multiagent, query: "multi-agent", cluster: S1}
+        - {id: s2_trustworthy, query: "trustworthy artificial intelligence", cluster: S2}
+        - {id: s3_cyber_ml, query: "cybersecurity machine learning", cluster: S3}
+        - {id: s4_energy_comp, query: "energy-efficient computing", cluster: S4}
+        - {id: s6_robot_learning, query: "robot learning", cluster: S6}
+        - {id: s7_multimodal, query: "multimodal learning", cluster: S7}
+        - {id: s9_materials_ml, query: "machine learning materials", cluster: S9}
+        - {id: s10_quantum, query: "quantum computing", cluster: S10}
+        - {id: base_ai, query: "artificial intelligence", cluster: BASE}
+      params: {keyword: "{query}", dateStart: "{start_mdy}", dateEnd: "{end_mdy}"}
+      count_path: response.metadata.totalCount
+      granularity: quarter
+      from: "2020-01"
+    id_field: id
+    fields: *count_fields
+
+  # L4 – download giornalieri delle librerie Python (storico di soli 180 giorni: va raccolto in continuo)
+  - name: pypi_downloads
+    connector: api_list
+    base_url: https://pypistats.org
+    endpoint: /api/packages/{package}/overall
+    params: {mirrors: "false"}
+    options:
+      items:
+        - {package: mcp, cluster: S1}
+        - {package: langgraph, cluster: S1}
+        - {package: crewai, cluster: S1}
+        - {package: guardrails-ai, cluster: S2}
+        - {package: ragas, cluster: S2}
+        - {package: deepeval, cluster: S2}
+        - {package: llama-cpp-python, cluster: S4}
+        - {package: vllm, cluster: S4}
+        - {package: onnxruntime, cluster: S4}
+        - {package: docling, cluster: S7}
+        - {package: unstructured, cluster: S7}
+        - {package: llama-index, cluster: S8}
+        - {package: qdrant-client, cluster: S8}
+        - {package: chromadb, cluster: S8}
+        - {package: rdkit, cluster: S9}
+        - {package: qiskit, cluster: S10}
+        - {package: pennylane, cluster: S10}
+        - {package: lerobot, cluster: S6}
+        - {package: scikit-learn, cluster: BASE}
+      records_path: data
+      id_template: "{package}|{date}|{category}"
+    id_field: id
+    fields:
+      package: package
+      cluster: cluster
+      date: date
+      category: category
+      downloads: downloads
+
+  # L5 – visualizzazioni mensili delle voci di Wikipedia (inglese, solo utenti umani)
+  - name: wiki_pageviews
+    connector: api_list
+    base_url: https://wikimedia.org
+    endpoint: /api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/{article}/monthly/2022010100/{today_compact}00
+    options:
+      items:
+        - {article: Model_Context_Protocol, cluster: S1}
+        - {article: Intelligent_agent, cluster: S1}
+        - {article: AI_safety, cluster: S2}
+        - {article: Explainable_artificial_intelligence, cluster: S2}
+        - {article: Prompt_injection, cluster: S3}
+        - {article: Edge_computing, cluster: S4}
+        - {article: Humanoid_robot, cluster: S6}
+        - {article: Retrieval-augmented_generation, cluster: S8}
+        - {article: Vector_database, cluster: S8}
+        - {article: Quantum_computing, cluster: S10}
+        - {article: Large_language_model, cluster: BASE}
+        - {article: Artificial_intelligence, cluster: BASE}
+      records_path: items
+      id_template: "{article}|{timestamp}"
+    id_field: id
+    fields:
+      article: article
+      cluster: cluster
+      timestamp: timestamp
+      views: views

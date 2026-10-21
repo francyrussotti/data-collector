@@ -108,6 +108,20 @@ Il workflow `trends.yml` gira ogni lunedì, oppure a mano. Allega `trends.json` 
 
 Il connettore `openalex_groups` è generico: con un altro `group_by` (es. `primary_topic.subfield.id`, `authorships.countries`) conta per altre dimensioni.
 
+## Segnali di validazione gratuiti
+
+`config/free_signals.yaml` raccoglie segnali di **adozione e domanda** per i cluster dell'analisi (`analysis/02_segnali.md`). Le fonti sono tutte gratuite e i formati sono stati verificati con `analysis/probe_sources.py`:
+
+| Fonte | Connettore | Cosa misura |
+|---|---|---|
+| GitHub Search | `query_counts` | nuovi repository per trimestre (`total_count`) |
+| Hacker News (Algolia) | `query_counts` | storie per trimestre (`nbHits`, conteggio approssimato) |
+| NSF Award Search | `query_counts` | grant NSF per trimestre di inizio (`response.metadata.totalCount`) |
+| pypistats | `api_list` | download giornalieri delle librerie (180 giorni di storico: si accumulano) |
+| Wikimedia Pageviews | `api_list` | visualizzazioni mensili delle voci di Wikipedia |
+
+Il workflow `free_signals.yml` gira ogni martedì, oppure a mano, e tiene il database nella release `data`. I connettori `query_counts` e `api_list` sono generici: una nuova API JSON si aggiunge solo con la configurazione.
+
 ## Report giornaliero
 
 Il workflow `daily.yml` gira ogni mattina alle 05:37 UTC, dopo la raccolta. Svolge tre passi:

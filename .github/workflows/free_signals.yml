@@ -1,0 +1,66 @@
+# Segnali di validazione gratuiti: GitHub, Hacker News, NSF, PyPI, Wikipedia (config/free_signals.yaml).
+# Ogni martedì e a mano (Actions → free_signals → Run workflow). Circa 30 minuti, nessun costo.
+# Il database resta nella release "data": i download PyPI hanno solo 180 giorni di storico, quindi si accumulano.
+name: free_signals
+
+on:
+  schedule:
+    - cron: "53 5 * * 2"   # martedì alle 05:53 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: free_signals
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      GH_TOKEN: ${{ github.token }}
+      OPENALEX_MAILTO: ${{ secrets.OPENALEX_MAILTO }}
+      DATA_TAG: data
+      CONFIG: config/free_signals.yaml
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Scarica il database precedente
+        run: |
+          mkdir -p data
+          if gh release download "$DATA_TAG" --pattern free_signals.sqlite.gz --dir data; then
+            gunzip -f data/free_signals.sqlite.gz
+          else
+            echo "Prima esecuzione: database nuovo"
+          fi
+      - name: Raccolta
+        id: run
+        run: |
+          set +e
+          collector -c "$CONFIG" run
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+      - name: Riepilogo
+        if: always()
+        run: |
+          {
+            echo '```'
+            collector -c "$CONFIG" status
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Export e salvataggio nella release
+        run: |
+          collector -c "$CONFIG" export -o data/free_signals.parquet
+          gzip -kf data/free_signals.sqlite
+          gh release upload "$DATA_TAG" data/free_signals.sqlite.gz data/free_signals.parquet --clobber
+      - name: Esito
+        if: steps.run.outputs.code != '0'
+        run: |
+          echo "::error::Raccolta fallita (codice ${{ steps.run.outputs.code }})"
+          exit 1
