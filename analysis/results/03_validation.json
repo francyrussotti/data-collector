@@ -1,0 +1,1305 @@
+{
+ "generato": "2026-10-21",
+ "metodo": "crescita = ultimi/precedenti - 1; vs_base = (1+g)/(1+g_BASE) - 1",
+ "righe_per_fonte": {
+  "github_repos": 440,
+  "hn_stories": 440,
+  "nsf_awards": 252,
+  "pypi_downloads": 3724,
+  "wiki_pageviews": 599
+ },
+ "github_repos": {
+  "finestra_ultimi": [
+   "2025-Q4",
+   "2026-Q1",
+   "2026-Q2",
+   "2026-Q3"
+  ],
+  "finestra_precedenti": [
+   "2024-Q4",
+   "2025-Q1",
+   "2025-Q2",
+   "2025-Q3"
+  ],
+  "crescita_base": 0.7428,
+  "per_cluster": {
+   "S1": {
+    "ultimi": 817941,
+    "precedenti": 152153,
+    "query": [
+     "mcp server",
+     "ai agent",
+     "multi-agent"
+    ],
+    "crescita": 4.3758,
+    "crescita_vs_base": 2.0846
+   },
+   "S2": {
+    "ultimi": 43569,
+    "precedenti": 5244,
+    "query": [
+     "llm guardrails",
+     "llm evaluation",
+     "ai governance"
+    ],
+    "crescita": 7.3084,
+    "crescita_vs_base": 3.7673
+   },
+   "S3": {
+    "ultimi": 18639,
+    "precedenti": 1868,
+    "query": [
+     "prompt injection",
+     "llm security"
+    ],
+    "crescita": 8.9781,
+    "crescita_vs_base": 4.7253
+   },
+   "S4": {
+    "ultimi": 58837,
+    "precedenti": 9548,
+    "query": [
+     "local llm",
+     "llm inference"
+    ],
+    "crescita": 5.1622,
+    "crescita_vs_base": 2.5358
+   },
+   "S5": {
+    "ultimi": 159754,
+    "precedenti": 13244,
+    "query": [
+     "coding agent",
+     "ai code review"
+    ],
+    "crescita": 11.0624,
+    "crescita_vs_base": 5.9213
+   },
+   "S6": {
+    "ultimi": 8973,
+    "precedenti": 2794,
+    "query": [
+     "humanoid robot",
+     "robot learning"
+    ],
+    "crescita": 2.2115,
+    "crescita_vs_base": 0.8427
+   },
+   "S7": {
+    "ultimi": 64148,
+    "precedenti": 15976,
+    "query": [
+     "document ai",
+     "multimodal llm"
+    ],
+    "crescita": 3.0153,
+    "crescita_vs_base": 1.3039
+   },
+   "S8": {
+    "ultimi": 37514,
+    "precedenti": 14689,
+    "query": [
+     "retrieval augmented generation",
+     "vector database"
+    ],
+    "crescita": 1.5539,
+    "crescita_vs_base": 0.4654
+   },
+   "S9": {
+    "ultimi": 2337,
+    "precedenti": 1324,
+    "query": [
+     "materials machine learning",
+     "protein design"
+    ],
+    "crescita": 0.7651,
+    "crescita_vs_base": 0.0128
+   },
+   "S10": {
+    "ultimi": 4915,
+    "precedenti": 2605,
+    "query": [
+     "quantum computing"
+    ],
+    "crescita": 0.8868,
+    "crescita_vs_base": 0.0826
+   },
+   "BASE": {
+    "ultimi": 385283,
+    "precedenti": 221075,
+    "query": [
+     "machine learning"
+    ],
+    "crescita": 0.7428,
+    "crescita_vs_base": 0.0
+   }
+  },
+  "per_query": {
+   "s1_mcp": {
+    "query": "mcp server",
+    "cluster": "S1",
+    "ultimi": 122648,
+    "precedenti": 37805,
+    "crescita": 2.2442,
+    "crescita_vs_base": 0.8615
+   },
+   "s1_agent": {
+    "query": "ai agent",
+    "cluster": "S1",
+    "ultimi": 554853,
+    "precedenti": 94377,
+    "crescita": 4.8791,
+    "crescita_vs_base": 2.3734
+   },
+   "s1_multiagent": {
+    "query": "multi-agent",
+    "cluster": "S1",
+    "ultimi": 140440,
+    "precedenti": 19971,
+    "crescita": 6.0322,
+    "crescita_vs_base": 3.035
+   },
+   "s2_guardrails": {
+    "query": "llm guardrails",
+    "cluster": "S2",
+    "ultimi": 4924,
+    "precedenti": 206,
+    "crescita": 22.9029,
+    "crescita_vs_base": 12.7152
+   },
+   "s2_eval": {
+    "query": "llm evaluation",
+    "cluster": "S2",
+    "ultimi": 23112,
+    "precedenti": 4080,
+    "crescita": 4.6647,
+    "crescita_vs_base": 2.2503
+   },
+   "s2_governance": {
+    "query": "ai governance",
+    "cluster": "S2",
+    "ultimi": 15533,
+    "precedenti": 958,
+    "crescita": 15.214,
+    "crescita_vs_base": 8.3034
+   },
+   "s3_injection": {
+    "query": "prompt injection",
+    "cluster": "S3",
+    "ultimi": 8585,
+    "precedenti": 717,
+    "crescita": 10.9735,
+    "crescita_vs_base": 5.8703
+   },
+   "s3_llmsec": {
+    "query": "llm security",
+    "cluster": "S3",
+    "ultimi": 10054,
+    "precedenti": 1151,
+    "crescita": 7.735,
+    "crescita_vs_base": 4.012
+   },
+   "s4_local": {
+    "query": "local llm",
+    "cluster": "S4",
+    "ultimi": 45807,
+    "precedenti": 7589,
+    "crescita": 5.036,
+    "crescita_vs_base": 2.4634
+   },
+   "s4_inference": {
+    "query": "llm inference",
+    "cluster": "S4",
+    "ultimi": 13030,
+    "precedenti": 1959,
+    "crescita": 5.6514,
+    "crescita_vs_base": 2.8165
+   },
+   "s5_coding": {
+    "query": "coding agent",
+    "cluster": "S5",
+    "ultimi": 141189,
+    "precedenti": 9129,
+    "crescita": 14.466,
+    "crescita_vs_base": 7.8742
+   },
+   "s5_review": {
+    "query": "ai code review",
+    "cluster": "S5",
+    "ultimi": 18565,
+    "precedenti": 4115,
+    "crescita": 3.5115,
+    "crescita_vs_base": 1.5887
+   },
+   "s6_humanoid": {
+    "query": "humanoid robot",
+    "cluster": "S6",
+    "ultimi": 3544,
+    "precedenti": 562,
+    "crescita": 5.306,
+    "crescita_vs_base": 2.6183
+   },
+   "s6_robotlearn": {
+    "query": "robot learning",
+    "cluster": "S6",
+    "ultimi": 5429,
+    "precedenti": 2232,
+    "crescita": 1.4323,
+    "crescita_vs_base": 0.3956
+   },
+   "s7_docai": {
+    "query": "document ai",
+    "cluster": "S7",
+    "ultimi": 60233,
+    "precedenti": 14774,
+    "crescita": 3.077,
+    "crescita_vs_base": 1.3393
+   },
+   "s7_multimodal": {
+    "query": "multimodal llm",
+    "cluster": "S7",
+    "ultimi": 3915,
+    "precedenti": 1202,
+    "crescita": 2.2571,
+    "crescita_vs_base": 0.8689
+   },
+   "s8_rag": {
+    "query": "retrieval augmented generation",
+    "cluster": "S8",
+    "ultimi": 29318,
+    "precedenti": 11406,
+    "crescita": 1.5704,
+    "crescita_vs_base": 0.4749
+   },
+   "s8_vectordb": {
+    "query": "vector database",
+    "cluster": "S8",
+    "ultimi": 8196,
+    "precedenti": 3283,
+    "crescita": 1.4965,
+    "crescita_vs_base": 0.4325
+   },
+   "s9_materials": {
+    "query": "materials machine learning",
+    "cluster": "S9",
+    "ultimi": 1388,
+    "precedenti": 885,
+    "crescita": 0.5684,
+    "crescita_vs_base": -0.1001
+   },
+   "s9_protein": {
+    "query": "protein design",
+    "cluster": "S9",
+    "ultimi": 949,
+    "precedenti": 439,
+    "crescita": 1.1617,
+    "crescita_vs_base": 0.2404
+   },
+   "s10_quantum": {
+    "query": "quantum computing",
+    "cluster": "S10",
+    "ultimi": 4915,
+    "precedenti": 2605,
+    "crescita": 0.8868,
+    "crescita_vs_base": 0.0826
+   },
+   "base_ml": {
+    "query": "machine learning",
+    "cluster": "BASE",
+    "ultimi": 385283,
+    "precedenti": 221075,
+    "crescita": 0.7428,
+    "crescita_vs_base": 0.0
+   }
+  }
+ },
+ "hn_stories": {
+  "finestra_ultimi": [
+   "2025-Q4",
+   "2026-Q1",
+   "2026-Q2",
+   "2026-Q3"
+  ],
+  "finestra_precedenti": [
+   "2024-Q4",
+   "2025-Q1",
+   "2025-Q2",
+   "2025-Q3"
+  ],
+  "crescita_base": -0.2276,
+  "per_cluster": {
+   "S1": {
+    "ultimi": 16855,
+    "precedenti": 5766,
+    "query": [
+     "mcp server",
+     "ai agent",
+     "multi-agent"
+    ],
+    "crescita": 1.9232,
+    "crescita_vs_base": 2.7846
+   },
+   "S2": {
+    "ultimi": 849,
+    "precedenti": 424,
+    "query": [
+     "llm guardrails",
+     "llm evaluation",
+     "ai governance"
+    ],
+    "crescita": 1.0024,
+    "crescita_vs_base": 1.5924
+   },
+   "S3": {
+    "ultimi": 960,
+    "precedenti": 373,
+    "query": [
+     "prompt injection",
+     "llm security"
+    ],
+    "crescita": 1.5737,
+    "crescita_vs_base": 2.3321
+   },
+   "S4": {
+    "ultimi": 2249,
+    "precedenti": 919,
+    "query": [
+     "local llm",
+     "llm inference"
+    ],
+    "crescita": 1.4472,
+    "crescita_vs_base": 2.1683
+   },
+   "S5": {
+    "ultimi": 5502,
+    "precedenti": 1207,
+    "query": [
+     "coding agent",
+     "ai code review"
+    ],
+    "crescita": 3.5584,
+    "crescita_vs_base": 4.9016
+   },
+   "S6": {
+    "ultimi": 346,
+    "precedenti": 186,
+    "query": [
+     "humanoid robot",
+     "robot learning"
+    ],
+    "crescita": 0.8602,
+    "crescita_vs_base": 1.4083
+   },
+   "S7": {
+    "ultimi": 932,
+    "precedenti": 657,
+    "query": [
+     "document ai",
+     "multimodal llm"
+    ],
+    "crescita": 0.4186,
+    "crescita_vs_base": 0.8366
+   },
+   "S8": {
+    "ultimi": 316,
+    "precedenti": 296,
+    "query": [
+     "retrieval augmented generation",
+     "vector database"
+    ],
+    "crescita": 0.0676,
+    "crescita_vs_base": 0.3822
+   },
+   "S9": {
+    "ultimi": 80,
+    "precedenti": 79,
+    "query": [
+     "materials machine learning",
+     "protein design"
+    ],
+    "crescita": 0.0127,
+    "crescita_vs_base": 0.3111
+   },
+   "S10": {
+    "ultimi": 250,
+    "precedenti": 277,
+    "query": [
+     "quantum computing"
+    ],
+    "crescita": -0.0975,
+    "crescita_vs_base": 0.1684
+   },
+   "BASE": {
+    "ultimi": 509,
+    "precedenti": 659,
+    "query": [
+     "machine learning"
+    ],
+    "crescita": -0.2276,
+    "crescita_vs_base": 0.0
+   }
+  },
+  "per_query": {
+   "s1_mcp": {
+    "query": "mcp server",
+    "cluster": "S1",
+    "ultimi": 2077,
+    "precedenti": 1129,
+    "crescita": 0.8397,
+    "crescita_vs_base": 1.3818
+   },
+   "s1_agent": {
+    "query": "ai agent",
+    "cluster": "S1",
+    "ultimi": 13964,
+    "precedenti": 4354,
+    "crescita": 2.2072,
+    "crescita_vs_base": 3.1523
+   },
+   "s1_multiagent": {
+    "query": "multi-agent",
+    "cluster": "S1",
+    "ultimi": 814,
+    "precedenti": 283,
+    "crescita": 1.8763,
+    "crescita_vs_base": 2.7238
+   },
+   "s2_guardrails": {
+    "query": "llm guardrails",
+    "cluster": "S2",
+    "ultimi": 136,
+    "precedenti": 52,
+    "crescita": 1.6154,
+    "crescita_vs_base": 2.3861
+   },
+   "s2_eval": {
+    "query": "llm evaluation",
+    "cluster": "S2",
+    "ultimi": 323,
+    "precedenti": 292,
+    "crescita": 0.1062,
+    "crescita_vs_base": 0.4322
+   },
+   "s2_governance": {
+    "query": "ai governance",
+    "cluster": "S2",
+    "ultimi": 390,
+    "precedenti": 80,
+    "crescita": 3.875,
+    "crescita_vs_base": 5.3115
+   },
+   "s3_injection": {
+    "query": "prompt injection",
+    "cluster": "S3",
+    "ultimi": 534,
+    "precedenti": 186,
+    "crescita": 1.871,
+    "crescita_vs_base": 2.717
+   },
+   "s3_llmsec": {
+    "query": "llm security",
+    "cluster": "S3",
+    "ultimi": 426,
+    "precedenti": 187,
+    "crescita": 1.2781,
+    "crescita_vs_base": 1.9494
+   },
+   "s4_local": {
+    "query": "local llm",
+    "cluster": "S4",
+    "ultimi": 1631,
+    "precedenti": 612,
+    "crescita": 1.665,
+    "crescita_vs_base": 2.4503
+   },
+   "s4_inference": {
+    "query": "llm inference",
+    "cluster": "S4",
+    "ultimi": 618,
+    "precedenti": 307,
+    "crescita": 1.013,
+    "crescita_vs_base": 1.6062
+   },
+   "s5_coding": {
+    "query": "coding agent",
+    "cluster": "S5",
+    "ultimi": 4556,
+    "precedenti": 872,
+    "crescita": 4.2248,
+    "crescita_vs_base": 5.7644
+   },
+   "s5_review": {
+    "query": "ai code review",
+    "cluster": "S5",
+    "ultimi": 946,
+    "precedenti": 335,
+    "crescita": 1.8239,
+    "crescita_vs_base": 2.656
+   },
+   "s6_humanoid": {
+    "query": "humanoid robot",
+    "cluster": "S6",
+    "ultimi": 290,
+    "precedenti": 153,
+    "crescita": 0.8954,
+    "crescita_vs_base": 1.4539
+   },
+   "s6_robotlearn": {
+    "query": "robot learning",
+    "cluster": "S6",
+    "ultimi": 56,
+    "precedenti": 33,
+    "crescita": 0.697,
+    "crescita_vs_base": 1.197
+   },
+   "s7_docai": {
+    "query": "document ai",
+    "cluster": "S7",
+    "ultimi": 841,
+    "precedenti": 552,
+    "crescita": 0.5236,
+    "crescita_vs_base": 0.9726
+   },
+   "s7_multimodal": {
+    "query": "multimodal llm",
+    "cluster": "S7",
+    "ultimi": 91,
+    "precedenti": 105,
+    "crescita": -0.1333,
+    "crescita_vs_base": 0.1221
+   },
+   "s8_rag": {
+    "query": "retrieval augmented generation",
+    "cluster": "S8",
+    "ultimi": 36,
+    "precedenti": 101,
+    "crescita": -0.6436,
+    "crescita_vs_base": -0.5386
+   },
+   "s8_vectordb": {
+    "query": "vector database",
+    "cluster": "S8",
+    "ultimi": 280,
+    "precedenti": 195,
+    "crescita": 0.4359,
+    "crescita_vs_base": 0.859
+   },
+   "s9_materials": {
+    "query": "materials machine learning",
+    "cluster": "S9",
+    "ultimi": 10,
+    "precedenti": 13,
+    "crescita": -0.2308,
+    "crescita_vs_base": -0.0041
+   },
+   "s9_protein": {
+    "query": "protein design",
+    "cluster": "S9",
+    "ultimi": 70,
+    "precedenti": 66,
+    "crescita": 0.0606,
+    "crescita_vs_base": 0.3731
+   },
+   "s10_quantum": {
+    "query": "quantum computing",
+    "cluster": "S10",
+    "ultimi": 250,
+    "precedenti": 277,
+    "crescita": -0.0975,
+    "crescita_vs_base": 0.1684
+   },
+   "base_ml": {
+    "query": "machine learning",
+    "cluster": "BASE",
+    "ultimi": 509,
+    "precedenti": 659,
+    "crescita": -0.2276,
+    "crescita_vs_base": 0.0
+   }
+  }
+ },
+ "nsf_awards": {
+  "finestra_ultimi": [
+   "2025-Q4",
+   "2026-Q1",
+   "2026-Q2",
+   "2026-Q3"
+  ],
+  "finestra_precedenti": [
+   "2024-Q4",
+   "2025-Q1",
+   "2025-Q2",
+   "2025-Q3"
+  ],
+  "crescita_base": 0.4005,
+  "per_cluster": {
+   "S1": {
+    "ultimi": 1165,
+    "precedenti": 1363,
+    "query": [
+     "multi-agent"
+    ],
+    "crescita": -0.1453,
+    "crescita_vs_base": -0.3897
+   },
+   "S2": {
+    "ultimi": 2931,
+    "precedenti": 2180,
+    "query": [
+     "trustworthy artificial intelligence"
+    ],
+    "crescita": 0.3445,
+    "crescita_vs_base": -0.04
+   },
+   "S3": {
+    "ultimi": 2918,
+    "precedenti": 3603,
+    "query": [
+     "cybersecurity machine learning"
+    ],
+    "crescita": -0.1901,
+    "crescita_vs_base": -0.4217
+   },
+   "S4": {
+    "ultimi": 2946,
+    "precedenti": 3612,
+    "query": [
+     "energy-efficient computing"
+    ],
+    "crescita": -0.1844,
+    "crescita_vs_base": -0.4176
+   },
+   "S6": {
+    "ultimi": 2786,
+    "precedenti": 3470,
+    "query": [
+     "robot learning"
+    ],
+    "crescita": -0.1971,
+    "crescita_vs_base": -0.4267
+   },
+   "S7": {
+    "ultimi": 2791,
+    "precedenti": 3437,
+    "query": [
+     "multimodal learning"
+    ],
+    "crescita": -0.188,
+    "crescita_vs_base": -0.4202
+   },
+   "S9": {
+    "ultimi": 3932,
+    "precedenti": 4812,
+    "query": [
+     "machine learning materials"
+    ],
+    "crescita": -0.1829,
+    "crescita_vs_base": -0.4166
+   },
+   "S10": {
+    "ultimi": 1896,
+    "precedenti": 1952,
+    "query": [
+     "quantum computing"
+    ],
+    "crescita": -0.0287,
+    "crescita_vs_base": -0.3065
+   },
+   "BASE": {
+    "ultimi": 2822,
+    "precedenti": 2015,
+    "query": [
+     "artificial intelligence"
+    ],
+    "crescita": 0.4005,
+    "crescita_vs_base": 0.0
+   }
+  },
+  "per_query": {
+   "s1_multiagent": {
+    "query": "multi-agent",
+    "cluster": "S1",
+    "ultimi": 1165,
+    "precedenti": 1363,
+    "crescita": -0.1453,
+    "crescita_vs_base": -0.3897
+   },
+   "s2_trustworthy": {
+    "query": "trustworthy artificial intelligence",
+    "cluster": "S2",
+    "ultimi": 2931,
+    "precedenti": 2180,
+    "crescita": 0.3445,
+    "crescita_vs_base": -0.04
+   },
+   "s3_cyber_ml": {
+    "query": "cybersecurity machine learning",
+    "cluster": "S3",
+    "ultimi": 2918,
+    "precedenti": 3603,
+    "crescita": -0.1901,
+    "crescita_vs_base": -0.4217
+   },
+   "s4_energy_comp": {
+    "query": "energy-efficient computing",
+    "cluster": "S4",
+    "ultimi": 2946,
+    "precedenti": 3612,
+    "crescita": -0.1844,
+    "crescita_vs_base": -0.4176
+   },
+   "s6_robot_learning": {
+    "query": "robot learning",
+    "cluster": "S6",
+    "ultimi": 2786,
+    "precedenti": 3470,
+    "crescita": -0.1971,
+    "crescita_vs_base": -0.4267
+   },
+   "s7_multimodal": {
+    "query": "multimodal learning",
+    "cluster": "S7",
+    "ultimi": 2791,
+    "precedenti": 3437,
+    "crescita": -0.188,
+    "crescita_vs_base": -0.4202
+   },
+   "s9_materials_ml": {
+    "query": "machine learning materials",
+    "cluster": "S9",
+    "ultimi": 3932,
+    "precedenti": 4812,
+    "crescita": -0.1829,
+    "crescita_vs_base": -0.4166
+   },
+   "s10_quantum": {
+    "query": "quantum computing",
+    "cluster": "S10",
+    "ultimi": 1896,
+    "precedenti": 1952,
+    "crescita": -0.0287,
+    "crescita_vs_base": -0.3065
+   },
+   "base_ai": {
+    "query": "artificial intelligence",
+    "cluster": "BASE",
+    "ultimi": 2822,
+    "precedenti": 2015,
+    "crescita": 0.4005,
+    "crescita_vs_base": 0.0
+   }
+  }
+ },
+ "pypi_downloads": {
+  "categoria": "without_mirrors",
+  "crescita_base": 0.0061,
+  "per_cluster": {
+   "S1": {
+    "librerie": {
+     "mcp": 0.0232,
+     "langgraph": -0.0099,
+     "crewai": 0.098
+    },
+    "mediana_vs_base": 0.0232
+   },
+   "S2": {
+    "librerie": {
+     "guardrails-ai": -0.2682,
+     "ragas": -0.1057,
+     "deepeval": -0.2705
+    },
+    "mediana_vs_base": -0.2682
+   },
+   "S4": {
+    "librerie": {
+     "llama-cpp-python": -0.0657,
+     "vllm": -0.5536,
+     "onnxruntime": 0.0371
+    },
+    "mediana_vs_base": -0.0657
+   },
+   "S7": {
+    "librerie": {
+     "docling": -0.5033,
+     "unstructured": -0.2911
+    },
+    "mediana_vs_base": -0.2911
+   },
+   "S8": {
+    "librerie": {
+     "llama-index": -0.5423,
+     "qdrant-client": -0.402,
+     "chromadb": -0.3315
+    },
+    "mediana_vs_base": -0.402
+   },
+   "S9": {
+    "librerie": {
+     "rdkit": -0.2785
+    },
+    "mediana_vs_base": -0.2785
+   },
+   "S10": {
+    "librerie": {
+     "qiskit": -0.1387,
+     "pennylane": -0.3098
+    },
+    "mediana_vs_base": -0.1387
+   },
+   "S6": {
+    "librerie": {
+     "lerobot": 0.1728
+    },
+    "mediana_vs_base": 0.1728
+   },
+   "BASE": {
+    "librerie": {
+     "scikit-learn": 0.0
+    },
+    "mediana_vs_base": 0.0
+   }
+  },
+  "per_libreria": {
+   "mcp": {
+    "cluster": "S1",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 9096191,
+    "media_ultimi": 9363203,
+    "crescita": 0.0294,
+    "crescita_vs_base": 0.0232
+   },
+   "langgraph": {
+    "cluster": "S1",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 1857719,
+    "media_ultimi": 1850512,
+    "crescita": -0.0039,
+    "crescita_vs_base": -0.0099
+   },
+   "crewai": {
+    "cluster": "S1",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 375716,
+    "media_ultimi": 415058,
+    "crescita": 0.1047,
+    "crescita_vs_base": 0.098
+   },
+   "guardrails-ai": {
+    "cluster": "S2",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 5329,
+    "media_ultimi": 3924,
+    "crescita": -0.2637,
+    "crescita_vs_base": -0.2682
+   },
+   "ragas": {
+    "cluster": "S2",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 48502,
+    "media_ultimi": 43640,
+    "crescita": -0.1002,
+    "crescita_vs_base": -0.1057
+   },
+   "deepeval": {
+    "cluster": "S2",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 175028,
+    "media_ultimi": 128450,
+    "crescita": -0.2661,
+    "crescita_vs_base": -0.2705
+   },
+   "llama-cpp-python": {
+    "cluster": "S4",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 21467,
+    "media_ultimi": 20179,
+    "crescita": -0.06,
+    "crescita_vs_base": -0.0657
+   },
+   "vllm": {
+    "cluster": "S4",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 226826,
+    "media_ultimi": 101866,
+    "crescita": -0.5509,
+    "crescita_vs_base": -0.5536
+   },
+   "onnxruntime": {
+    "cluster": "S4",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 2552185,
+    "media_ultimi": 2663013,
+    "crescita": 0.0434,
+    "crescita_vs_base": 0.0371
+   },
+   "docling": {
+    "cluster": "S7",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 368678,
+    "media_ultimi": 184222,
+    "crescita": -0.5003,
+    "crescita_vs_base": -0.5033
+   },
+   "unstructured": {
+    "cluster": "S7",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 175604,
+    "media_ultimi": 125233,
+    "crescita": -0.2868,
+    "crescita_vs_base": -0.2911
+   },
+   "llama-index": {
+    "cluster": "S8",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 334815,
+    "media_ultimi": 154169,
+    "crescita": -0.5395,
+    "crescita_vs_base": -0.5423
+   },
+   "qdrant-client": {
+    "cluster": "S8",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 810692,
+    "media_ultimi": 487751,
+    "crescita": -0.3984,
+    "crescita_vs_base": -0.402
+   },
+   "chromadb": {
+    "cluster": "S8",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 456629,
+    "media_ultimi": 307111,
+    "crescita": -0.3274,
+    "crescita_vs_base": -0.3315
+   },
+   "rdkit": {
+    "cluster": "S9",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 234694,
+    "media_ultimi": 170369,
+    "crescita": -0.2741,
+    "crescita_vs_base": -0.2785
+   },
+   "qiskit": {
+    "cluster": "S10",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 38702,
+    "media_ultimi": 33540,
+    "crescita": -0.1334,
+    "crescita_vs_base": -0.1387
+   },
+   "pennylane": {
+    "cluster": "S10",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 10468,
+    "media_ultimi": 7269,
+    "crescita": -0.3056,
+    "crescita_vs_base": -0.3098
+   },
+   "lerobot": {
+    "cluster": "S6",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 7571,
+    "media_ultimi": 8933,
+    "crescita": 0.18,
+    "crescita_vs_base": 0.1728
+   },
+   "scikit-learn": {
+    "cluster": "BASE",
+    "giorni_confrontati": 90,
+    "dal": "2026-04-08",
+    "al": "2026-10-20",
+    "media_primi": 6899492,
+    "media_ultimi": 6941319,
+    "crescita": 0.0061,
+    "crescita_vs_base": 0.0
+   }
+  }
+ },
+ "wiki_pageviews": {
+  "finestra_ultimi": [
+   "202510",
+   "202609"
+  ],
+  "finestra_precedenti": [
+   "202410",
+   "202509"
+  ],
+  "crescita_base": 0.0387,
+  "per_cluster": {
+   "S1": {
+    "voci": {
+     "Model_Context_Protocol": null,
+     "Intelligent_agent": -0.4483
+    }
+   },
+   "S2": {
+    "voci": {
+     "AI_safety": 0.0761,
+     "Explainable_artificial_intelligence": -0.2811
+    }
+   },
+   "S3": {
+    "voci": {
+     "Prompt_injection": 0.4622
+    }
+   },
+   "S4": {
+    "voci": {
+     "Edge_computing": -0.3088
+    }
+   },
+   "S6": {
+    "voci": {
+     "Humanoid_robot": -0.21
+    }
+   },
+   "S8": {
+    "voci": {
+     "Retrieval-augmented_generation": 0.0505,
+     "Vector_database": -0.246
+    }
+   },
+   "S10": {
+    "voci": {
+     "Quantum_computing": -0.3402
+    }
+   },
+   "BASE": {
+    "voci": {
+     "Large_language_model": -0.1105,
+     "Artificial_intelligence": 0.0374
+    }
+   }
+  },
+  "per_voce": {
+   "Model_Context_Protocol": {
+    "cluster": "S1",
+    "visite_ultimi": 505621,
+    "visite_precedenti": 263107,
+    "mesi_precedenti_con_dati": 7,
+    "crescita": null,
+    "nota": "voce più recente della finestra: crescita non confrontabile",
+    "crescita_vs_base": null
+   },
+   "Intelligent_agent": {
+    "cluster": "S1",
+    "visite_ultimi": 93407,
+    "visite_precedenti": 163010,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": -0.427,
+    "crescita_vs_base": -0.4483
+   },
+   "AI_safety": {
+    "cluster": "S2",
+    "visite_ultimi": 81718,
+    "visite_precedenti": 73113,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": 0.1177,
+    "crescita_vs_base": 0.0761
+   },
+   "Explainable_artificial_intelligence": {
+    "cluster": "S2",
+    "visite_ultimi": 71704,
+    "visite_precedenti": 96032,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": -0.2533,
+    "crescita_vs_base": -0.2811
+   },
+   "Prompt_injection": {
+    "cluster": "S3",
+    "visite_ultimi": 81749,
+    "visite_precedenti": 53824,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": 0.5188,
+    "crescita_vs_base": 0.4622
+   },
+   "Edge_computing": {
+    "cluster": "S4",
+    "visite_ultimi": 103155,
+    "visite_precedenti": 143698,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": -0.2821,
+    "crescita_vs_base": -0.3088
+   },
+   "Humanoid_robot": {
+    "cluster": "S6",
+    "visite_ultimi": 131030,
+    "visite_precedenti": 159667,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": -0.1794,
+    "crescita_vs_base": -0.21
+   },
+   "Retrieval-augmented_generation": {
+    "cluster": "S8",
+    "visite_ultimi": 484044,
+    "visite_precedenti": 443608,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": 0.0912,
+    "crescita_vs_base": 0.0505
+   },
+   "Vector_database": {
+    "cluster": "S8",
+    "visite_ultimi": 101498,
+    "visite_precedenti": 129600,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": -0.2168,
+    "crescita_vs_base": -0.246
+   },
+   "Quantum_computing": {
+    "cluster": "S10",
+    "visite_ultimi": 798711,
+    "visite_precedenti": 1165422,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": -0.3147,
+    "crescita_vs_base": -0.3402
+   },
+   "Large_language_model": {
+    "cluster": "BASE",
+    "visite_ultimi": 1221248,
+    "visite_precedenti": 1321849,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": -0.0761,
+    "crescita_vs_base": -0.1105
+   },
+   "Artificial_intelligence": {
+    "cluster": "BASE",
+    "visite_ultimi": 4213174,
+    "visite_precedenti": 3909966,
+    "mesi_precedenti_con_dati": 12,
+    "crescita": 0.0775,
+    "crescita_vs_base": 0.0374
+   }
+  }
+ },
+ "sintesi": {
+  "BASE": {
+   "github_repos": 0.0,
+   "hn_stories": 0.0,
+   "nsf_awards": 0.0,
+   "pypi_downloads": 0.0,
+   "wiki_pageviews": 0.0374,
+   "fonti_positive": 1,
+   "fonti_disponibili": 5
+  },
+  "S1": {
+   "github_repos": 2.0846,
+   "hn_stories": 2.7846,
+   "nsf_awards": -0.3897,
+   "pypi_downloads": 0.0232,
+   "wiki_pageviews": -0.4483,
+   "fonti_positive": 3,
+   "fonti_disponibili": 5
+  },
+  "S10": {
+   "github_repos": 0.0826,
+   "hn_stories": 0.1684,
+   "nsf_awards": -0.3065,
+   "pypi_downloads": -0.1387,
+   "wiki_pageviews": -0.3402,
+   "fonti_positive": 2,
+   "fonti_disponibili": 5
+  },
+  "S2": {
+   "github_repos": 3.7673,
+   "hn_stories": 1.5924,
+   "nsf_awards": -0.04,
+   "pypi_downloads": -0.2682,
+   "wiki_pageviews": 0.0761,
+   "fonti_positive": 3,
+   "fonti_disponibili": 5
+  },
+  "S3": {
+   "github_repos": 4.7253,
+   "hn_stories": 2.3321,
+   "nsf_awards": -0.4217,
+   "wiki_pageviews": 0.4622,
+   "fonti_positive": 3,
+   "fonti_disponibili": 4
+  },
+  "S4": {
+   "github_repos": 2.5358,
+   "hn_stories": 2.1683,
+   "nsf_awards": -0.4176,
+   "pypi_downloads": -0.0657,
+   "wiki_pageviews": -0.3088,
+   "fonti_positive": 2,
+   "fonti_disponibili": 5
+  },
+  "S5": {
+   "github_repos": 5.9213,
+   "hn_stories": 4.9016,
+   "fonti_positive": 2,
+   "fonti_disponibili": 2
+  },
+  "S6": {
+   "github_repos": 0.8427,
+   "hn_stories": 1.4083,
+   "nsf_awards": -0.4267,
+   "pypi_downloads": 0.1728,
+   "wiki_pageviews": -0.21,
+   "fonti_positive": 3,
+   "fonti_disponibili": 5
+  },
+  "S7": {
+   "github_repos": 1.3039,
+   "hn_stories": 0.8366,
+   "nsf_awards": -0.4202,
+   "pypi_downloads": -0.2911,
+   "fonti_positive": 2,
+   "fonti_disponibili": 4
+  },
+  "S8": {
+   "github_repos": 0.4654,
+   "hn_stories": 0.3822,
+   "pypi_downloads": -0.402,
+   "wiki_pageviews": 0.0505,
+   "fonti_positive": 3,
+   "fonti_disponibili": 4
+  },
+  "S9": {
+   "github_repos": 0.0128,
+   "hn_stories": 0.3111,
+   "nsf_awards": -0.4166,
+   "pypi_downloads": -0.2785,
+   "fonti_positive": 2,
+   "fonti_disponibili": 4
+  }
+ }
+}
