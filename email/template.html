@@ -1,0 +1,134 @@
+<!--
+  Template della newsletter "Radar tecnologico".
+  Regole tecniche (client di posta, soprattutto Gmail):
+  - solo stili INLINE e layout a tabelle; niente <style> obbligatorio, niente immagini esterne, niente JS;
+  - larghezza massima 640px, font di sistema;
+  - i blocchi marcati RIPETI si duplicano per ogni elemento; quelli marcati FACOLTATIVO si tolgono se non ci sono dati;
+  - i testi tra {{ }} si sostituiscono; mai lasciare un segnaposto nel testo inviato.
+  Palette: inchiostro #0E1A2B · segnale #19C39C · testo #1B2430 · secondario #5B6675 · fondo #EEF1F5 · carta #FFFFFF · bordo #DDE3EA
+-->
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#EEF1F5;">{{anteprima: una frase di 90-110 caratteri che riassume il giorno}}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#EEF1F5;">
+<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:640px;background:#FFFFFF;border:1px solid #DDE3EA;border-radius:10px;overflow:hidden;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1B2430;">
+
+  <!-- TESTATA -->
+  <tr><td style="background:#0E1A2B;padding:22px 28px 18px 28px;">
+    <div style="font-size:12px;letter-spacing:2px;color:#19C39C;font-weight:700;">RADAR TECNOLOGICO</div>
+    <div style="font-size:22px;line-height:1.3;color:#FFFFFF;font-weight:700;margin-top:6px;">{{titolo del giorno: il segnale principale in 8-12 parole}}</div>
+    <div style="font-size:13px;color:#A9B4C2;margin-top:8px;">N. {{numero}} · {{giorno della settimana}} {{data in italiano}} · {{minuti}} min di lettura</div>
+  </td></tr>
+  <tr><td style="height:3px;background:#19C39C;line-height:3px;font-size:0;">&nbsp;</td></tr>
+
+  <!-- IN 30 SECONDI -->
+  <tr><td style="padding:22px 28px 6px 28px;">
+    <div style="font-size:12px;letter-spacing:1.5px;color:#5B6675;font-weight:700;">IN 30 SECONDI</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:10px;">
+      <!-- RIPETI ×3 -->
+      <tr><td valign="top" style="width:22px;padding:4px 0;color:#19C39C;font-weight:700;font-size:15px;">{{1}}</td>
+          <td style="padding:4px 0;font-size:15px;line-height:1.5;">{{una frase con il fatto e perché conta}}</td></tr>
+      <!-- /RIPETI -->
+    </table>
+  </td></tr>
+
+  <!-- NUMERI DEL GIORNO -->
+  <tr><td style="padding:14px 28px 6px 28px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #DDE3EA;border-radius:8px;">
+      <tr>
+        <!-- RIPETI ×3: cifra grande + etichetta breve -->
+        <td align="center" style="padding:14px 6px;width:33%;">
+          <div style="font-size:24px;font-weight:700;color:#0E1A2B;">{{cifra}}</div>
+          <div style="font-size:12px;color:#5B6675;line-height:1.4;margin-top:2px;">{{etichetta, es. nuovi paper nei temi seguiti}}</div>
+        </td>
+        <!-- /RIPETI -->
+      </tr>
+    </table>
+  </td></tr>
+
+  <!-- IL SEGNALE DEL GIORNO -->
+  <tr><td style="padding:18px 28px 4px 28px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F2FBF8;border-left:4px solid #19C39C;border-radius:6px;">
+      <tr><td style="padding:16px 18px;">
+        <div style="font-size:12px;letter-spacing:1.5px;color:#0F766E;font-weight:700;">IL SEGNALE DEL GIORNO</div>
+        <div style="font-size:17px;font-weight:700;margin-top:6px;line-height:1.4;"><a href="{{link}}" style="color:#0E1A2B;text-decoration:none;">{{titolo del paper in italiano, breve}}</a></div>
+        <div style="font-size:13px;color:#5B6675;margin-top:4px;">{{fonte}} · {{data}} · {{etichetta tipo}}</div>
+        <div style="font-size:15px;line-height:1.55;margin-top:10px;">{{3-4 frasi: cosa hanno fatto, risultato con numeri dell'abstract, perché è il segnale più importante di oggi}}</div>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <!-- SEZIONE (RIPETI per "Temi emergenti" e "LLM") -->
+  <tr><td style="padding:26px 28px 0 28px;">
+    <div style="font-size:12px;letter-spacing:1.5px;color:#5B6675;font-weight:700;border-bottom:1px solid #DDE3EA;padding-bottom:8px;">{{TITOLO SEZIONE IN MAIUSCOLO}}</div>
+  </td></tr>
+
+  <!-- TEMA (RIPETI dentro la sezione) -->
+  <tr><td style="padding:16px 28px 0 28px;">
+    <span style="font-size:16px;font-weight:700;color:#0E1A2B;">{{nome del tema in italiano}}</span>
+    <!-- chip categoria: emergente = #6D28D9 su #EFE7FF · forte crescita = #0F766E su #DDF5F1 -->
+    <span style="display:inline-block;margin-left:6px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;color:{{colore}};background:{{fondo}};">{{emergente | forte crescita}}</span>
+    <div style="font-size:12px;color:#5B6675;margin-top:3px;">{{peso del tema: +X% in 3 anni · Y paper nel 2025}}</div>
+  </td></tr>
+
+  <!-- PAPER (RIPETI dentro il tema) -->
+  <tr><td style="padding:10px 28px 0 28px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #DDE3EA;border-radius:8px;">
+      <tr><td style="padding:14px 16px;">
+        <div style="font-size:15px;font-weight:700;line-height:1.4;"><a href="{{link}}" style="color:#1B2430;text-decoration:none;">{{titolo originale}}</a></div>
+        <div style="font-size:12px;color:#5B6675;margin-top:5px;">
+          {{fonte}} · {{data}}
+          <!-- etichetta tipo: Rivista #166534/#DCFCE7 · Review in rivista #7C2D12/#FFEDD5 · Conferenza #1E40AF/#DBEAFE · Preprint – non revisionato #92400E/#FEF3C7 · Altro #374151/#F3F4F6 -->
+          &nbsp;<span style="display:inline-block;padding:1px 7px;border-radius:9px;font-size:11px;font-weight:700;color:{{colore}};background:{{fondo}};">{{tipo}}</span>
+          <!-- FACOLTATIVO: solo se c'è pdf_gratuito -->
+          &nbsp;<a href="{{pdf}}" style="color:#0F766E;font-weight:700;text-decoration:none;">PDF gratuito ↗</a>
+        </div>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:10px;">
+          <tr><td valign="top" style="width:96px;font-size:12px;font-weight:700;color:#5B6675;padding:3px 0;">COSA FANNO</td><td style="font-size:14px;line-height:1.5;padding:3px 0;">{{...}}</td></tr>
+          <!-- FACOLTATIVO: solo se l'abstract riporta un risultato -->
+          <tr><td valign="top" style="width:96px;font-size:12px;font-weight:700;color:#5B6675;padding:3px 0;">RISULTATO</td><td style="font-size:14px;line-height:1.5;padding:3px 0;">{{... con i numeri dell'abstract}}</td></tr>
+          <tr><td valign="top" style="width:96px;font-size:12px;font-weight:700;color:#0F766E;padding:3px 0;">PERCHÉ CONTA</td><td style="font-size:14px;line-height:1.5;padding:3px 0;color:#1B2430;"><i>{{lettura personale, presentata come tale}}</i></td></tr>
+        </table>
+      </td></tr>
+    </table>
+  </td></tr>
+  <!-- /PAPER /TEMA /SEZIONE -->
+
+  <!-- FACOLTATIVO – RADAR DELLA SETTIMANA (solo se trend o segnali di adozione sono stati aggiornati da ≤ 2 giorni) -->
+  <tr><td style="padding:26px 28px 0 28px;">
+    <div style="font-size:12px;letter-spacing:1.5px;color:#5B6675;font-weight:700;border-bottom:1px solid #DDE3EA;padding-bottom:8px;">RADAR DELLA SETTIMANA</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;font-size:13px;">
+      <tr style="color:#5B6675;font-size:11px;font-weight:700;">
+        <td style="padding:6px 0;">AREA</td><td align="right" style="padding:6px 0;">RICERCA<br>(peso, 3 anni)</td><td align="right" style="padding:6px 0;">GITHUB<br>(anno su anno)</td><td align="right" style="padding:6px 0;">HACKER NEWS<br>(anno su anno)</td>
+      </tr>
+      <!-- RIPETI per 5-8 aree; frecce ▲ #0F766E · ▼ #B42318 · ■ #5B6675; "—" se il dato manca -->
+      <tr style="border-top:1px solid #DDE3EA;">
+        <td style="padding:7px 0;border-top:1px solid #EEF1F5;">{{area}}</td>
+        <td align="right" style="padding:7px 0;border-top:1px solid #EEF1F5;color:{{colore}};">{{▲ +78%}}</td>
+        <td align="right" style="padding:7px 0;border-top:1px solid #EEF1F5;color:{{colore}};">{{▲ +120%}}</td>
+        <td align="right" style="padding:7px 0;border-top:1px solid #EEF1F5;color:{{colore}};">{{▼ −10%}}</td>
+      </tr>
+      <!-- /RIPETI -->
+    </table>
+    <div style="font-size:12px;color:#5B6675;margin-top:6px;">{{una riga: dove ricerca e adozione concordano, e dove no}}</div>
+  </td></tr>
+
+  <!-- DA TENERE D'OCCHIO -->
+  <tr><td style="padding:26px 28px 0 28px;">
+    <div style="font-size:12px;letter-spacing:1.5px;color:#5B6675;font-weight:700;border-bottom:1px solid #DDE3EA;padding-bottom:8px;">DA TENERE D'OCCHIO</div>
+    <div style="font-size:15px;line-height:1.6;margin-top:10px;">{{2-3 frasi che collegano i paper del giorno ai trend; cosa potrebbe succedere e cosa lo confermerebbe}}</div>
+  </td></tr>
+
+  <!-- PIEDE -->
+  <tr><td style="padding:26px 28px 24px 28px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F6F8FA;border-radius:8px;">
+      <tr><td style="padding:14px 16px;font-size:12px;line-height:1.6;color:#5B6675;">
+        <a href="https://claude.ai/artifact/4bCKVECyEyHZrHvYKH9oMS" style="color:#0F766E;font-weight:700;text-decoration:none;">Apri il Radar delle tecnologie emergenti ↗</a><br>
+        Come leggere: i takeaway vengono solo dagli abstract; "Perché conta" è una lettura di Claude. Le etichette dicono se un lavoro è passato da revisione. OpenAlex non verifica i contenuti.<br>
+        {{FACOLTATIVO: una riga sui limiti di oggi}}<br>
+        Fonti: OpenAlex, GitHub, Hacker News · raccolta automatica francyrussotti/data-collector · testo scritto da Claude.
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
+</td></tr>
+</table>

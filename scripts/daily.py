@@ -13,6 +13,7 @@ import argparse
 import json
 import sqlite3
 import sys
+from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -21,6 +22,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from emerging import TECH_FIELDS, suspicious  # noqa: E402
 
 RECENT_DAYS = 60
+FIRST_EDITION = date(2026, 10, 22)   # N. 1 della newsletter
+CLUSTERS = {
+    "S1": "IA agentica e multi-agente", "S2": "Fiducia e governance dell'IA", "S3": "Cybersecurity con IA",
+    "S4": "IA efficiente e locale", "S5": "Affidabilità del software", "S6": "Robotica ed embodied AI",
+    "S7": "IA multimodale e documenti", "S8": "Ricerca e gestione della conoscenza", "S9": "IA per la scienza",
+    "S10": "Calcolo quantistico",
+}
 # Depositi senza revisione o senza rivista: restano in coda alla selezione.
 REPOSITORY_DOI_PREFIXES = ("10.5281/", "10.6084/", "10.13140/")   # Zenodo, Figshare, ResearchGate
 REPOSITORY_VENUES = ("zenodo", "figshare", "researchgate")
@@ -99,9 +107,49 @@ def emerging_section(db: Path, topics: list[dict], day: str, per_topic: int, cha
         items = rank_recent(by_topic.get(t["id"], []))
         if items:
             out.append({"tema": t["tema"], "categoria": t.get("categoria"), "disciplina": t.get("disciplina"),
+                        "peso_3_anni": t.get("crescita_3a"), "paper_ultimo_anno": t.get("paper_ultimo_anno"),
                         "nuovi_oggi": len(items), "paper": [paper(d, chars) for d in items[:per_topic]]})
     out.sort(key=lambda x: -x["nuovi_oggi"])
     return {"temi_seguiti": len(topics), "nuovi_oggi": len(new), "per_tema": out}
+
+
+def _prev_year_period(period: str) -> str:
+    year, q = period.split("-")
+    return f"{int(year) - 1}-{q}"
+
+
+def adoption_section(db: Path) -> dict:
+    """Per cluster: ultimo trimestre chiuso rispetto allo stesso trimestre dell'anno prima,
+    per GitHub (nuovi repository) e Hacker News (storie), anche normalizzato sul controllo BASE."""
+    conn = sqlite3.connect(db)
+    out = {"aggiornato_il": conn.execute("SELECT max(last_seen_at) FROM records").fetchone()[0], "fonti": {}}
+    for source in ("github_repos", "hn_stories"):
+        sums = defaultdict(lambda: defaultdict(int))
+        closed = set()
+        for (d,) in conn.execute("SELECT data FROM records WHERE source=?", (source,)):
+            r = json.loads(d)
+            if r.get("count") is None:
+                continue
+            sums[r["cluster"]][r["period"]] += int(r["count"])
+            if not r.get("partial"):
+                closed.add(r["period"])
+        if not closed:
+            continue
+        last = max(closed)
+        prev = _prev_year_period(last)
+        yoy = {c: (v[last] / v[prev] - 1) if v.get(prev) else None for c, v in sums.items()}
+        base = yoy.get("BASE")
+        rows = []
+        for c, g in sorted(yoy.items()):
+            if c == "BASE":
+                continue
+            rel = (1 + g) / (1 + base) - 1 if g is not None and base is not None and base > -1 else None
+            rows.append({"cluster": c, "area": CLUSTERS.get(c, c), "ultimo_trimestre": sums[c][last],
+                         "anno_su_anno": round(g, 3) if g is not None else None,
+                         "rispetto_al_controllo": round(rel, 3) if rel is not None else None})
+        out["fonti"][source] = {"trimestre": last, "confronto_con": prev,
+                                "controllo_anno_su_anno": round(base, 3) if base is not None else None, "aree": rows}
+    return out
 
 
 def trend_section(trends: dict, top: int) -> dict:
@@ -123,6 +171,7 @@ def main() -> int:
     ap.add_argument("--daily")
     ap.add_argument("--topics")
     ap.add_argument("--trends")
+    ap.add_argument("--signals", help="free_signals.sqlite (GitHub, Hacker News)")
     ap.add_argument("--date", default=datetime.now(timezone.utc).date().isoformat())
     ap.add_argument("--llm-top", type=int, default=12)
     ap.add_argument("--per-topic", type=int, default=3)
@@ -135,10 +184,12 @@ def main() -> int:
     topics = json.loads(Path(args.topics).read_text(encoding="utf-8")) if exists(args.topics) else []
     result = {
         "data": args.date,
+        "edizione": (date.fromisoformat(args.date) - FIRST_EDITION).days + 1,
         "llm": llm_section(Path(args.papers), args.date, args.llm_top, args.abstract_chars) if exists(args.papers) else None,
         "emergenti": emerging_section(Path(args.daily), topics, args.date, args.per_topic, args.abstract_chars)
         if exists(args.daily) else None,
         "trend": trend_section(json.loads(Path(args.trends).read_text(encoding="utf-8")), 8) if exists(args.trends) else None,
+        "adozione": adoption_section(Path(args.signals)) if exists(args.signals) else None,
     }
     text = json.dumps(result, ensure_ascii=False, separators=(",", ":"))
     if args.out:

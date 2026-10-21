@@ -96,3 +96,23 @@ def test_daily_without_files(tmp_path):
                          check=True, capture_output=True, text=True)
     r = json.loads(out.stdout)
     assert r["llm"] is None and r["emergenti"] is None and r["trend"] is None
+
+
+def test_adoption_section(tmp_path):
+    rows = []
+    for cluster, q, base in (("S1", "s1_mcp", 10), ("BASE", "base_ml", 100)):
+        for period, mult, partial in (("2025-Q3", 1, False), ("2026-Q3", 3 if cluster == "S1" else 1.5, False),
+                                      ("2026-Q4", 9, True)):
+            rows.append((f"{q}|{period}", None, {"query_id": q, "cluster": cluster, "period": period,
+                                                 "partial": partial, "count": int(base * mult)}, None))
+    st = Storage(tmp_path / "free.sqlite")
+    st.commit_page("github_repos", rows, None, None)
+    st.close()
+    out = subprocess.run([sys.executable, SCRIPT, "--signals", str(tmp_path / "free.sqlite"), "--date", "2026-10-23"],
+                         check=True, capture_output=True, text=True)
+    r = json.loads(out.stdout)
+    assert r["edizione"] == 2
+    g = r["adozione"]["fonti"]["github_repos"]
+    assert g["trimestre"] == "2026-Q3" and g["confronto_con"] == "2025-Q3" and g["controllo_anno_su_anno"] == 0.5
+    s1 = g["aree"][0]
+    assert s1["area"] == "IA agentica e multi-agente" and s1["anno_su_anno"] == 2.0 and s1["rispetto_al_controllo"] == 1.0
