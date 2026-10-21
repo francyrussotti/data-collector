@@ -37,9 +37,9 @@ def penalty(d: dict) -> int:
 
 
 def rank_recent(items: list[dict]) -> list[dict]:
-    """Prima le sedi migliori, poi dal più recente."""
+    """Prima le sedi migliori, poi i paper con abstract (servono per i takeaway), poi dal più recente."""
     items = sorted(items, key=lambda d: d.get("published_date") or "", reverse=True)
-    return sorted(items, key=penalty)
+    return sorted(items, key=lambda d: (penalty(d), 0 if d.get("abstract") else 1))
 
 
 def paper(d: dict, chars: int) -> dict:
@@ -113,7 +113,7 @@ def main() -> int:
     ap.add_argument("--date", default=datetime.now(timezone.utc).date().isoformat())
     ap.add_argument("--llm-top", type=int, default=12)
     ap.add_argument("--per-topic", type=int, default=3)
-    ap.add_argument("--abstract-chars", type=int, default=350)
+    ap.add_argument("--abstract-chars", type=int, default=1500, help="abstract quasi interi: servono per i takeaway")
     ap.add_argument("-o", "--out")
     ap.add_argument("--chunks", type=int, default=0)
     args = ap.parse_args()

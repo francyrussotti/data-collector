@@ -18,7 +18,7 @@ def test_daily_digest(tmp_path):
     papers.conn.commit()
     papers.commit_page("openalex_llm", [
         ("W2", "10.1/b", {"title": "Nuovo poco citato", "cited_by_count": 0, "published_date": "2026-10-20",
-                          "abstract": "x" * 500, "doi": "10.1/b"}, None),
+                          "abstract": "x" * 2000, "doi": "10.1/b"}, None),
         ("W3", "10.1/c", {"title": "Nuovo citato", "cited_by_count": 3, "published_date": "2026-10-19"}, None),
     ], None, None)
     run = papers.start_run("openalex_llm", None)
@@ -72,6 +72,8 @@ def test_ranking_prefers_journals_and_skips_future():
         {"title": "other-lang", "venue": "Rivista", "language": "id", "published_date": "2026-10-21"},
     ]
     assert [d["title"] for d in daily.rank_recent(items)] == ["journal-new", "journal-old", "other-lang", "zenodo", "rg"]
+    items.append({"title": "journal-abstract", "venue": "Cell", "language": "en", "published_date": "2026-10-01", "abstract": "a"})
+    assert daily.rank_recent(items)[0]["title"] == "journal-abstract"   # con abstract prima, a parità di sede
 
 
 def test_daily_without_files(tmp_path):
