@@ -57,6 +57,23 @@ def test_daily_digest(tmp_path):
     assert r["trend"]["in_calo"][0]["tema"] == "C"
 
 
+def test_ranking_prefers_journals_and_skips_future():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("daily", SCRIPT)
+    daily = importlib.util.module_from_spec(spec)
+    import sys as _s
+    _s.path.insert(0, str(PROJECT_ROOT / "scripts"))
+    spec.loader.exec_module(daily)
+    items = [
+        {"title": "zenodo", "venue": "Zenodo (CERN European Organization for Nuclear Research)", "published_date": "2026-10-21"},
+        {"title": "rg", "venue": None, "doi": "10.13140/rg.2.2.1", "published_date": "2026-10-21"},
+        {"title": "journal-old", "venue": "Nature", "language": "en", "published_date": "2026-10-10"},
+        {"title": "journal-new", "venue": "Science", "language": "en", "published_date": "2026-10-20"},
+        {"title": "other-lang", "venue": "Rivista", "language": "id", "published_date": "2026-10-21"},
+    ]
+    assert [d["title"] for d in daily.rank_recent(items)] == ["journal-new", "journal-old", "other-lang", "zenodo", "rg"]
+
+
 def test_daily_without_files(tmp_path):
     out = subprocess.run([sys.executable, SCRIPT, "--papers", str(tmp_path / "nope.sqlite")],
                          check=True, capture_output=True, text=True)

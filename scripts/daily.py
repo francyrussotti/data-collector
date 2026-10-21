@@ -21,12 +21,31 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from emerging import TECH_FIELDS, suspicious  # noqa: E402
 
 RECENT_DAYS = 60
+# Depositi senza revisione o senza rivista: restano in coda alla selezione.
+REPOSITORY_DOI_PREFIXES = ("10.5281/", "10.6084/", "10.13140/")   # Zenodo, Figshare, ResearchGate
+REPOSITORY_VENUES = ("zenodo", "figshare", "researchgate")
+
+
+def penalty(d: dict) -> int:
+    """0 = rivista o server di preprint riconosciuto in inglese; 1 = altra lingua; 2 = deposito o senza sede."""
+    venue = (d.get("venue") or "").lower()
+    doi = (d.get("doi") or "").lower()
+    if not venue or any(v in venue for v in REPOSITORY_VENUES) or doi.startswith(REPOSITORY_DOI_PREFIXES):
+        return 2
+    lang = d.get("language")
+    return 1 if lang and lang != "en" else 0
+
+
+def rank_recent(items: list[dict]) -> list[dict]:
+    """Prima le sedi migliori, poi dal più recente."""
+    items = sorted(items, key=lambda d: d.get("published_date") or "", reverse=True)
+    return sorted(items, key=penalty)
 
 
 def paper(d: dict, chars: int) -> dict:
     abstract = d.get("abstract") or ""
     return {"titolo": d.get("title"), "data": d.get("published_date"), "citazioni": d.get("cited_by_count"),
-            "venue": d.get("venue"), "autori": (d.get("authors") or [])[:4], "paesi": d.get("countries") or [],
+            "venue": d.get("venue"), "lingua": d.get("language"), "autori": (d.get("authors") or [])[:4], "paesi": d.get("countries") or [],
             "link": d.get("landing_page_url") or (f"https://doi.org/{d['doi']}" if d.get("doi") else None),
             "estratto": abstract[:chars] + ("…" if len(abstract) > chars else "")}
 
@@ -43,8 +62,8 @@ def llm_section(db: Path, day: str, top: int, chars: int) -> dict:
     # Prima i paper usciti negli ultimi RECENT_DAYS giorni (dal più recente), poi gli altri per citazioni:
     # così il primo giorno o un recupero di storico non riempiono il report di paper vecchi.
     cutoff = (date.fromisoformat(day) - timedelta(days=RECENT_DAYS)).isoformat()
-    recent = sorted((d for d in new if (d.get("published_date") or "") >= cutoff),
-                    key=lambda d: d.get("published_date") or "", reverse=True)
+    # le date future (metadati errati di alcune fonti) restano fuori dalla selezione
+    recent = rank_recent([d for d in new if cutoff <= (d.get("published_date") or "") <= day])
     older = sorted((d for d in new if (d.get("published_date") or "") < cutoff),
                    key=lambda d: d.get("cited_by_count") or 0, reverse=True)
     new = recent + older
@@ -64,7 +83,7 @@ def emerging_section(db: Path, topics: list[dict], day: str, per_topic: int, cha
         by_topic.setdefault(d.get("primary_topic_id"), []).append(d)
     out = []
     for t in topics:
-        items = sorted(by_topic.get(t["id"], []), key=lambda d: d.get("published_date") or "", reverse=True)
+        items = rank_recent(by_topic.get(t["id"], []))
         if items:
             out.append({"tema": t["tema"], "categoria": t.get("categoria"), "disciplina": t.get("disciplina"),
                         "nuovi_oggi": len(items), "paper": [paper(d, chars) for d in items[:per_topic]]})
