@@ -37,7 +37,7 @@ def works_route(query):
 
 def topics_route(query):
     results = [{"id": f"https://openalex.org/{t}", "display_name": f"Tema {t}", "description": "d",
-                "keywords": ["k1", "k2"], "subfield": {"display_name": "Sub"},
+                "keywords": ["k1", {"id": "x", "display_name": "k2"}], "subfield": {"display_name": "Sub"},
                 "field": {"display_name": "Computer Science" if t != "T3" else "Medicine"},
                 "domain": {"display_name": "Physical Sciences"}, "works_count": 1} for t in BASE]
     if query["cursor"] == "*":
@@ -92,3 +92,4 @@ def test_trends_end_to_end(server, tmp_path, monkeypatch):
     assert t["T1"]["n2025"] == count_for("T1", 2025)
     assert abs(t["T1"]["crescita_ytd"] - 1.0) < 0.01
     assert {f["disciplina"] for f in res["fields"]} == {"Computer Science", "Medicine"}
+    assert t["T1"]["parole_chiave"] == "k1, k2"

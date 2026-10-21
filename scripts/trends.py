@@ -47,6 +47,16 @@ def ratio(a, b):
     return a / b - 1 if b else None
 
 
+def keyword_text(k) -> str:
+    """Le parole chiave dei temi possono arrivare come testo o come oggetto."""
+    if isinstance(k, dict):
+        for name in ("display_name", "keyword", "name"):
+            if isinstance(k.get(name), str):
+                return k[name]
+        return next((v for v in k.values() if isinstance(v, str)), "")
+    return str(k)
+
+
 def rnd(x, n=4):
     return None if x is None else round(x, n)
 
@@ -111,7 +121,7 @@ def build(db: Path) -> dict:
             continue
         rows.append({"id": tid, "tema": t.get("name") or tid, "sottocampo": t.get("subfield"),
                      "disciplina": field, "dominio": t.get("domain"),
-                     "parole_chiave": ", ".join((t.get("keywords") or [])[:6]),
+                     "parole_chiave": ", ".join(filter(None, map(keyword_text, (t.get("keywords") or [])[:6]))),
                      **metrics(n, tot, years, ytd)})
     fields = [{"disciplina": f, "dominio": field_domain.get(f), **metrics(n, tot, years, ytd)}
               for f, n in by_field.items()]
