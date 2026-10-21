@@ -1,0 +1,39 @@
+# Report sui dati raccolti: statistiche + totali OpenAlex per stimare i tempi.
+# Avvio manuale da Actions → report → Run workflow. Non modifica il database.
+name: report
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write          # per allegare report.json alla release "data"
+
+concurrency:
+  group: collector         # non gira mentre la raccolta sta aggiornando il database
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+      OPENALEX_MAILTO: ${{ secrets.OPENALEX_MAILTO }}
+      GH_TOKEN: ${{ github.token }}
+      DATA_TAG: data
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Scarica il database
+        run: |
+          mkdir -p data
+          gh release download "$DATA_TAG" --pattern papers.sqlite.gz --dir data
+          gunzip data/papers.sqlite.gz
+      - name: Calcola il report
+        run: python scripts/report.py -c config/openalex.yaml -s openalex_llm -o data/report.json --chunks 3000
+      - name: Allega report.json alla release
+        run: gh release upload "$DATA_TAG" data/report.json --clobber
