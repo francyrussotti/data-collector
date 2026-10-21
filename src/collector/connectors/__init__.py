@@ -8,6 +8,7 @@ from .base import Connector, Page
 
 REGISTRY = {
     "openalex": "collector.connectors.openalex:OpenAlexConnector",
+    "openalex_groups": "collector.connectors.openalex_groups:OpenAlexGroupsConnector",
 }
 
 

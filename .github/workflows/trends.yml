@@ -1,0 +1,60 @@
+# Trend tecnologici: conteggi OpenAlex per tema e anno su tutta la letteratura.
+# Ogni lunedì (e a mano da Actions → trends → Run workflow) ricalcola tutto da zero:
+# circa 250 chiamate, pochi centesimi del budget giornaliero gratuito.
+name: trends
+
+on:
+  schedule:
+    - cron: "43 4 * * 1"   # lunedì alle 04:43 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write          # per allegare i risultati alla release "data"
+
+concurrency:
+  group: collector
+  cancel-in-progress: false
+
+jobs:
+  trends:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+      OPENALEX_MAILTO: ${{ secrets.OPENALEX_MAILTO }}
+      GH_TOKEN: ${{ github.token }}
+      DATA_TAG: data
+      CONFIG: config/tech_trends.yaml
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Controlla i secrets
+        run: |
+          if [ -z "$OPENALEX_API_KEY" ]; then
+            echo "::error::Manca il secret OPENALEX_API_KEY (Settings > Secrets and variables > Actions)"
+            exit 1
+          fi
+      - name: Raccolta conteggi
+        run: collector -c "$CONFIG" run
+      - name: Riepilogo
+        if: always()
+        run: |
+          {
+            echo '```'
+            collector -c "$CONFIG" status
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Calcola i trend
+        run: python scripts/trends.py -c "$CONFIG" -o data/trends.json --chunks 3000
+      - name: Allega i risultati alla release
+        run: |
+          if ! gh release view "$DATA_TAG" > /dev/null 2>&1; then
+            gh release create "$DATA_TAG" --title "Dati collector" --latest=false \
+              --notes "Database e export aggiornati automaticamente dai workflow. Non modificare a mano."
+          fi
+          gzip -k data/trends.sqlite
+          gh release upload "$DATA_TAG" data/trends.sqlite.gz data/trends.json --clobber

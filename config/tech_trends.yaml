@@ -1,0 +1,65 @@
+# Trend tecnologici: conteggi di paper per tema OpenAlex e per anno, su tutta la letteratura.
+# Non scarica i paper: usa i conteggi aggregati (group_by), quindi costa poche centinaia di chiamate.
+# Ogni esecuzione ricalcola tutto (i conteggi OpenAlex cambiano mentre l'indice si aggiorna).
+#
+# Variabili d'ambiente: OPENALEX_API_KEY (obbligatoria), OPENALEX_MAILTO (consigliata)
+
+storage:
+  database: data/trends.sqlite
+  store_raw: false
+
+http:
+  user_agent: "data-collector/0.1 (mailto:${OPENALEX_MAILTO:-not-set})"
+  requests_per_second: 5
+  timeout: 60
+  max_retries: 5
+  backoff_base: 1.0
+  backoff_max: 60
+  respect_robots: true
+
+sources:
+  # Anagrafica dei temi: tema → sottocampo → disciplina → dominio (circa 4.500 temi)
+  - name: topics
+    connector: openalex
+    base_url: https://api.openalex.org
+    endpoint: /topics
+    params:
+      api_key: ${OPENALEX_API_KEY:-}
+      mailto: ${OPENALEX_MAILTO:-}
+      per-page: 200
+    max_requests_per_run: 100
+    id_field: "id | strip_prefix:https://openalex.org/"
+    fields:
+      name: display_name
+      description: description
+      keywords: keywords
+      subfield: subfield.display_name
+      field: field.display_name
+      domain: domain.display_name
+      works_count: works_count
+
+  # Paper per tema principale e periodo: anni interi dal 2018 + "da inizio anno" per gli ultimi due anni
+  - name: topic_counts
+    connector: openalex_groups
+    base_url: https://api.openalex.org
+    endpoint: /works
+    params:
+      api_key: ${OPENALEX_API_KEY:-}
+      mailto: ${OPENALEX_MAILTO:-}
+      # articoli, preprint (arXiv compreso) e review; si combinano in OR con "|"
+      filter: "type:article|preprint|review"
+      group_by: primary_topic.id
+      per-page: 200
+    options:
+      from_year: 2018
+      year_to_date: true
+      all_groups: true
+    max_requests_per_run: 600
+    id_field: id                # "<periodo>|<tema>", generato dal connettore
+    fields:
+      period: period
+      period_type: period_type
+      year: year
+      topic_id: "key | strip_prefix:https://openalex.org/"
+      topic: key_display_name
+      count: count

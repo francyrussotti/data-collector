@@ -86,6 +86,26 @@ Il workflow `.github/workflows/collect.yml` lancia la raccolta ogni giorno alle 
 
 Codici di uscita: `0` ok (anche run `partial`), `1` almeno una fonte fallita, `2` errore di configurazione.
 
+## Trend tecnologici (tutta la letteratura)
+
+`config/tech_trends.yaml` non scarica paper: chiede a OpenAlex **quanti paper ci sono per ogni tema** (circa 4.500 temi, in tutte le discipline). Lo fa per ogni anno dal 2018 e per il periodo da inizio anno, quest'anno e l'anno scorso alla stessa data. Usa i conteggi aggregati (`group_by`) e costa circa 250 chiamate.
+
+```bash
+collector -c config/tech_trends.yaml run      # anagrafica temi + conteggi
+python scripts/trends.py -c config/tech_trends.yaml -o data/trends.json
+```
+
+`scripts/trends.py` calcola, per tema e per disciplina:
+- la crescita della quota sul totale negli ultimi 3 anni, cioè rispetto a tutta la letteratura;
+- la crescita da inizio anno e lo slancio rispetto alla media;
+- una categoria: `emergente`, `nuovo`, `forte crescita`, `in crescita`, `stabile`, `in calo`.
+
+Le soglie sono in cima allo script.
+
+Il workflow `trends.yml` gira ogni lunedì, oppure a mano. Allega `trends.json` e `trends.sqlite.gz` alla release `data`.
+
+Il connettore `openalex_groups` è generico: con un altro `group_by` (es. `primary_topic.subfield.id`, `authorships.countries`) conta per altre dimensioni.
+
 ## Come funziona l'incrementale
 
 - Ogni pagina viene salvata insieme al **checkpoint** (il cursore della pagina successiva). Un run interrotto riparte da lì: per il budget giornaliero (stato `partial`), per un errore o per Ctrl-C.

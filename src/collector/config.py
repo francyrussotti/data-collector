@@ -48,6 +48,7 @@ class SourceConfig:
     dedup_key: str | None = None
     incremental: IncrementalConfig | None = None
     max_requests_per_run: int | None = None
+    options: dict[str, Any] = field(default_factory=dict)  # opzioni specifiche del connettore
 
     @property
     def url(self) -> str:
@@ -135,6 +136,7 @@ def _build_source(raw: dict, http_defaults: dict) -> SourceConfig:
         dedup_key=dedup_key,
         incremental=incremental,
         max_requests_per_run=raw.get("max_requests_per_run"),
+        options=raw.get("options") or {},
     )
 
 
