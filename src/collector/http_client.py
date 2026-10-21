@@ -55,6 +55,10 @@ class HttpClient:
         self.max_requests = max_requests
         self.session = session or requests.Session()
         self.session.headers["User-Agent"] = cfg.user_agent
+        for name, value in (cfg.headers or {}).items():
+            # un header senza valore (es. "Bearer " con token mancante) non viene inviato
+            if value and value.strip() not in ("", "Bearer", "token"):
+                self.session.headers[name] = value
         self.requests_made = 0
         self._min_interval = 1.0 / cfg.requests_per_second if cfg.requests_per_second > 0 else 0.0
         self._last_request = 0.0

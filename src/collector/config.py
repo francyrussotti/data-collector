@@ -25,6 +25,7 @@ class HttpConfig:
     backoff_base: float = 1.0
     backoff_max: float = 60.0
     respect_robots: bool = True
+    headers: dict[str, str] = field(default_factory=dict)  # es. Authorization per GitHub
 
 
 @dataclass

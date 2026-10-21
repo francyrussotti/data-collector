@@ -54,8 +54,18 @@ probe("pypistats_overall", "https://pypistats.org/api/packages/langgraph/overall
 probe("wikimedia_pageviews",
       "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Large_language_model/monthly/2025010100/2025033100")
 key = os.environ.get("OPENALEX_API_KEY")
-probe("openalex_funders_search", "https://api.openalex.org/funders",
-      {"search": "National Institutes of Health", "per-page": 3, "select": "id,display_name,works_count", "api_key": key})
+for name in ["National Institutes of Health", "National Science Foundation", "European Commission",
+             "National Natural Science Foundation of China", "European Research Council", "Deutsche Forschungsgemeinschaft",
+             "UK Research and Innovation", "Japan Society for the Promotion of Science"]:
+    try:
+        r = requests.get("https://api.openalex.org/funders", headers=UA, timeout=30,
+                         params={"search": name, "per-page": 3, "select": "id,display_name,country_code,works_count", "api_key": key})
+        print(f"\n=== funder '{name}': HTTP {r.status_code}")
+        for f in (r.json().get("results") or []):
+            print("   ", f.get("id"), "|", f.get("display_name"), "|", f.get("country_code"), "|", f.get("works_count"))
+    except requests.RequestException as exc:
+        print(f"\n=== funder '{name}': ERRORE {exc}")
+    time.sleep(1)
 probe("openalex_group_by_funder", "https://api.openalex.org/works",
       {"filter": "primary_topic.id:T10028,publication_year:2024", "group_by": "awards.funder_id", "per-page": 5, "api_key": key})
 aid, akey = os.environ.get("ADZUNA_APP_ID"), os.environ.get("ADZUNA_APP_KEY")
