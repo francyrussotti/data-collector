@@ -65,6 +65,25 @@ Esecuzione periodica con cron, ogni giorno alle 6:
 0 6 * * * cd /percorso/data-collector && .venv/bin/collector -c config/openalex.yaml run >> data/collector.log 2>&1
 ```
 
+## Esecuzione automatica con GitHub Actions
+
+Il workflow `.github/workflows/collect.yml` lancia la raccolta ogni giorno alle 05:17 UTC. Si può anche avviare a mano da **Actions → collect → Run workflow**.
+
+**Configurazione, una sola volta:** in **Settings → Secrets and variables → Actions → New repository secret** aggiungi:
+- `OPENALEX_API_KEY` (obbligatorio);
+- `OPENALEX_MAILTO` (consigliato).
+
+**Cosa fa ogni esecuzione:**
+1. Scarica il database dalla release **`data`** del repository. Alla prima esecuzione crea la release.
+2. Lancia `collector run`: riprende dal checkpoint o fa l'incrementale.
+3. Scrive lo `status` nel riepilogo dell'esecuzione.
+4. Ricarica nella release `data` il database (`papers.sqlite.gz`) e l'export `papers.parquet`. Da lì li scarichi per l'analisi.
+
+**Note:**
+- Nel workflow il JSON grezzo non viene salvato (`COLLECTOR_STORE_RAW=false`), per tenere piccolo il database. Un allegato di una release può arrivare al massimo a 2 GB.
+- Il database non viene mai committato nel repository.
+- Il workflow `tests.yml` esegue i test a ogni push.
+
 Codici di uscita: `0` ok (anche run `partial`), `1` almeno una fonte fallita, `2` errore di configurazione.
 
 ## Come funziona l'incrementale
