@@ -108,6 +108,15 @@ Il workflow `trends.yml` gira ogni lunedì, oppure a mano. Allega `trends.json` 
 
 Il connettore `openalex_groups` è generico: con un altro `group_by` (es. `primary_topic.subfield.id`, `authorships.countries`) conta per altre dimensioni.
 
+## Report giornaliero
+
+Il workflow `daily.yml` gira ogni mattina alle 05:37 UTC, dopo la raccolta. Svolge tre passi:
+1. Scarica dalla release `data` il database LLM, l'elenco dei temi emergenti e i trend.
+2. Cerca i paper usciti negli ultimi 14 giorni nei temi emergenti (`config/daily.yaml`, circa 50 richieste). Il database resta tra un giorno e l'altro, quindi conta come "nuovo" solo ciò che compare per la prima volta.
+3. Con `scripts/daily.py` produce `daily.json`, cioè le novità del giorno, e lo allega alla release.
+
+Il report da leggere lo scrive Claude, che legge `daily.json` e lo invia via email.
+
 ## Come funziona l'incrementale
 
 - Ogni pagina viene salvata insieme al **checkpoint** (il cursore della pagina successiva). Un run interrotto riparte da lì: per il budget giornaliero (stato `partial`), per un errore o per Ctrl-C.

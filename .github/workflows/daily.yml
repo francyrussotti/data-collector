@@ -1,0 +1,58 @@
+# Materiale per il report giornaliero (lo legge Claude e lo manda via email).
+# Gira dopo la raccolta delle 05:17 UTC; si può avviare a mano da Actions → daily → Run workflow.
+name: daily
+
+on:
+  schedule:
+    - cron: "37 5 * * *"   # ogni giorno alle 05:37 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collector         # aspetta che la raccolta abbia finito
+  cancel-in-progress: false
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+      OPENALEX_MAILTO: ${{ secrets.OPENALEX_MAILTO }}
+      GH_TOKEN: ${{ github.token }}
+      DATA_TAG: data
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Scarica i dati dalla release
+        run: |
+          mkdir -p data
+          for f in papers.sqlite.gz daily.sqlite.gz emerging_topics.json emerging_topics.meta.json trends.json; do
+            gh release download "$DATA_TAG" --pattern "$f" --dir data || echo "manca $f"
+          done
+          for f in data/*.gz; do [ -e "$f" ] && gunzip -f "$f"; done
+          ls -la data
+      - name: Novità nei temi emergenti
+        run: |
+          if [ ! -f data/emerging_topics.json ]; then echo "Temi emergenti non ancora calcolati"; exit 0; fi
+          TODAY="$(date -u +%F)"
+          SINCE="$(date -u -d '14 days ago' +%F)"
+          export TODAY SINCE
+          collector -c config/daily.yaml run
+      - name: Prepara il materiale del report
+        run: |
+          python scripts/daily.py --papers data/papers.sqlite --daily data/daily.sqlite \
+            --topics data/emerging_topics.meta.json --trends data/trends.json \
+            -o data/daily.json --chunks 3000
+      - name: Salva nella release
+        run: |
+          files="data/daily.json"
+          if [ -f data/daily.sqlite ]; then gzip -kf data/daily.sqlite; files="$files data/daily.sqlite.gz"; fi
+          # shellcheck disable=SC2086
+          gh release upload "$DATA_TAG" $files --clobber
