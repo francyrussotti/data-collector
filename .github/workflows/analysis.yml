@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       step:
-        description: "Fase da eseguire (inspect | signals)"
+        description: "Fase da eseguire (inspect | signals | probe)"
         required: true
         default: inspect
 
@@ -33,6 +33,7 @@ jobs:
           cache: pip
       - run: pip install -e .
       - name: Scarica i database
+        if: env.STEP != 'probe'
         run: |
           mkdir -p data analysis/results
           for f in papers.sqlite.gz emerging.sqlite.gz daily.sqlite.gz trends.sqlite.gz trends.json emerging_topics.meta.json; do
@@ -45,12 +46,23 @@ jobs:
         run: |
           python analysis/inspect_data.py data/papers.sqlite data/emerging.sqlite data/daily.sqlite \
             --trends-db data/trends.sqlite -o analysis/results/01_inspection.json --chunks 3000
+      - name: Sonda delle fonti gratuite
+        if: env.STEP == 'probe'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+          OPENALEX_MAILTO: ${{ secrets.OPENALEX_MAILTO }}
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        run: python analysis/probe_sources.py
       - name: Segnali
         if: env.STEP == 'signals'
         run: python analysis/signals.py --data data -o analysis/results/02_signals.json --chunks 3000
       - name: Allega i risultati alla release
+        if: env.STEP != 'probe'
         run: gh release upload "$DATA_TAG" analysis/results/*.json --clobber
       - name: Salva i risultati nel repository (versionati)
+        if: env.STEP != 'probe'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
