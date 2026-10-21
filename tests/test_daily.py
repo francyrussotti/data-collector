@@ -18,7 +18,8 @@ def test_daily_digest(tmp_path):
     papers.conn.commit()
     papers.commit_page("openalex_llm", [
         ("W2", "10.1/b", {"title": "Nuovo poco citato", "cited_by_count": 0, "published_date": "2026-10-20",
-                          "abstract": "x" * 2000, "doi": "10.1/b"}, None),
+                          "abstract": "x" * 2000, "doi": "10.1/b",
+                          "source_type": "journal", "type": "article", "oa_url": "https://x/b.pdf"}, None),
         ("W3", "10.1/c", {"title": "Nuovo citato", "cited_by_count": 3, "published_date": "2026-10-19"}, None),
     ], None, None)
     run = papers.start_run("openalex_llm", None)
@@ -51,6 +52,8 @@ def test_daily_digest(tmp_path):
     sel = {p["titolo"]: p for p in r["llm"]["selezione"]}
     assert sel["Nuovo poco citato"]["estratto"].endswith("…") and sel["Nuovo poco citato"]["link"] == "https://doi.org/10.1/b"
     assert r["llm"]["ultima_raccolta"]["nuovi"] == 2
+    assert sel["Nuovo poco citato"]["tipo"] == "rivista" and sel["Nuovo poco citato"]["pdf_gratuito"] == "https://x/b.pdf"
+    assert sel["Nuovo citato"]["tipo"] == "altro" and sel["Nuovo citato"]["pdf_gratuito"] is None
     assert r["emergenti"]["nuovi_oggi"] == 2 and r["emergenti"]["per_tema"][0]["tema"] == "Quantum Computing"
     assert len(r["emergenti"]["per_tema"]) == 1  # il tema non seguito resta fuori
     assert [t["tema"] for t in r["trend"]["emergenti"]] == ["A"]  # B è un salto sospetto
@@ -74,6 +77,18 @@ def test_ranking_prefers_journals_and_skips_future():
     assert [d["title"] for d in daily.rank_recent(items)] == ["journal-new", "journal-old", "other-lang", "zenodo", "rg"]
     items.append({"title": "journal-abstract", "venue": "Cell", "language": "en", "published_date": "2026-10-01", "abstract": "a"})
     assert daily.rank_recent(items)[0]["title"] == "journal-abstract"   # con abstract prima, a parità di sede
+
+
+def test_kind_labels():
+    import importlib.util, sys as _s
+    _s.path.insert(0, str(PROJECT_ROOT / "scripts"))
+    spec = importlib.util.spec_from_file_location("daily", SCRIPT)
+    daily = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(daily)
+    assert daily.kind({"type": "preprint", "source_type": "repository"}) == "preprint"
+    assert daily.kind({"type": "article", "source_type": "repository"}) == "preprint"
+    assert daily.kind({"type": "review", "source_type": "journal"}) == "review in rivista"
+    assert daily.kind({"type": "article", "source_type": "conference"}) == "conferenza"
 
 
 def test_daily_without_files(tmp_path):

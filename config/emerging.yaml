@@ -45,6 +45,7 @@ sources:
       language: language
       type: type
       venue: primary_location.source.display_name
+      source_type: primary_location.source.type   # journal, repository, conference, ...
       authors: authorships[].author.display_name
       author_ids: "authorships[].author.id | strip_prefix:https://openalex.org/"
       institutions: "authorships[].institutions[].display_name | flatten | unique"
@@ -93,6 +94,7 @@ sources:
       language: language
       type: type
       venue: primary_location.source.display_name
+      source_type: primary_location.source.type   # journal, repository, conference, ...
       authors: authorships[].author.display_name
       author_ids: "authorships[].author.id | strip_prefix:https://openalex.org/"
       institutions: "authorships[].institutions[].display_name | flatten | unique"
