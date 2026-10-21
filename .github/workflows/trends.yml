@@ -1,6 +1,7 @@
 # Trend tecnologici: conteggi OpenAlex per tema e anno su tutta la letteratura.
 # Ogni lunedì (e a mano da Actions → trends → Run workflow) ricalcola tutto da zero:
-# circa 250 chiamate, pochi centesimi del budget giornaliero gratuito.
+# circa 250 chiamate per i conteggi + circa 100 per i paper dei temi emergenti:
+# pochi centesimi del budget giornaliero gratuito.
 name: trends
 
 on:
@@ -50,11 +51,22 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
       - name: Calcola i trend
         run: python scripts/trends.py -c "$CONFIG" -o data/trends.json --chunks 3000
+      - name: Scegli i temi emergenti
+        run: python scripts/emerging.py select --trends data/trends.json --out data/emerging_topics.json --limit 50
+      - name: Paper dei temi emergenti
+        run: |
+          TODAY="$(date -u +%F)"
+          export TODAY
+          collector -c config/emerging.yaml run
+          collector -c config/emerging.yaml export -o data/emerging.parquet --dedup
+          python scripts/emerging.py digest -c config/emerging.yaml --topics data/emerging_topics.meta.json \
+            -o data/emerging_digest.json --chunks 3000
       - name: Allega i risultati alla release
         run: |
           if ! gh release view "$DATA_TAG" > /dev/null 2>&1; then
             gh release create "$DATA_TAG" --title "Dati collector" --latest=false \
               --notes "Database e export aggiornati automaticamente dai workflow. Non modificare a mano."
           fi
-          gzip -k data/trends.sqlite
-          gh release upload "$DATA_TAG" data/trends.sqlite.gz data/trends.json --clobber
+          gzip -k data/trends.sqlite data/emerging.sqlite
+          gh release upload "$DATA_TAG" data/trends.sqlite.gz data/trends.json \
+            data/emerging.sqlite.gz data/emerging.parquet data/emerging_topics.meta.json data/emerging_digest.json --clobber
