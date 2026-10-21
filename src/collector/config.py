@@ -79,6 +79,13 @@ def expand_env(value: Any) -> Any:
     return value
 
 
+def _as_bool(value: Any) -> bool:
+    """Accetta anche stringhe, utile quando il valore arriva da una variabile d'ambiente."""
+    if isinstance(value, str):
+        return value.strip().lower() in ("1", "true", "yes", "on")
+    return bool(value)
+
+
 def _require(d: dict, key: str, where: str) -> Any:
     if key not in d or d[key] in (None, ""):
         raise ConfigError(f"{where}: campo obbligatorio mancante '{key}'")
@@ -152,6 +159,6 @@ def load_config(path: str | Path) -> Config:
 
     return Config(
         database=Path(storage.get("database", "data/collector.sqlite")),
-        store_raw=bool(storage.get("store_raw", True)),
+        store_raw=_as_bool(storage.get("store_raw", True)),
         sources=sources,
     )

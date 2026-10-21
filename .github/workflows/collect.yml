@@ -1,0 +1,88 @@
+# Raccolta giornaliera da OpenAlex.
+# Il database SQLite viene conservato tra un'esecuzione e l'altra come allegato
+# della release "data" (non nel repository). Lì trovi anche l'export Parquet.
+name: collect
+
+on:
+  schedule:
+    - cron: "17 5 * * *"   # ogni giorno alle 05:17 UTC
+  workflow_dispatch: {}    # avvio manuale dalla scheda Actions
+
+permissions:
+  contents: write          # serve per creare/aggiornare la release "data"
+
+concurrency:
+  group: collector         # mai due raccolte in parallelo sullo stesso database
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+      OPENALEX_MAILTO: ${{ secrets.OPENALEX_MAILTO }}
+      COLLECTOR_STORE_RAW: "false"   # senza JSON grezzo il database resta molto più piccolo
+      GH_TOKEN: ${{ github.token }}
+      DATA_TAG: data
+      CONFIG: config/openalex.yaml
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installa
+        run: pip install -e .
+
+      - name: Controlla i secrets
+        run: |
+          if [ -z "$OPENALEX_API_KEY" ]; then
+            echo "::error::Manca il secret OPENALEX_API_KEY (Settings > Secrets and variables > Actions)"
+            exit 1
+          fi
+
+      - name: Scarica il database dall'ultima esecuzione
+        run: |
+          mkdir -p data
+          if ! gh release view "$DATA_TAG" > /dev/null 2>&1; then
+            gh release create "$DATA_TAG" --title "Dati collector" --latest=false \
+              --notes "Database e export aggiornati automaticamente dal workflow collect. Non modificare a mano."
+            echo "Prima esecuzione: database nuovo"
+          elif gh release download "$DATA_TAG" --pattern papers.sqlite.gz --dir data; then
+            gunzip data/papers.sqlite.gz
+          else
+            echo "Nessun database salvato: ne creo uno nuovo"
+          fi
+
+      - name: Raccolta
+        id: run
+        run: |
+          set +e
+          collector -c "$CONFIG" run
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Riepilogo
+        if: always()
+        run: |
+          {
+            echo '```'
+            collector -c "$CONFIG" status
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Export Parquet
+        run: collector -c "$CONFIG" export -o data/papers.parquet --dedup
+
+      - name: Salva database ed export nella release
+        run: |
+          gzip -k data/papers.sqlite
+          gh release upload "$DATA_TAG" data/papers.sqlite.gz data/papers.parquet --clobber
+
+      - name: Esito della raccolta
+        if: steps.run.outputs.code != '0'
+        run: |
+          echo "::error::La raccolta è fallita (codice ${{ steps.run.outputs.code }}): vedi il log del passo Raccolta"
+          exit 1

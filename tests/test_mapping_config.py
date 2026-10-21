@@ -73,7 +73,8 @@ sources:
 
 def test_config_validation(tmp_path):
     cfg = load_config(_write(tmp_path, BASE))
-    assert cfg.sources["s"].http.requests_per_second == 1.0
+    assert cfg.sources["s"].http.requests_per_second == 1.0 and cfg.store_raw is True
+    assert load_config(_write(tmp_path, "storage: {store_raw: 'false'}\n" + BASE)).store_raw is False
     with pytest.raises(ConfigError, match="dedup_key"):
         load_config(_write(tmp_path, BASE + "    dedup_key: nope\n"))
     with pytest.raises(ConfigError, match="since"):

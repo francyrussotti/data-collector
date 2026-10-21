@@ -5,7 +5,8 @@
 
 storage:
   database: data/papers.sqlite   # relativo alla cartella da cui lanci il comando
-  store_raw: true                # salva anche il JSON grezzo (più spazio, ma rielaborabile)
+  # salva anche il JSON grezzo (più spazio, ma rielaborabile); in GitHub Actions è disattivato
+  store_raw: ${COLLECTOR_STORE_RAW:-true}
 
 http:                            # default per tutte le fonti; ogni fonte può sovrascriverli
   user_agent: "data-collector/0.1 (mailto:${OPENALEX_MAILTO:-not-set})"
