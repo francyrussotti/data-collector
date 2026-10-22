@@ -1,0 +1,1106 @@
+{
+ "anno": 2025,
+ "anni": [
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "totali_finanziati_per_periodo": {
+  "2018": 440223,
+  "2019": 488740,
+  "2020": 535435,
+  "2021": 565100,
+  "2022": 623119,
+  "2023": 639922,
+  "2024": 665397,
+  "2025": 744910,
+  "2025-ytd": 599024,
+  "2026-ytd": 597835
+ },
+ "quota_finanziata_media": 0.0937,
+ "per_cluster": {
+  "S1": {
+   "temi": [
+    {
+     "tema": "Distributed Control Multi-Agent Systems",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.0894,
+     "quota_finanziata": 0.5206,
+     "quota_finanziata_base": 0.4792,
+     "var_quota_finanziata_3a": 0.0864,
+     "crescita_peso_finanziamenti_3a": 0.3228,
+     "paper_ultimo_anno": 3882,
+     "finanziati_ultimo_anno": 2021
+    },
+    {
+     "tema": "Multi-Agent Systems and Negotiation",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.7826,
+     "quota_finanziata": 0.0727,
+     "quota_finanziata_base": 0.0879,
+     "var_quota_finanziata_3a": -0.1734,
+     "crescita_peso_finanziamenti_3a": 0.6469,
+     "paper_ultimo_anno": 867,
+     "finanziati_ultimo_anno": 63
+    }
+   ],
+   "paper_ultimo_anno": 4749,
+   "finanziati_ultimo_anno": 2084,
+   "quota_finanziata": 0.4388
+  },
+  "S2": {
+   "temi": [
+    {
+     "tema": "Ethics and Social Impacts of AI",
+     "disciplina": "Social Sciences",
+     "crescita_3a": 2.5448,
+     "quota_finanziata": 0.0277,
+     "quota_finanziata_base": 0.0754,
+     "var_quota_finanziata_3a": -0.6324,
+     "crescita_peso_finanziamenti_3a": 0.4563,
+     "paper_ultimo_anno": 13816,
+     "finanziati_ultimo_anno": 383
+    },
+    {
+     "tema": "Explainable Artificial Intelligence (XAI)",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.9691,
+     "quota_finanziata": 0.0783,
+     "quota_finanziata_base": 0.166,
+     "var_quota_finanziata_3a": -0.5283,
+     "crescita_peso_finanziamenti_3a": 0.0382,
+     "paper_ultimo_anno": 4470,
+     "finanziati_ultimo_anno": 350
+    },
+    {
+     "tema": "Technostress in Professional Settings",
+     "disciplina": "Psychology",
+     "crescita_3a": 0.9122,
+     "quota_finanziata": 0.0136,
+     "quota_finanziata_base": 0.0214,
+     "var_quota_finanziata_3a": null,
+     "crescita_peso_finanziamenti_3a": null,
+     "paper_ultimo_anno": 953,
+     "finanziati_ultimo_anno": 13
+    }
+   ],
+   "paper_ultimo_anno": 19239,
+   "finanziati_ultimo_anno": 746,
+   "quota_finanziata": 0.0388
+  },
+  "S3": {
+   "temi": [
+    {
+     "tema": "Network Security and Intrusion Detection",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.8069,
+     "quota_finanziata": 0.0433,
+     "quota_finanziata_base": 0.0693,
+     "var_quota_finanziata_3a": -0.375,
+     "crescita_peso_finanziamenti_3a": 0.2622,
+     "paper_ultimo_anno": 9725,
+     "finanziati_ultimo_anno": 421
+    },
+    {
+     "tema": "Spam and Phishing Detection",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.8015,
+     "quota_finanziata": 0.0324,
+     "quota_finanziata_base": 0.0696,
+     "var_quota_finanziata_3a": -0.535,
+     "crescita_peso_finanziamenti_3a": -0.0636,
+     "paper_ultimo_anno": 2318,
+     "finanziati_ultimo_anno": 75
+    },
+    {
+     "tema": "Web Application Security Vulnerabilities",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.6186,
+     "quota_finanziata": 0.034,
+     "quota_finanziata_base": 0.0223,
+     "var_quota_finanziata_3a": null,
+     "crescita_peso_finanziamenti_3a": null,
+     "paper_ultimo_anno": 1263,
+     "finanziati_ultimo_anno": 43
+    }
+   ],
+   "paper_ultimo_anno": 13306,
+   "finanziati_ultimo_anno": 539,
+   "quota_finanziata": 0.0405
+  },
+  "S4": {
+   "temi": [
+    {
+     "tema": "Green IT and Sustainability",
+     "disciplina": "Engineering",
+     "crescita_3a": 1.5415,
+     "quota_finanziata": 0.0491,
+     "quota_finanziata_base": 0.0476,
+     "var_quota_finanziata_3a": null,
+     "crescita_peso_finanziamenti_3a": null,
+     "paper_ultimo_anno": 1141,
+     "finanziati_ultimo_anno": 56
+    },
+    {
+     "tema": "Energy Efficiency in Computing",
+     "disciplina": "Computer Science",
+     "crescita_3a": 1.5247,
+     "quota_finanziata": 0.1067,
+     "quota_finanziata_base": 0.1467,
+     "var_quota_finanziata_3a": null,
+     "crescita_peso_finanziamenti_3a": null,
+     "paper_ultimo_anno": 253,
+     "finanziati_ultimo_anno": 27
+    }
+   ],
+   "paper_ultimo_anno": 1394,
+   "finanziati_ultimo_anno": 83,
+   "quota_finanziata": 0.0595
+  },
+  "S5": {
+   "temi": [
+    {
+     "tema": "Software Engineering Research",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.7763,
+     "quota_finanziata": 0.1111,
+     "quota_finanziata_base": 0.1522,
+     "var_quota_finanziata_3a": -0.2699,
+     "crescita_peso_finanziamenti_3a": 0.4495,
+     "paper_ultimo_anno": 3852,
+     "finanziati_ultimo_anno": 428
+    },
+    {
+     "tema": "Software System Performance and Reliability",
+     "disciplina": "Computer Science",
+     "crescita_3a": 1.8257,
+     "quota_finanziata": 0.0315,
+     "quota_finanziata_base": 0.0641,
+     "var_quota_finanziata_3a": -0.5081,
+     "crescita_peso_finanziamenti_3a": 0.5535,
+     "paper_ultimo_anno": 2473,
+     "finanziati_ultimo_anno": 78
+    },
+    {
+     "tema": "Distributed systems and fault tolerance",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.2885,
+     "quota_finanziata": 0.0958,
+     "quota_finanziata_base": 0.1175,
+     "var_quota_finanziata_3a": -0.1848,
+     "crescita_peso_finanziamenti_3a": 0.174,
+     "paper_ultimo_anno": 835,
+     "finanziati_ultimo_anno": 80
+    }
+   ],
+   "paper_ultimo_anno": 7160,
+   "finanziati_ultimo_anno": 586,
+   "quota_finanziata": 0.0818
+  },
+  "S6": {
+   "temi": [
+    {
+     "tema": "Reinforcement Learning in Robotics",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.4798,
+     "quota_finanziata": 0.1719,
+     "quota_finanziata_base": 0.2116,
+     "var_quota_finanziata_3a": -0.1879,
+     "crescita_peso_finanziamenti_3a": 0.3432,
+     "paper_ultimo_anno": 5568,
+     "finanziati_ultimo_anno": 957
+    },
+    {
+     "tema": "Robot Manipulation and Learning",
+     "disciplina": "Engineering",
+     "crescita_3a": 0.6189,
+     "quota_finanziata": 0.1979,
+     "quota_finanziata_base": 0.2304,
+     "var_quota_finanziata_3a": -0.1408,
+     "crescita_peso_finanziamenti_3a": 0.5546,
+     "paper_ultimo_anno": 3117,
+     "finanziati_ultimo_anno": 617
+    }
+   ],
+   "paper_ultimo_anno": 8685,
+   "finanziati_ultimo_anno": 1574,
+   "quota_finanziata": 0.1812
+  },
+  "S7": {
+   "temi": [
+    {
+     "tema": "Multimodal Machine Learning Applications",
+     "disciplina": "Computer Science",
+     "crescita_3a": 2.4389,
+     "quota_finanziata": 0.1638,
+     "quota_finanziata_base": 0.268,
+     "var_quota_finanziata_3a": -0.3888,
+     "crescita_peso_finanziamenti_3a": 1.3494,
+     "paper_ultimo_anno": 6001,
+     "finanziati_ultimo_anno": 983
+    }
+   ],
+   "paper_ultimo_anno": 6001,
+   "finanziati_ultimo_anno": 983,
+   "quota_finanziata": 0.1638
+  },
+  "S8": {
+   "temi": [
+    {
+     "tema": "Information Retrieval and Search Behavior",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.4456,
+     "quota_finanziata": 0.0415,
+     "quota_finanziata_base": 0.0749,
+     "var_quota_finanziata_3a": -0.4466,
+     "crescita_peso_finanziamenti_3a": -0.1058,
+     "paper_ultimo_anno": 1495,
+     "finanziati_ultimo_anno": 62
+    },
+    {
+     "tema": "Knowledge Management and Technology",
+     "disciplina": "Decision Sciences",
+     "crescita_3a": 1.037,
+     "quota_finanziata": 0.0055,
+     "quota_finanziata_base": 0.0075,
+     "var_quota_finanziata_3a": null,
+     "crescita_peso_finanziamenti_3a": null,
+     "paper_ultimo_anno": 362,
+     "finanziati_ultimo_anno": 2
+    }
+   ],
+   "paper_ultimo_anno": 1857,
+   "finanziati_ultimo_anno": 64,
+   "quota_finanziata": 0.0345
+  },
+  "S9": {
+   "temi": [
+    {
+     "tema": "Machine Learning in Materials Science",
+     "disciplina": "Materials Science",
+     "crescita_3a": 0.7346,
+     "quota_finanziata": 0.2849,
+     "quota_finanziata_base": 0.3033,
+     "var_quota_finanziata_3a": -0.0607,
+     "crescita_peso_finanziamenti_3a": 0.8211,
+     "paper_ultimo_anno": 6128,
+     "finanziati_ultimo_anno": 1746
+    },
+    {
+     "tema": "Model Reduction and Neural Networks",
+     "disciplina": "Physics and Astronomy",
+     "crescita_3a": 0.8036,
+     "quota_finanziata": 0.2644,
+     "quota_finanziata_base": 0.2874,
+     "var_quota_finanziata_3a": -0.0801,
+     "crescita_peso_finanziamenti_3a": 0.8544,
+     "paper_ultimo_anno": 5685,
+     "finanziati_ultimo_anno": 1503
+    }
+   ],
+   "paper_ultimo_anno": 11813,
+   "finanziati_ultimo_anno": 3249,
+   "quota_finanziata": 0.275
+  },
+  "S10": {
+   "temi": [
+    {
+     "tema": "Quantum Computing Algorithms and Architecture",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.7793,
+     "quota_finanziata": 0.1898,
+     "quota_finanziata_base": 0.2664,
+     "var_quota_finanziata_3a": -0.2876,
+     "crescita_peso_finanziamenti_3a": 0.4167,
+     "paper_ultimo_anno": 7282,
+     "finanziati_ultimo_anno": 1382
+    }
+   ],
+   "paper_ultimo_anno": 7282,
+   "finanziati_ultimo_anno": 1382,
+   "quota_finanziata": 0.1898
+  },
+  "S11": {
+   "temi": [
+    {
+     "tema": "Intelligent Tutoring Systems and Adaptive Learning",
+     "disciplina": "Computer Science",
+     "crescita_3a": 1.5149,
+     "quota_finanziata": 0.0679,
+     "quota_finanziata_base": 0.1207,
+     "var_quota_finanziata_3a": -0.4374,
+     "crescita_peso_finanziamenti_3a": 0.5813,
+     "paper_ultimo_anno": 2033,
+     "finanziati_ultimo_anno": 138
+    }
+   ],
+   "paper_ultimo_anno": 2033,
+   "finanziati_ultimo_anno": 138,
+   "quota_finanziata": 0.0679
+  },
+  "S12": {
+   "temi": [
+    {
+     "tema": "Digital Mental Health Interventions",
+     "disciplina": "Psychology",
+     "crescita_3a": 0.6228,
+     "quota_finanziata": 0.0391,
+     "quota_finanziata_base": 0.0726,
+     "var_quota_finanziata_3a": -0.4619,
+     "crescita_peso_finanziamenti_3a": -0.0241,
+     "paper_ultimo_anno": 3582,
+     "finanziati_ultimo_anno": 140
+    },
+    {
+     "tema": "Machine Learning in Healthcare",
+     "disciplina": "Computer Science",
+     "crescita_3a": 0.5429,
+     "quota_finanziata": 0.1729,
+     "quota_finanziata_base": 0.2207,
+     "var_quota_finanziata_3a": -0.2168,
+     "crescita_peso_finanziamenti_3a": 0.3505,
+     "paper_ultimo_anno": 2447,
+     "finanziati_ultimo_anno": 423
+    }
+   ],
+   "paper_ultimo_anno": 6029,
+   "finanziati_ultimo_anno": 563,
+   "quota_finanziata": 0.0934
+  },
+  "S14": {
+   "temi": [
+    {
+     "tema": "Satellite Communication Systems",
+     "disciplina": "Engineering",
+     "crescita_3a": 0.6776,
+     "quota_finanziata": 0.2854,
+     "quota_finanziata_base": 0.2524,
+     "var_quota_finanziata_3a": 0.1308,
+     "crescita_peso_finanziamenti_3a": 1.1203,
+     "paper_ultimo_anno": 1661,
+     "finanziati_ultimo_anno": 474
+    }
+   ],
+   "paper_ultimo_anno": 1661,
+   "finanziati_ultimo_anno": 474,
+   "quota_finanziata": 0.2854
+  }
+ },
+ "discipline": [
+  {
+   "disciplina": "Chemical Engineering",
+   "quota_finanziata": 0.2776,
+   "var_quota_finanziata_3a": 0.1731,
+   "crescita_peso_finanziamenti_3a": 0.188
+  },
+  {
+   "disciplina": "Materials Science",
+   "quota_finanziata": 0.2682,
+   "var_quota_finanziata_3a": 0.0637,
+   "crescita_peso_finanziamenti_3a": 0.0487
+  },
+  {
+   "disciplina": "Energy",
+   "quota_finanziata": 0.2567,
+   "var_quota_finanziata_3a": 0.1022,
+   "crescita_peso_finanziamenti_3a": 0.2096
+  },
+  {
+   "disciplina": "Chemistry",
+   "quota_finanziata": 0.2534,
+   "var_quota_finanziata_3a": 0.0564,
+   "crescita_peso_finanziamenti_3a": -0.0433
+  },
+  {
+   "disciplina": "Physics and Astronomy",
+   "quota_finanziata": 0.2361,
+   "var_quota_finanziata_3a": -0.2062,
+   "crescita_peso_finanziamenti_3a": -0.0612
+  },
+  {
+   "disciplina": "Biochemistry, Genetics and Molecular Biology",
+   "quota_finanziata": 0.2169,
+   "var_quota_finanziata_3a": -0.0857,
+   "crescita_peso_finanziamenti_3a": -0.1408
+  },
+  {
+   "disciplina": "Engineering",
+   "quota_finanziata": 0.2087,
+   "var_quota_finanziata_3a": 0.087,
+   "crescita_peso_finanziamenti_3a": 0.1747
+  },
+  {
+   "disciplina": "Earth and Planetary Sciences",
+   "quota_finanziata": 0.2044,
+   "var_quota_finanziata_3a": -0.0141,
+   "crescita_peso_finanziamenti_3a": -0.0583
+  },
+  {
+   "disciplina": "Neuroscience",
+   "quota_finanziata": 0.177,
+   "var_quota_finanziata_3a": -0.1927,
+   "crescita_peso_finanziamenti_3a": -0.1118
+  },
+  {
+   "disciplina": "Immunology and Microbiology",
+   "quota_finanziata": 0.1515,
+   "var_quota_finanziata_3a": -0.1011,
+   "crescita_peso_finanziamenti_3a": -0.0858
+  },
+  {
+   "disciplina": "Environmental Science",
+   "quota_finanziata": 0.1403,
+   "var_quota_finanziata_3a": 0.0141,
+   "crescita_peso_finanziamenti_3a": 0.1252
+  },
+  {
+   "disciplina": "Mathematics",
+   "quota_finanziata": 0.1173,
+   "var_quota_finanziata_3a": -0.1388,
+   "crescita_peso_finanziamenti_3a": -0.117
+  },
+  {
+   "disciplina": "Computer Science",
+   "quota_finanziata": 0.1065,
+   "var_quota_finanziata_3a": -0.185,
+   "crescita_peso_finanziamenti_3a": 0.1452
+  },
+  {
+   "disciplina": "Agricultural and Biological Sciences",
+   "quota_finanziata": 0.081,
+   "var_quota_finanziata_3a": -0.0793,
+   "crescita_peso_finanziamenti_3a": 0.0289
+  },
+  {
+   "disciplina": "Medicine",
+   "quota_finanziata": 0.0703,
+   "var_quota_finanziata_3a": -0.176,
+   "crescita_peso_finanziamenti_3a": -0.1714
+  },
+  {
+   "disciplina": "Pharmacology, Toxicology and Pharmaceutics",
+   "quota_finanziata": 0.0608,
+   "var_quota_finanziata_3a": 0.0171,
+   "crescita_peso_finanziamenti_3a": -0.0718
+  },
+  {
+   "disciplina": "Nursing",
+   "quota_finanziata": 0.0552,
+   "var_quota_finanziata_3a": -0.1408,
+   "crescita_peso_finanziamenti_3a": -0.0668
+  },
+  {
+   "disciplina": "Decision Sciences",
+   "quota_finanziata": 0.0463,
+   "var_quota_finanziata_3a": -0.2288,
+   "crescita_peso_finanziamenti_3a": -0.0703
+  },
+  {
+   "disciplina": "Economics, Econometrics and Finance",
+   "quota_finanziata": 0.0323,
+   "var_quota_finanziata_3a": -0.2109,
+   "crescita_peso_finanziamenti_3a": -0.1038
+  },
+  {
+   "disciplina": "Dentistry",
+   "quota_finanziata": 0.0307,
+   "var_quota_finanziata_3a": -0.1684,
+   "crescita_peso_finanziamenti_3a": -0.0886
+  },
+  {
+   "disciplina": "Psychology",
+   "quota_finanziata": 0.0305,
+   "var_quota_finanziata_3a": -0.2564,
+   "crescita_peso_finanziamenti_3a": -0.1122
+  },
+  {
+   "disciplina": "Veterinary",
+   "quota_finanziata": 0.0265,
+   "var_quota_finanziata_3a": -0.2648,
+   "crescita_peso_finanziamenti_3a": -0.23
+  },
+  {
+   "disciplina": "Health Professions",
+   "quota_finanziata": 0.0216,
+   "var_quota_finanziata_3a": -0.2493,
+   "crescita_peso_finanziamenti_3a": -0.1455
+  },
+  {
+   "disciplina": "Business, Management and Accounting",
+   "quota_finanziata": 0.0154,
+   "var_quota_finanziata_3a": -0.1373,
+   "crescita_peso_finanziamenti_3a": 0.1053
+  },
+  {
+   "disciplina": "Social Sciences",
+   "quota_finanziata": 0.0101,
+   "var_quota_finanziata_3a": -0.2477,
+   "crescita_peso_finanziamenti_3a": -0.0821
+  },
+  {
+   "disciplina": "Arts and Humanities",
+   "quota_finanziata": 0.0039,
+   "var_quota_finanziata_3a": -0.2678,
+   "crescita_peso_finanziamenti_3a": -0.0887
+  }
+ ],
+ "tech_peso_finanziamenti_in_crescita": [
+  {
+   "tema": "Network Time Synchronization Technologies",
+   "disciplina": "Computer Science",
+   "crescita_3a": 0.2973,
+   "quota_finanziata": 0.2995,
+   "quota_finanziata_base": 0.1667,
+   "var_quota_finanziata_3a": 0.7967,
+   "crescita_peso_finanziamenti_3a": 1.6051,
+   "paper_ultimo_anno": 364,
+   "finanziati_ultimo_anno": 109
+  },
+  {
+   "tema": "Multimodal Machine Learning Applications",
+   "disciplina": "Computer Science",
+   "crescita_3a": 2.4389,
+   "quota_finanziata": 0.1638,
+   "quota_finanziata_base": 0.268,
+   "var_quota_finanziata_3a": -0.3888,
+   "crescita_peso_finanziamenti_3a": 1.3494,
+   "paper_ultimo_anno": 6001,
+   "finanziati_ultimo_anno": 983
+  },
+  {
+   "tema": "AI in Service Interactions",
+   "disciplina": "Computer Science",
+   "crescita_3a": 2.542,
+   "quota_finanziata": 0.0248,
+   "quota_finanziata_base": 0.0421,
+   "var_quota_finanziata_3a": -0.412,
+   "crescita_peso_finanziamenti_3a": 1.3277,
+   "paper_ultimo_anno": 5168,
+   "finanziati_ultimo_anno": 128
+  },
+  {
+   "tema": "Satellite Communication Systems",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.6776,
+   "quota_finanziata": 0.2854,
+   "quota_finanziata_base": 0.2524,
+   "var_quota_finanziata_3a": 0.1308,
+   "crescita_peso_finanziamenti_3a": 1.1203,
+   "paper_ultimo_anno": 1661,
+   "finanziati_ultimo_anno": 474
+  },
+  {
+   "tema": "Infrastructure Maintenance and Monitoring",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.7241,
+   "quota_finanziata": 0.154,
+   "quota_finanziata_base": 0.1404,
+   "var_quota_finanziata_3a": 0.097,
+   "crescita_peso_finanziamenti_3a": 1.1139,
+   "paper_ultimo_anno": 3642,
+   "finanziati_ultimo_anno": 561
+  },
+  {
+   "tema": "Time Series Analysis and Forecasting",
+   "disciplina": "Computer Science",
+   "crescita_3a": 0.7576,
+   "quota_finanziata": 0.206,
+   "quota_finanziata_base": 0.1942,
+   "var_quota_finanziata_3a": 0.0604,
+   "crescita_peso_finanziamenti_3a": 1.0832,
+   "paper_ultimo_anno": 1874,
+   "finanziati_ultimo_anno": 386
+  },
+  {
+   "tema": "Anomaly Detection Techniques and Applications",
+   "disciplina": "Computer Science",
+   "crescita_3a": 0.5066,
+   "quota_finanziata": 0.1884,
+   "quota_finanziata_base": 0.1524,
+   "var_quota_finanziata_3a": 0.2363,
+   "crescita_peso_finanziamenti_3a": 1.0818,
+   "paper_ultimo_anno": 2325,
+   "finanziati_ultimo_anno": 438
+  },
+  {
+   "tema": "Mineral Processing and Grinding",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.0165,
+   "quota_finanziata": 0.1344,
+   "quota_finanziata_base": 0.0761,
+   "var_quota_finanziata_3a": 0.7658,
+   "crescita_peso_finanziamenti_3a": 0.9411,
+   "paper_ultimo_anno": 1347,
+   "finanziati_ultimo_anno": 181
+  },
+  {
+   "tema": "Spacecraft and Cryogenic Technologies",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.4,
+   "quota_finanziata": 0.1714,
+   "quota_finanziata_base": 0.1382,
+   "var_quota_finanziata_3a": 0.2398,
+   "crescita_peso_finanziamenti_3a": 0.94,
+   "paper_ultimo_anno": 636,
+   "finanziati_ultimo_anno": 109
+  },
+  {
+   "tema": "Extraction and Separation Processes",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.3439,
+   "quota_finanziata": 0.2314,
+   "quota_finanziata_base": 0.1864,
+   "var_quota_finanziata_3a": 0.2414,
+   "crescita_peso_finanziamenti_3a": 0.8647,
+   "paper_ultimo_anno": 5211,
+   "finanziati_ultimo_anno": 1206
+  },
+  {
+   "tema": "Wireless Signal Modulation Classification",
+   "disciplina": "Computer Science",
+   "crescita_3a": 0.4212,
+   "quota_finanziata": 0.3275,
+   "quota_finanziata_base": 0.2791,
+   "var_quota_finanziata_3a": 0.1735,
+   "crescita_peso_finanziamenti_3a": 0.864,
+   "paper_ultimo_anno": 864,
+   "finanziati_ultimo_anno": 283
+  },
+  {
+   "tema": "Grouting, Rheology, and Soil Mechanics",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.1654,
+   "quota_finanziata": 0.3211,
+   "quota_finanziata_base": 0.2246,
+   "var_quota_finanziata_3a": 0.4298,
+   "crescita_peso_finanziamenti_3a": 0.8624,
+   "paper_ultimo_anno": 735,
+   "finanziati_ultimo_anno": 236
+  },
+  {
+   "tema": "Advanced Battery Technologies Research",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.5215,
+   "quota_finanziata": 0.2314,
+   "quota_finanziata_base": 0.2127,
+   "var_quota_finanziata_3a": 0.0882,
+   "crescita_peso_finanziamenti_3a": 0.8506,
+   "paper_ultimo_anno": 7160,
+   "finanziati_ultimo_anno": 1657
+  },
+  {
+   "tema": "Aerospace and Aviation Technology",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.1968,
+   "quota_finanziata": 0.0985,
+   "quota_finanziata_base": 0.0714,
+   "var_quota_finanziata_3a": 0.3783,
+   "crescita_peso_finanziamenti_3a": 0.8437,
+   "paper_ultimo_anno": 1097,
+   "finanziati_ultimo_anno": 108
+  },
+  {
+   "tema": "Wave and Wind Energy Systems",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.1419,
+   "quota_finanziata": 0.2711,
+   "quota_finanziata_base": 0.1895,
+   "var_quota_finanziata_3a": 0.4309,
+   "crescita_peso_finanziamenti_3a": 0.8263,
+   "paper_ultimo_anno": 1538,
+   "finanziati_ultimo_anno": 417
+  },
+  {
+   "tema": "Tunneling and Rock Mechanics",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.3177,
+   "quota_finanziata": 0.2779,
+   "quota_finanziata_base": 0.2256,
+   "var_quota_finanziata_3a": 0.2319,
+   "crescita_peso_finanziamenti_3a": 0.8143,
+   "paper_ultimo_anno": 1155,
+   "finanziati_ultimo_anno": 321
+  },
+  {
+   "tema": "Advanced battery technologies research",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.3629,
+   "quota_finanziata": 0.522,
+   "quota_finanziata_base": 0.4398,
+   "var_quota_finanziata_3a": 0.1871,
+   "crescita_peso_finanziamenti_3a": 0.8084,
+   "paper_ultimo_anno": 6423,
+   "finanziati_ultimo_anno": 3353
+  },
+  {
+   "tema": "Industrial Vision Systems and Defect Detection",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.6747,
+   "quota_finanziata": 0.1798,
+   "quota_finanziata_base": 0.1883,
+   "var_quota_finanziata_3a": -0.0451,
+   "crescita_peso_finanziamenti_3a": 0.7874,
+   "paper_ultimo_anno": 4171,
+   "finanziati_ultimo_anno": 750
+  },
+  {
+   "tema": "Electrical Contact Performance and Analysis",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.2791,
+   "quota_finanziata": 0.2798,
+   "quota_finanziata_base": 0.2274,
+   "var_quota_finanziata_3a": 0.2305,
+   "crescita_peso_finanziamenti_3a": 0.7591,
+   "paper_ultimo_anno": 511,
+   "finanziati_ultimo_anno": 143
+  },
+  {
+   "tema": "Thermal Radiation and Cooling Technologies",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.3623,
+   "quota_finanziata": 0.4591,
+   "quota_finanziata_base": 0.3984,
+   "var_quota_finanziata_3a": 0.1523,
+   "crescita_peso_finanziamenti_3a": 0.7546,
+   "paper_ultimo_anno": 1640,
+   "finanziati_ultimo_anno": 753
+  },
+  {
+   "tema": "Soil Mechanics and Vehicle Dynamics",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.0717,
+   "quota_finanziata": 0.1409,
+   "quota_finanziata_base": 0.0835,
+   "var_quota_finanziata_3a": 0.6869,
+   "crescita_peso_finanziamenti_3a": 0.7502,
+   "paper_ultimo_anno": 965,
+   "finanziati_ultimo_anno": 136
+  },
+  {
+   "tema": "Advanced Data Compression Techniques",
+   "disciplina": "Computer Science",
+   "crescita_3a": 0.1296,
+   "quota_finanziata": 0.2077,
+   "quota_finanziata_base": 0.1499,
+   "var_quota_finanziata_3a": 0.3853,
+   "crescita_peso_finanziamenti_3a": 0.7491,
+   "paper_ultimo_anno": 886,
+   "finanziati_ultimo_anno": 184
+  },
+  {
+   "tema": "Mechanical stress and fatigue analysis",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.0133,
+   "quota_finanziata": 0.3366,
+   "quota_finanziata_base": 0.2122,
+   "var_quota_finanziata_3a": 0.586,
+   "crescita_peso_finanziamenti_3a": 0.7491,
+   "paper_ultimo_anno": 410,
+   "finanziati_ultimo_anno": 138
+  },
+  {
+   "tema": "Maritime Navigation and Safety",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.2044,
+   "quota_finanziata": 0.1914,
+   "quota_finanziata_base": 0.1481,
+   "var_quota_finanziata_3a": 0.292,
+   "crescita_peso_finanziamenti_3a": 0.7392,
+   "paper_ultimo_anno": 1923,
+   "finanziati_ultimo_anno": 368
+  },
+  {
+   "tema": "Autonomous Vehicle Technology and Safety",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.4587,
+   "quota_finanziata": 0.1904,
+   "quota_finanziata_base": 0.1786,
+   "var_quota_finanziata_3a": 0.0662,
+   "crescita_peso_finanziamenti_3a": 0.7382,
+   "paper_ultimo_anno": 3362,
+   "finanziati_ultimo_anno": 640
+  }
+ ],
+ "tech_quota_finanziata_piu_alta": [
+  {
+   "tema": "Surface Chemistry and Catalysis",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.2682,
+   "quota_finanziata": 0.5579,
+   "quota_finanziata_base": 0.5091,
+   "var_quota_finanziata_3a": 0.0958,
+   "crescita_peso_finanziamenti_3a": -0.1037,
+   "paper_ultimo_anno": 484,
+   "finanziati_ultimo_anno": 270
+  },
+  {
+   "tema": "Adaptive Dynamic Programming Control",
+   "disciplina": "Computer Science",
+   "crescita_3a": 0.2791,
+   "quota_finanziata": 0.5568,
+   "quota_finanziata_base": 0.5127,
+   "var_quota_finanziata_3a": 0.0859,
+   "crescita_peso_finanziamenti_3a": 0.5524,
+   "paper_ultimo_anno": 740,
+   "finanziati_ultimo_anno": 412
+  },
+  {
+   "tema": "Nanoplatforms for cancer theranostics",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.0093,
+   "quota_finanziata": 0.5356,
+   "quota_finanziata_base": 0.5464,
+   "var_quota_finanziata_3a": -0.0197,
+   "crescita_peso_finanziamenti_3a": 0.0855,
+   "paper_ultimo_anno": 5168,
+   "finanziati_ultimo_anno": 2768
+  },
+  {
+   "tema": "Advanced battery technologies research",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.3629,
+   "quota_finanziata": 0.522,
+   "quota_finanziata_base": 0.4398,
+   "var_quota_finanziata_3a": 0.1871,
+   "crescita_peso_finanziamenti_3a": 0.8084,
+   "paper_ultimo_anno": 6423,
+   "finanziati_ultimo_anno": 3353
+  },
+  {
+   "tema": "Coal Properties and Utilization",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.0318,
+   "quota_finanziata": 0.5217,
+   "quota_finanziata_base": 0.4744,
+   "var_quota_finanziata_3a": 0.0995,
+   "crescita_peso_finanziamenti_3a": 0.2681,
+   "paper_ultimo_anno": 1915,
+   "finanziati_ultimo_anno": 999
+  },
+  {
+   "tema": "Distributed Control Multi-Agent Systems",
+   "disciplina": "Computer Science",
+   "crescita_3a": 0.0894,
+   "quota_finanziata": 0.5206,
+   "quota_finanziata_base": 0.4792,
+   "var_quota_finanziata_3a": 0.0864,
+   "crescita_peso_finanziamenti_3a": 0.3228,
+   "paper_ultimo_anno": 3882,
+   "finanziati_ultimo_anno": 2021
+  },
+  {
+   "tema": "Iterative Learning Control Systems",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.05,
+   "quota_finanziata": 0.5203,
+   "quota_finanziata_base": 0.4576,
+   "var_quota_finanziata_3a": 0.1372,
+   "crescita_peso_finanziamenti_3a": 0.2075,
+   "paper_ultimo_anno": 344,
+   "finanziati_ultimo_anno": 179
+  },
+  {
+   "tema": "Nanopore and Nanochannel Transport Studies",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.1839,
+   "quota_finanziata": 0.4924,
+   "quota_finanziata_base": 0.4387,
+   "var_quota_finanziata_3a": 0.1224,
+   "crescita_peso_finanziamenti_3a": 0.0238,
+   "paper_ultimo_anno": 1121,
+   "finanziati_ultimo_anno": 552
+  },
+  {
+   "tema": "Neural Networks Stability and Synchronization",
+   "disciplina": "Computer Science",
+   "crescita_3a": -0.2492,
+   "quota_finanziata": 0.4872,
+   "quota_finanziata_base": 0.4556,
+   "var_quota_finanziata_3a": 0.0693,
+   "crescita_peso_finanziamenti_3a": -0.1026,
+   "paper_ultimo_anno": 938,
+   "finanziati_ultimo_anno": 457
+  },
+  {
+   "tema": "Rock Mechanics and Modeling",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.0304,
+   "quota_finanziata": 0.4871,
+   "quota_finanziata_base": 0.4322,
+   "var_quota_finanziata_3a": 0.127,
+   "crescita_peso_finanziamenti_3a": 0.2979,
+   "paper_ultimo_anno": 5215,
+   "finanziati_ultimo_anno": 2540
+  },
+  {
+   "tema": "Organic Light-Emitting Diodes Research",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.2071,
+   "quota_finanziata": 0.4842,
+   "quota_finanziata_base": 0.4051,
+   "var_quota_finanziata_3a": 0.1953,
+   "crescita_peso_finanziamenti_3a": 0.0593,
+   "paper_ultimo_anno": 1836,
+   "finanziati_ultimo_anno": 889
+  },
+  {
+   "tema": "Stability and Control of Uncertain Systems",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.259,
+   "quota_finanziata": 0.4754,
+   "quota_finanziata_base": 0.4296,
+   "var_quota_finanziata_3a": 0.1065,
+   "crescita_peso_finanziamenti_3a": -0.0836,
+   "paper_ultimo_anno": 2701,
+   "finanziati_ultimo_anno": 1284
+  },
+  {
+   "tema": "Molecular Junctions and Nanostructures",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.2457,
+   "quota_finanziata": 0.4738,
+   "quota_finanziata_base": 0.4168,
+   "var_quota_finanziata_3a": 0.1366,
+   "crescita_peso_finanziamenti_3a": -0.0418,
+   "paper_ultimo_anno": 515,
+   "finanziati_ultimo_anno": 244
+  },
+  {
+   "tema": "Advanced Battery Materials and Technologies",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.0756,
+   "quota_finanziata": 0.4632,
+   "quota_finanziata_base": 0.4318,
+   "var_quota_finanziata_3a": 0.0727,
+   "crescita_peso_finanziamenti_3a": 0.2896,
+   "paper_ultimo_anno": 9679,
+   "finanziati_ultimo_anno": 4483
+  },
+  {
+   "tema": "Age of Information Optimization",
+   "disciplina": "Computer Science",
+   "crescita_3a": -0.061,
+   "quota_finanziata": 0.4597,
+   "quota_finanziata_base": 0.4569,
+   "var_quota_finanziata_3a": 0.0061,
+   "crescita_peso_finanziamenti_3a": 0.0559,
+   "paper_ultimo_anno": 335,
+   "finanziati_ultimo_anno": 154
+  },
+  {
+   "tema": "Thermal Radiation and Cooling Technologies",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.3623,
+   "quota_finanziata": 0.4591,
+   "quota_finanziata_base": 0.3984,
+   "var_quota_finanziata_3a": 0.1523,
+   "crescita_peso_finanziamenti_3a": 0.7546,
+   "paper_ultimo_anno": 1640,
+   "finanziati_ultimo_anno": 753
+  },
+  {
+   "tema": "Organic Electronics and Photovoltaics",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.2523,
+   "quota_finanziata": 0.446,
+   "quota_finanziata_base": 0.4243,
+   "var_quota_finanziata_3a": 0.051,
+   "crescita_peso_finanziamenti_3a": -0.1216,
+   "paper_ultimo_anno": 3341,
+   "finanziati_ultimo_anno": 1490
+  },
+  {
+   "tema": "Advanced SAR Imaging Techniques",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.014,
+   "quota_finanziata": 0.4354,
+   "quota_finanziata_base": 0.5021,
+   "var_quota_finanziata_3a": -0.1329,
+   "crescita_peso_finanziamenti_3a": -0.0444,
+   "paper_ultimo_anno": 1548,
+   "finanziati_ultimo_anno": 674
+  },
+  {
+   "tema": "Electrowetting and Microfluidic Technologies",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.2542,
+   "quota_finanziata": 0.4342,
+   "quota_finanziata_base": 0.4326,
+   "var_quota_finanziata_3a": 0.0036,
+   "crescita_peso_finanziamenti_3a": -0.1635,
+   "paper_ultimo_anno": 281,
+   "finanziati_ultimo_anno": 122
+  },
+  {
+   "tema": "Perovskite Materials and Applications",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.0136,
+   "quota_finanziata": 0.4287,
+   "quota_finanziata_base": 0.4396,
+   "var_quota_finanziata_3a": -0.0247,
+   "crescita_peso_finanziamenti_3a": 0.1048,
+   "paper_ultimo_anno": 10237,
+   "finanziati_ultimo_anno": 4389
+  },
+  {
+   "tema": "Advanced Materials and Mechanics",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.0399,
+   "quota_finanziata": 0.4276,
+   "quota_finanziata_base": 0.4374,
+   "var_quota_finanziata_3a": -0.0224,
+   "crescita_peso_finanziamenti_3a": 0.049,
+   "paper_ultimo_anno": 2182,
+   "finanziati_ultimo_anno": 933
+  },
+  {
+   "tema": "Piezoelectric Actuators and Control",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.13,
+   "quota_finanziata": 0.4246,
+   "quota_finanziata_base": 0.4444,
+   "var_quota_finanziata_3a": -0.0446,
+   "crescita_peso_finanziamenti_3a": -0.071,
+   "paper_ultimo_anno": 544,
+   "finanziati_ultimo_anno": 231
+  },
+  {
+   "tema": "Wireless Communication Security Techniques",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.0293,
+   "quota_finanziata": 0.4187,
+   "quota_finanziata_base": 0.4357,
+   "var_quota_finanziata_3a": -0.0391,
+   "crescita_peso_finanziamenti_3a": 0.1055,
+   "paper_ultimo_anno": 1070,
+   "finanziati_ultimo_anno": 448
+  },
+  {
+   "tema": "Advanced Sensor and Energy Harvesting Materials",
+   "disciplina": "Engineering",
+   "crescita_3a": 0.1302,
+   "quota_finanziata": 0.4164,
+   "quota_finanziata_base": 0.3942,
+   "var_quota_finanziata_3a": 0.0564,
+   "crescita_peso_finanziamenti_3a": 0.3344,
+   "paper_ultimo_anno": 7259,
+   "finanziati_ultimo_anno": 3023
+  },
+  {
+   "tema": "Photoacoustic and Ultrasonic Imaging",
+   "disciplina": "Engineering",
+   "crescita_3a": -0.1307,
+   "quota_finanziata": 0.4131,
+   "quota_finanziata_base": 0.4115,
+   "var_quota_finanziata_3a": 0.0039,
+   "crescita_peso_finanziamenti_3a": -0.0246,
+   "paper_ultimo_anno": 748,
+   "finanziati_ultimo_anno": 309
+  }
+ ]
+}
