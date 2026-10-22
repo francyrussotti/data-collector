@@ -1,0 +1,46 @@
+# Invia la newsletter quando Claude aggiunge un file in newsletter/outbox/ (oppure a mano, indicando il file).
+# Secrets: SMTP_USER, SMTP_PASSWORD (password per le app di Google), NEWSLETTER_TO.
+name: send_newsletter
+
+on:
+  push:
+    branches: [main]
+    paths: ["newsletter/outbox/*.json"]
+  workflow_dispatch:
+    inputs:
+      file:
+        description: "File da (re)inviare, es. newsletter/outbox/2026-10-23.json"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SMTP_USER: ${{ secrets.SMTP_USER }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      NEWSLETTER_TO: ${{ secrets.NEWSLETTER_TO }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: File da inviare
+        id: files
+        env:
+          INPUT_FILE: ${{ inputs.file }}
+        run: |
+          if [ -n "$INPUT_FILE" ]; then
+            files="$INPUT_FILE"
+          else
+            files="$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'newsletter/outbox/*.json' | tr '\n' ' ')"
+          fi
+          echo "files=$files" >> "$GITHUB_OUTPUT"
+          echo "File: $files"
+      - name: Invio
+        run: python scripts/send_email.py ${{ steps.files.outputs.files }}

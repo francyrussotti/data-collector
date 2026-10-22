@@ -129,7 +129,12 @@ Il workflow `daily.yml` gira ogni mattina alle 05:37 UTC, dopo la raccolta. Svol
 2. Cerca i paper usciti negli ultimi 14 giorni nei temi emergenti (`config/daily.yaml`, circa 50 richieste). Il database resta tra un giorno e l'altro, quindi conta come "nuovo" solo ciò che compare per la prima volta.
 3. Con `scripts/daily.py` produce `daily.json`, cioè le novità del giorno, e lo allega alla release.
 
-Il report da leggere lo scrive Claude, che legge `daily.json` e lo invia via email.
+Il report da leggere lo scrive Claude, che legge `daily.json` e deposita la mail in `newsletter/outbox/AAAA-MM-GG.json` (`subject`, `html`, `text`). Il workflow `send_newsletter.yml` parte a ogni nuovo file e la invia via Gmail con `scripts/send_email.py`.
+
+**Secrets da impostare per l'invio:**
+- `SMTP_USER`: l'indirizzo mittente;
+- `SMTP_PASSWORD`: una *password per le app* di Google, non la password dell'account;
+- `NEWSLETTER_TO`: i destinatari, separati da virgola.
 
 ## Come funziona l'incrementale
 
