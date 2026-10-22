@@ -45,19 +45,47 @@ def main(argv: list[str]) -> int:
     if not paths:
         print("nessun file da inviare")
         return 0
-    user, password = os.environ.get("SMTP_USER"), os.environ.get("SMTP_PASSWORD")
+    user = (os.environ.get("SMTP_USER") or "").strip()
+    # la password per le app di Google viene mostrata a gruppi di 4 con spazi: si tolgono
+    password = "".join((os.environ.get("SMTP_PASSWORD") or "").split())
     if not user or not password:
         print("::error::Mancano i secrets SMTP_USER / SMTP_PASSWORD")
         return 2
     default_to = [a.strip() for a in os.environ.get("NEWSLETTER_TO", "").split(",") if a.strip()]
     messages = [build(p, user, default_to) for p in paths]   # valida tutto prima di inviare
-    host, port = os.environ.get("SMTP_HOST", "smtp.gmail.com"), int(os.environ.get("SMTP_PORT", "465"))
-    with smtplib.SMTP_SSL(host, port, context=ssl.create_default_context(), timeout=60) as s:
+    host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+    print(f"mittente {user} · password di {len(password)} caratteri (una password per le app Google ne ha 16)")
+    if not password.isascii():
+        print("::error::SMTP_PASSWORD contiene caratteri non ASCII: ricopia la password per le app")
+        return 2
+    try:
+        send_all(host, int(os.environ.get("SMTP_PORT", "465")), user, password, paths, messages)
+    except (smtplib.SMTPServerDisconnected, smtplib.SMTPAuthenticationError) as exc:
+        print(f"::warning::porta 465 non riuscita ({exc}); riprovo con STARTTLS sulla 587")
+        try:
+            send_all(host, 587, user, password, paths, messages)
+        except smtplib.SMTPAuthenticationError as exc2:
+            print(f"::error::Gmail rifiuta le credenziali ({exc2.smtp_code}): controlla SMTP_USER e che SMTP_PASSWORD "
+                  "sia una password per le app dell'account (serve la verifica in due passaggi attiva)")
+            return 1
+    return 0
+
+
+def send_all(host: str, port: int, user: str, password: str, paths, messages) -> None:
+    ctx = ssl.create_default_context()
+    if port == 465:
+        server = smtplib.SMTP_SSL(host, port, context=ctx, timeout=60)
+    else:
+        server = smtplib.SMTP(host, port, timeout=60)
+    with server as s:
+        if port != 465:
+            s.ehlo()
+            s.starttls(context=ctx)
+            s.ehlo()
         s.login(user, password)
         for p, m in zip(paths, messages):
             s.send_message(m)
             print(f"inviata: {p} → {m['To']} · {m['Subject']}")
-    return 0
 
 
 if __name__ == "__main__":

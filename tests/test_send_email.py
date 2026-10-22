@@ -48,7 +48,7 @@ def test_main_sends_via_smtp(tmp_path, monkeypatch):
 
     monkeypatch.setattr(se.smtplib, "SMTP_SSL", FakeSMTP)
     monkeypatch.setenv("SMTP_USER", "s@example.com")
-    monkeypatch.setenv("SMTP_PASSWORD", "app-pass")
+    monkeypatch.setenv("SMTP_PASSWORD", " app- pass ")
     monkeypatch.setenv("NEWSLETTER_TO", "a@example.com, b@example.com")
     assert se.main([str(write(tmp_path))]) == 0
     assert sent and sent[0]["To"] == "a@example.com, b@example.com"
