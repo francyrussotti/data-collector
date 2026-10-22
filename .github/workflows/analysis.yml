@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       step:
-        description: "Fase da eseguire (inspect | signals | probe | validate)"
+        description: "Fase da eseguire (inspect | signals | probe | validate | funding)"
         required: true
         default: inspect
 
@@ -61,6 +61,9 @@ jobs:
       - name: Validazione con i segnali gratuiti
         if: env.STEP == 'validate'
         run: python analysis/validate_signals.py data/free_signals.sqlite -o analysis/results/03_validation.json
+      - name: Finanziamenti per cluster
+        if: env.STEP == 'funding'
+        run: python analysis/funding.py data/trends.json -o analysis/results/05_funding.json
       - name: Allega i risultati alla release
         if: env.STEP != 'probe'
         run: gh release upload "$DATA_TAG" analysis/results/*.json --clobber
