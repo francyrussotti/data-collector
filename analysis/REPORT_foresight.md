@@ -2,7 +2,7 @@
 
 **Domanda:** quali trend tecnologici stanno emergendo dalla ricerca, quali hanno già segnali di adozione, e dove conviene costruire un prodotto o un'azienda.
 
-**Data:** 22 ottobre 2026. **Autore:** Claude, sui dati raccolti da `francyrussotti/data-collector`.
+**Data:** 22 ottobre 2026 (finanziamenti pubblici aggiunti alle 01:00 UTC). **Autore:** Claude, sui dati raccolti da `francyrussotti/data-collector`.
 
 **Legenda:**
 - **[F]** fatto, dai dati o da una fonte citata;
@@ -41,7 +41,12 @@ Dettagli: [01 Ispezione](01_ispezione_dati.md) · [02 Segnali](02_segnali.md) ·
    - governance degli strumenti degli agenti (MCP).
 
    Hanno i segnali più concordi e richiedono poco capitale per partire.
-5. **[F] Limite principale:** mancano ancora brevetti (L2), round venture (L3) e offerte di lavoro (L5). Nessuna opportunità è ancora validata come domanda pagante. Il paragrafo 7 dice come chiudere questi buchi.
+5. **[F] I fondi pubblici dividono i trend in due gruppi.** Quota di paper con finanziamento di 9 grandi finanziatori (2025), contro una media del 9,4%:
+   - **alta** in IA per i materiali (28,5%), satellite (28,5%), robotica (19,8%), quantum (19,0%) e multimodale (16,4%);
+   - **bassa** in sicurezza (4,3%), etica e governance (2,8%) e RAG (4,2%).
+
+   **[I]** I primi sono spinti dal denaro pubblico; i secondi crescono dal basso e vanno validati sul mercato. Dettagli: [04, sezione 4.5](04_opportunita.md).
+6. **[F] Limite principale:** mancano ancora brevetti (L2), round venture e offerte di lavoro (L5). Nessuna opportunità è ancora validata come domanda pagante. Il paragrafo 7 dice come chiudere questi buchi.
 
 ## 2. Dati e metodo
 
@@ -50,7 +55,7 @@ Dettagli: [01 Ispezione](01_ispezione_dati.md) · [02 Segnali](02_segnali.md) ·
 | 1. Ispezione | Qualità e copertura dei dati | 4.516 temi OpenAlex × 10 periodi (6–8 milioni di paper l'anno); 88.059 paper LLM; 20.000 paper dei 50 temi emergenti; 1.125 novità giornaliere | [01](01_ispezione_dati.md) |
 | 2. Segnali | Crescita, velocità di citazione, parole chiave nuove, convergenza tra discipline | Quota di ogni tema sul totale, 2022→2025 e 2026 | 14 cluster S1–S14 · [02](02_segnali.md) |
 | 3. Validazione | Scala L1–L5, fonti gratuite verificate, raccolta automatica | GitHub, Hacker News, NSF, PyPI, Wikipedia: 5.455 righe | [03](03_validazione.md) · `results/03_validation.json` |
-| 4. Opportunità | 15 opportunità ordinate per attrattività e fattibilità | Fasi 2 e 3 | [04](04_opportunita.md) |
+| 4. Opportunità | 15 opportunità ordinate per attrattività e fattibilità | Fasi 2 e 3 + finanziamenti OpenAlex (`results/05_funding.json`) | [04](04_opportunita.md) |
 
 **Scelte di metodo [F]**
 - **Crescita nella ricerca:** si misura come **quota** di paper sul totale, non come numero assoluto, per neutralizzare i salti di indicizzazione di OpenAlex (2022 e 2026).
@@ -104,15 +109,15 @@ Schede complete, con evidenza, bisogno, idee, profilo del team, rischi e verific
 | 4 | Affidabilità degli agenti in produzione (test di stress, monitoraggio) | 4 | 4 | 4,0 | L1, L4 (PyPI contrario) | Media | Medio |
 | 5 | Governance e conformità dell'IA (registro, audit, documentazione) | 4 | 3 | 3,6 | L1, L4 | Media | Basso (servizio) / medio |
 | 6 | Costo ed energia dell'IA (FinOps/GreenOps, instradamento, IA locale) | 4 | 3 | 3,6 | L1, L4 (PyPI contrario) | Media | Medio |
-| 7 | Automazione documentale verticale | 3 | 4 | 3,4 | L1, L4 (PyPI contrario) | Media | Basso |
-| 8 | Dati e strumenti per il robot learning | 4 | 2 | 3,2 | L1, L4 | Media | Medio-alto |
+| 7 | Automazione documentale verticale | 3 | 4 | 3,4 | L1, L3, L4 (PyPI contrario) | Media | Basso |
+| 8 | Dati e strumenti per il robot learning | 4 | 2 | 3,2 | L1, L3 (grant), L4 | Media | Medio-alto |
+| 12 | Simulazione con IA per materiali e chimica | 4 | 2 | 3,2 | L1 forte, L3 (grant 28,5%) | Bassa-media | Alto (o grant) |
 | 9 | Tutor IA adattivi | 3 | 3 | 3,0 | L1 | Bassa | Basso |
 | 10 | Dati e reporting per la finanza della transizione | 3 | 3 | 3,0 | L1 (debole) | Bassa | Basso |
 | 11 | Cura della conoscenza aziendale per assistenti IA | 2 | 4 | 2,8 | L1 (L4 in calo) | Bassa | Basso |
-| 12 | Simulazione con IA per materiali e chimica | 3 | 2 | 2,6 | L1 forte | Bassa-media | Alto |
 | 13 | ML clinico e salute mentale digitale | 3 | 2 | 2,6 | L1 | Bassa | Alto |
-| 14 | Software per il calcolo quantistico | 2 | 1 | 1,6 | L1 forte | Bassa | Alto |
-| 15 | Servizi per comunicazioni satellitari | 2 | 1 | 1,6 | L1 | Bassa | Alto |
+| 14 | Software per il calcolo quantistico | 2 | 1 | 1,6 | L1 forte, L3 | Bassa | Alto |
+| 15 | Servizi per comunicazioni satellitari | 2 | 1 | 1,6 | L1, L3 | Bassa | Alto |
 
 **[I] Profili di fondatore diversi trovano posto in punti diversi della lista:**
 - **Ingegnere software o di sicurezza:** 1–4.
@@ -129,7 +134,7 @@ Schede complete, con evidenza, bisogno, idee, profilo del team, rischi e verific
 | **Mercato geografico** | Europa, Italia come base | La regolazione europea dell'IA crea domanda di conformità e sicurezza (date da verificare **[V]**); meno concorrenza locale nei verticali |
 | **Settori clienti** | Regolati e con dati sensibili: banche, assicurazioni, sanità (lato amministrativo), PA, studi professionali | Pagano per controllo, audit e dati che restano in casa |
 | **Distribuzione** | Open source o gratuito per gli sviluppatori, poi versione enterprise | [F] L'adozione oggi si vede su GitHub e Hacker News: è lì che nasce la domanda |
-| **Fondi** | Venture per 1–7; fondi pubblici (Horizon Europe, nazionali) per 8 e 12 | [I] I deep tech hanno cicli lunghi; i dati sui finanziamenti per tema arrivano con OpenAlex awards |
+| **Fondi** | Venture o autofinanziamento per 1–7; grant e programmi pubblici per 8, 12, 14, 15 | [F] Quota di paper finanziati 18–28% in robotica, materiali, quantum e satellite, contro il 3–4% di sicurezza e governance (media 9,4%) |
 | **Da evitare ora** | Infrastruttura RAG generica, framework per agenti generici, software quantistico | [F] Adozione in calo, oppure assente rispetto alla ricerca |
 
 ## 7. Cosa costruire per primo [I]
@@ -162,7 +167,7 @@ Schede complete, con evidenza, bisogno, idee, profilo del team, rischi e verific
 | Livello | Stato | Prossimo passo |
 |---|---|---|
 | L2 Brevetti | Non raccolto | Google Patents su BigQuery: serve un progetto Google Cloud e l'autorizzazione del connettore BigQuery |
-| L3 Grant per tema | In arrivo | Finanziamenti OpenAlex (`awards.funder_id`) raccolti dopo le 00:25 UTC del 22 ottobre; il report sarà aggiornato. NSF da rifare con frasi esatte **[V]** |
+| L3 Grant per tema | **Raccolto il 22/10** | 9 finanziatori via OpenAlex (`results/05_funding.json`), aggiornato ogni lunedì con *trends*. Da aggiungere: finanziatori italiani ed europei nazionali; importi (CORDIS). NSF Award Search da rifare con frasi esatte **[V]** |
 | L3 Venture | Non raccolto | SEC EDGAR Form D (gratuito) o ricerca manuale per le prime 3 opportunità |
 | L5 Lavoro | Non raccolto | Adzuna: servono `ADZUNA_APP_ID` e `ADZUNA_APP_KEY` (gratuiti) come secret del repository |
 | L4 PyPI | Solo 180 giorni | Si accumula ogni martedì; tra 3–6 mesi il confronto diventa affidabile |

@@ -6,7 +6,7 @@ Legenda: **[F]** = fatto, dai dati o da una fonte citata · **[I]** = mia infere
 
 - `analysis/results/02_signals.json`: segnali dalla ricerca (Fase 2), descritti in `02_segnali.md`.
 - `analysis/results/03_validation.json`: segnali di adozione e attenzione, prodotti da `analysis/validate_signals.py` sui dati di `config/free_signals.yaml` raccolti il 21 ottobre 2026.
-- **Finanziamenti per tema da OpenAlex:** non ancora disponibili. Vengono raccolti dopo le 00:25 UTC del 22 ottobre e saranno aggiunti in una revisione di questo documento.
+- `analysis/results/05_funding.json`: paper con finanziamento pubblico per tema (OpenAlex awards, 9 finanziatori), aggiunto il 22 ottobre 2026; vedi 4.5.
 
 ## 4.1 Cosa dicono i segnali di validazione [F]
 
@@ -111,25 +111,25 @@ Per Hacker News il valore grezzo di cluster è `per_cluster.crescita` in `03_val
 
 **Punteggio = 0,6 × A + 0,4 × F.** L'attrattività pesa di più perché il fondatore non ha vincoli dichiarati: la fattibilità serve a ordinare, non a escludere.
 
-Livelli di validazione: **L1** ricerca · **L2** brevetti · **L3** capitale · **L4** adozione tecnica · **L5** domanda/attenzione (vedi `03_validazione.md`). ✓ = segnale positivo · ✗ = negativo · ? = non misurato o non conclusivo.
+Livelli di validazione (L3 aggiornato il 22/10 con i finanziamenti OpenAlex, vedi 4.5): **L1** ricerca · **L2** brevetti · **L3** capitale · **L4** adozione tecnica · **L5** domanda/attenzione (vedi `03_validazione.md`). ✓ = segnale positivo · ~ = debole o misto · ✗ = negativo · ? = non misurato o non conclusivo. Per L3: ✓ = quota di paper finanziati sopra la media (9,4%) e peso tra i finanziati in crescita; ~ = peso in crescita ma quota sotto la media; ✗ = peso in calo.
 
 | # | Opportunità | Cluster | A | F | Punteggio | L1 | L2 | L3 | L4 | L5 | Confidenza |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | Sicurezza per applicazioni LLM e agenti | S3+S1 | 5 | 4 | **4,6** | ✓ | ? | ? | ✓ | ✓ (attenzione) | Alta |
-| 2 | Verifica e review del codice scritto da agenti | S5 | 5 | 4 | **4,6** | ✓ | ? | ? | ✓✓ | ? | Alta (adozione) / media (disponibilità a pagare) |
-| 3 | Gateway e governance per MCP e strumenti degli agenti | S1+S2 | 4 | 4 | **4,0** | ✓ | ? | ? | ✓ | ✓ (attenzione) | Media-alta |
-| 4 | Affidabilità degli agenti in produzione (test di stress, tracciamento, ripristino) | S1+S2 | 4 | 4 | **4,0** | ✓ | ? | ? | ✓ / ✗ PyPI | ? | Media |
-| 5 | Governance e conformità dell'IA (documentazione, audit) | S2 | 4 | 3 | **3,6** | ✓ | ? | ? | ✓ | ✓ debole | Media |
+| 1 | Sicurezza per applicazioni LLM e agenti | S3+S1 | 5 | 4 | **4,6** | ✓ | ? | ~ | ✓ | ✓ (attenzione) | Alta |
+| 2 | Verifica e review del codice scritto da agenti | S5 | 5 | 4 | **4,6** | ✓ | ? | ~ | ✓✓ | ? | Alta (adozione) / media (disponibilità a pagare) |
+| 3 | Gateway e governance per MCP e strumenti degli agenti | S1+S2 | 4 | 4 | **4,0** | ✓ | ? | ~ | ✓ | ✓ (attenzione) | Media-alta |
+| 4 | Affidabilità degli agenti in produzione (test di stress, tracciamento, ripristino) | S1+S2 | 4 | 4 | **4,0** | ✓ | ? | ~ | ✓ / ✗ PyPI | ? | Media |
+| 5 | Governance e conformità dell'IA (documentazione, audit) | S2 | 4 | 3 | **3,6** | ✓ | ? | ~ | ✓ | ✓ debole | Media |
 | 6 | Costo ed energia dell'IA: inferenza locale e misura dei consumi | S4 | 4 | 3 | **3,6** | ✓ | ? | ? | ✓ / ✗ PyPI | ✗ | Media |
-| 7 | Automazione documentale multimodale verticale | S7 | 3 | 4 | **3,4** | ✓ | ? | ? | ✓ / ✗ PyPI | ? | Media |
-| 8 | Dati e strumenti per il robot learning | S6 | 4 | 2 | **3,2** | ✓ | ? | ? | ✓ | ✗ | Media |
-| 9 | Tutor IA adattivi | S11 | 3 | 3 | 3,0 | ✓ | ? | ? | ? | ? | Bassa |
+| 7 | Automazione documentale multimodale verticale | S7 | 3 | 4 | **3,4** | ✓ | ? | ✓ | ✓ / ✗ PyPI | ? | Media |
+| 8 | Dati e strumenti per il robot learning | S6 | 4 | 2 | **3,2** | ✓ | ? | ✓ | ✓ | ✗ | Media |
+| 12 | Simulazione con IA per materiali e chimica | S9 | 4 | 2 | **3,2** | ✓✓ | ? | ✓ | ✗ | ? | Bassa-media |
+| 9 | Tutor IA adattivi | S11 | 3 | 3 | 3,0 | ✓ | ? | ~ | ? | ? | Bassa |
 | 10 | Dati e reporting per la finanza della transizione | S13 | 3 | 3 | 3,0 | ✓ (debole) | ? | ? | ? | ? | Bassa |
-| 11 | Basi di conoscenza curate per assistenti IA (non infrastruttura RAG) | S8 | 2 | 4 | 2,8 | ✓ | ? | ? | ✗ | ✓ debole | Bassa |
-| 12 | Simulazione con IA per materiali e chimica | S9 | 3 | 2 | 2,6 | ✓✓ | ? | ? | ✗ | ? | Bassa-media |
-| 13 | ML clinico e salute mentale digitale | S12 | 3 | 2 | 2,6 | ✓ | ? | ? | ? | ? | Bassa |
-| 14 | Software per il calcolo quantistico | S10 | 2 | 1 | 1,6 | ✓✓ | ? | ? | ✗ | ✗ | Bassa |
-| 15 | Servizi per comunicazioni satellitari | S14 | 2 | 1 | 1,6 | ✓ | ? | ? | ? | ? | Bassa |
+| 11 | Basi di conoscenza curate per assistenti IA (non infrastruttura RAG) | S8 | 2 | 4 | 2,8 | ✓ | ? | ✗ | ✗ | ✓ debole | Bassa |
+| 13 | ML clinico e salute mentale digitale | S12 | 3 | 2 | 2,6 | ✓ | ? | ~ | ? | ? | Bassa |
+| 14 | Software per il calcolo quantistico | S10 | 2 | 1 | 1,6 | ✓✓ | ? | ✓ | ✗ | ✗ | Bassa |
+| 15 | Servizi per comunicazioni satellitari | S14 | 2 | 1 | 1,6 | ✓ | ? | ✓ | ? | ? | Bassa |
 
 ## 4.3 Le opportunità nel dettaglio
 
@@ -475,7 +475,7 @@ Livelli di validazione: **L1** ricerca · **L2** brevetti · **L3** capitale · 
 
 **Confidenza: bassa** come azienda di prodotto; **media** come servizio.
 
-### 12. Simulazione con IA per materiali e chimica — punteggio 2,6
+### 12. Simulazione con IA per materiali e chimica — punteggio 3,2 (era 2,6: attrattività alzata a 4 per i finanziamenti pubblici, vedi 4.5)
 
 **Evidenza**
 - Ricerca [F]:
@@ -524,11 +524,67 @@ Livelli di validazione: **L1** ricerca · **L2** brevetti · **L3** capitale · 
 
 **Confidenza: bassa.**
 
+## 4.5 Finanziamenti pubblici (L3)
+
+Fonte: `analysis/results/05_funding.json`, generato da `analysis/funding.py` su `trends.json` (fonte `funded_topic_counts`, raccolta il 22 ottobre 2026).
+
+**Come si misura [F].** Si contano i paper con almeno un finanziamento collegato da uno di 9 finanziatori:
+- NIH, NSF;
+- Commissione Europea, ERC (due voci);
+- NSFC (Cina);
+- DFG, UKRI, JSPS.
+
+Due misure, confrontando il 2025 con il 2022:
+- la **quota finanziata** del tema (paper finanziati / paper del tema);
+- il **peso** del tema tra tutti i paper finanziati.
+
+**[F] Quadro generale**
+- Nel 2025 i paper finanziati sono 744.910, il **9,4%** dei paper con tema.
+- Nel 2026, da inizio anno, sono 597.835 contro 599.024 nello stesso periodo del 2025: fermi, mentre i paper totali crescono del +24%.
+- **[I]** I collegamenti paper → finanziamento arrivano in ritardo: il 2026 non è ancora leggibile.
+
+| Cluster | Temi (OpenAlex) | Quota finanziata 2025 | Quota 2022 | Peso tra i finanziati, 2022→2025 |
+|---|---|---|---|---|
+| S1 Agenti | Multi-Agent Systems and Negotiation | 7,3% | 8,8% | **+65%** |
+| S2 Fiducia / governance | Ethics and Social Impacts of AI · XAI | 2,8% · 7,8% | 7,5% · 16,6% | +46% · +4% |
+| S3 Sicurezza | Network Security & Intrusion Detection · Spam & Phishing | 4,3% · 3,2% | 6,9% · 7,0% | +26% · −6% |
+| S4 Efficienza | Energy Efficiency in Computing · Green IT | 10,7% · 4,9% | 14,7% · 4,8% | n.d. (base piccola) |
+| S5 Software | Software Engineering Research · Performance & Reliability | 11,1% · 3,1% | 15,2% · 6,4% | +45% · +55% |
+| S6 Robotica | Robot Manipulation & Learning · RL in Robotics | **19,8%** · 17,2% | 23,0% · 21,2% | +55% · +34% |
+| S7 Multimodale | Multimodal Machine Learning Applications | **16,4%** | 26,8% | **+135%** |
+| S8 Ricerca / RAG | Information Retrieval & Search Behavior | 4,2% | 7,5% | **−11%** |
+| S9 IA per la scienza | ML in Materials Science · Model Reduction & NN | **28,5%** · 26,4% | 30,3% · 28,7% | **+82% · +85%** |
+| S10 Quantum | Quantum Computing Algorithms & Architecture | **19,0%** | 26,6% | +42% |
+| S11 Educazione | Intelligent Tutoring Systems | 6,8% | 12,1% | +58% |
+| S12 Salute | ML in Healthcare · Digital Mental Health | 17,3% · 3,9% | 22,1% · 7,3% | +35% · −2% |
+| S14 Satellite | Satellite Communication Systems | **28,5%** | 25,2% | **+112%** |
+
+**Nota sul cluster S1 [F].** La ricerca per nome trova anche "Distributed Control Multi-Agent Systems": controllo automatico, quota finanziata 52,1%. Non è lo stesso trend degli agenti IA, quindi non lo uso nella valutazione.
+
+### Lettura [I]
+
+1. **Due tipi di trend.**
+   - *Spinti dai fondi pubblici*: IA per la scienza (S9), satellite (S14), quantum (S10), robotica (S6), multimodale (S7). Qui la quota finanziata è il doppio o il triplo della media.
+   - *Spinti dal basso*: sicurezza (S3), governance (S2), RAG (S8), software (S5). Qui la quota è sotto la media: la ricerca cresce senza grant dei grandi finanziatori, probabilmente da industria, università senza fondi dedicati e autori di paesi non coperti.
+2. **La quota finanziata scende in tutti i cluster tranne il satellite** (da −6% per i materiali a −63% per l'etica dell'IA), anche dove il peso tra i finanziati sale. La produzione cresce più in fretta dei grant: il denaro pubblico segue, ma non guida.
+3. **Conseguenze per le opportunità.**
+   - Per 8 (robotica), 12 (materiali), 14 (quantum) e 15 (satellite) esiste un **canale di finanziamento non diluitivo** (grant, programmi pubblici): questo alza l'attrattività per team di ricerca. Per questo il punteggio della 12 sale da 2,6 a 3,2.
+   - Per 1–5 (sicurezza, codice, MCP, agenti, governance) la validazione deve venire dal mercato (L4/L5 e venture), non dai grant.
+   - Per 11 (RAG) anche i fondi pubblici calano di peso: conferma il consolidamento.
+4. **La classifica in testa non cambia.** Le prime 7 opportunità restano tali: per prodotti software rivolti alle aziende il segnale che conta è l'adozione, non il grant pubblico.
+
+### Limiti [F/I]
+
+- **NSFC (Cina) pesa molto:** nel 2024 ha 423.361 paper collegati, contro 80.706 del NIH, secondo finanziatore. Le quote riflettono molto le priorità cinesi.
+- **Finanziatori esclusi:** solo 9; mancano finanziatori nazionali (es. Italia), privati e fondazioni.
+- **Collegamenti incompleti:** paper ↔ finanziamento sono parziali e arrivano in ritardo, soprattutto per i paper recenti ([help OpenAlex](https://help.openalex.org/data/awards/)).
+- **Conteggio senza importi:** dice quanti paper sono finanziati, non quanto denaro.
+
 ## 4.4 Cosa cambierebbe questa classifica
 
 | Se… | Allora… |
 |---|---|
 | Le offerte di lavoro (Adzuna) per "AI security" e "coding agent" crescono come GitHub | Le opportunità 1 e 2 passano a L5 pieno: confidenza alta anche sulla domanda |
-| I finanziamenti OpenAlex mostrano molti grant per robotica e materiali | 8 e 12 salgono in attrattività per chi cerca fondi pubblici e non venture |
+| ~~I finanziamenti OpenAlex mostrano molti grant per robotica e materiali~~ | **Verificato il 22/10** (4.5): la 12 sale a 3,2, la 8 resta a 3,2 con L3 ✓ |
 | Il calo PyPI di vllm, docling e llama-index continua per altri 6 mesi | 6, 7 e 11 scendono: segno di consolidamento sulle piattaforme |
 | L'API NSF tratta le parole chiave come OR **[V]** | La colonna NSF va rifatta con frasi esatte o con un'altra fonte (OpenAlex awards) |
