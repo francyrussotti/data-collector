@@ -2,8 +2,11 @@
 
 Valgono per chi scrive la newsletter ogni giorno (Claude, routine "Report giornaliero Radar tecnologico"). Il layout è in `email/template.html`.
 
+## Lettore
+Chi legge **non è un tecnico né un esperto di ogni campo**: segue i trend per capire dove va la tecnologia. Ogni paper va spiegato in modo che lo capisca anche chi non conosce la disciplina.
+
 ## Obiettivo
-In 5 minuti il lettore deve sapere tre cose:
+In 5–8 minuti il lettore deve sapere tre cose:
 1. quali novità della ricerca contano oggi;
 2. perché contano;
 3. come si collegano ai trend di fondo.
@@ -20,13 +23,24 @@ Deve poter decidere se aprire un paper.
    - nuovi paper LLM;
    - il tema con più novità.
 6. **Il segnale del giorno:** il paper più importante, raccontato in 3–4 frasi.
-7. **Temi emergenti** e **LLM:** 6–9 paper in tutto, raggruppati per tema. Per ogni tema: chip della categoria e peso in 3 anni (da `trend`/radar).
-8. **Radar della settimana:** solo quando trend o segnali di adozione sono stati aggiornati da al massimo 2 giorni (lunedì o martedì).
-9. **Da tenere d'occhio:** 2–3 frasi.
-10. **Piede:** come da template.
+7. **Temi emergenti** e **LLM:** 5–7 paper in tutto, raggruppati per tema.
+   - **Per ogni tema:** chip della categoria, peso in 3 anni (da `trend`/radar) e un riquadro **"Di cosa si tratta"** di 2–3 frasi: che cos'è il campo, quale problema concreto affronta, dove lo si incontra nella vita reale o nelle aziende.
+   - **Per ogni paper**, nell'ordine:
+     - **IL CONTESTO:** 1–2 frasi sul problema di partenza e sul perché finora era difficile;
+     - **COSA FANNO**;
+     - **RISULTATO:** solo se l'abstract lo riporta;
+     - **PERCHÉ CONTA.**
+8. **Radar della settimana:** solo il lunedì e il martedì, e solo quando trend o segnali di adozione sono stati aggiornati da al massimo 2 giorni. Sotto la tabella, una frase che spiega come leggerla.
+9. **Parole del giorno:** 3–5 termini tecnici usati nella mail, ognuno spiegato in una frase, con un esempio quotidiano quando possibile.
+10. **Da tenere d'occhio:** 2–3 frasi.
+11. **Piede:** come da template.
 
 ## Regole sui contenuti
 - **Solo fatti presenti nei dati o negli abstract.** Se l'abstract non riporta un risultato, la riga "Risultato" non c'è.
+- **Contesto ammesso, ma solo di base.** "Di cosa si tratta", "Il contesto" e "Parole del giorno" possono usare conoscenze generali consolidate (cos'è un attacco informatico, a cosa serve la chimica computazionale). Valgono tre limiti:
+  - niente numeri;
+  - niente notizie o affermazioni su aziende e prodotti che non siano nei dati;
+  - niente affermazioni incerte presentate come certe.
 - **I numeri si copiano dall'abstract**, con le unità. Non si arrotondano in modo da cambiarne il senso.
 - **"Perché conta"** è in corsivo e formulato come lettura ("può…", "suggerisce…"), mai attribuito agli autori.
 - **Etichetta del tipo sempre visibile.** Per i preprint va aggiunto che i risultati non sono ancora revisionati.
@@ -38,9 +52,11 @@ Deve poter decidere se aprire un paper.
 - **Varietà.** Massimo 2 paper per tema; almeno 3 temi diversi.
 
 ## Stile
-- **Italiano semplice e frasi brevi.** Al primo uso un termine tecnico ha una spiegazione tra parentesi, per esempio: "boson sampling (un test del vantaggio dei computer quantistici)".
+- **Italiano semplice e frasi brevi.** Al primo uso un termine tecnico ha una spiegazione tra parentesi, per esempio: "boson sampling (un test del vantaggio dei computer quantistici)". I termini più importanti vanno anche in "Parole del giorno".
+- **Analogie.** Quando aiutano, si usano paragoni con la vita quotidiana, per esempio: "come un antivirus che impara le abitudini del tuo computer".
+- **"Cosa fanno" e "Risultato" senza gergo:** acronimi e metriche (ROC-AUC, F1…) vanno spiegati o tradotti in parole, per esempio: "ROC-AUC 0,95 (un punteggio che va da 0,5, cioè tirare a caso, a 1, cioè perfetto)". Mai convertire una metrica in un'altra che l'abstract non riporta.
 - **Niente aggettivi da comunicato** (rivoluzionario, incredibile, game changer) e niente punti esclamativi.
-- **Massimo 900 parole** nel corpo.
+- **Massimo 1.300 parole** nel corpo. Se si sfora, meglio un paper in meno che il contesto più corto.
 - **Colori solo dalla palette del template.** Niente emoji nei titoli; le frecce ▲ ▼ ■ solo nel radar.
 
 ## Controlli prima dell'invio

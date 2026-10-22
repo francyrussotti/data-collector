@@ -68,6 +68,8 @@
     <!-- chip categoria: emergente = #6D28D9 su #EFE7FF · forte crescita = #0F766E su #DDF5F1 -->
     <span style="display:inline-block;margin-left:6px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;color:{{colore}};background:{{fondo}};">{{emergente | forte crescita}}</span>
     <div style="font-size:12px;color:#5B6675;margin-top:3px;">{{peso del tema: +X% in 3 anni · Y paper nel 2025}}</div>
+    <!-- DI COSA SI TRATTA: 2-3 frasi per chi non è del settore -->
+    <div style="font-size:14px;line-height:1.55;color:#1B2430;background:#F6F8FA;border-radius:6px;padding:10px 12px;margin-top:8px;"><b style="color:#0F766E;">Di cosa si tratta.</b> {{che cos'è questo campo, quale problema concreto affronta, dove lo incontriamo nella vita reale o nelle aziende}}</div>
   </td></tr>
 
   <!-- PAPER (RIPETI dentro il tema) -->
@@ -83,6 +85,7 @@
           &nbsp;<a href="{{pdf}}" style="color:#0F766E;font-weight:700;text-decoration:none;">PDF gratuito ↗</a>
         </div>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:10px;">
+          <tr><td valign="top" style="width:96px;font-size:12px;font-weight:700;color:#5B6675;padding:3px 0;">IL CONTESTO</td><td style="font-size:14px;line-height:1.5;padding:3px 0;">{{1-2 frasi: qual è il problema di partenza e perché finora era difficile, in parole semplici}}</td></tr>
           <tr><td valign="top" style="width:96px;font-size:12px;font-weight:700;color:#5B6675;padding:3px 0;">COSA FANNO</td><td style="font-size:14px;line-height:1.5;padding:3px 0;">{{...}}</td></tr>
           <!-- FACOLTATIVO: solo se l'abstract riporta un risultato -->
           <tr><td valign="top" style="width:96px;font-size:12px;font-weight:700;color:#5B6675;padding:3px 0;">RISULTATO</td><td style="font-size:14px;line-height:1.5;padding:3px 0;">{{... con i numeri dell'abstract}}</td></tr>
@@ -110,6 +113,16 @@
       <!-- /RIPETI -->
     </table>
     <div style="font-size:12px;color:#5B6675;margin-top:6px;">{{una riga: dove ricerca e adozione concordano, e dove no}}</div>
+  </td></tr>
+
+  <!-- PAROLE DEL GIORNO: 3-5 termini tecnici usati nella mail, spiegati in una riga -->
+  <tr><td style="padding:26px 28px 0 28px;">
+    <div style="font-size:12px;letter-spacing:1.5px;color:#5B6675;font-weight:700;border-bottom:1px solid #DDE3EA;padding-bottom:8px;">PAROLE DEL GIORNO</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;">
+      <!-- RIPETI per ogni termine -->
+      <tr><td style="padding:5px 0;font-size:14px;line-height:1.5;"><b>{{termine}}</b> — {{spiegazione in una frase, con un esempio quotidiano se possibile}}</td></tr>
+      <!-- /RIPETI -->
+    </table>
   </td></tr>
 
   <!-- DA TENERE D'OCCHIO -->
