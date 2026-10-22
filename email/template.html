@@ -96,24 +96,38 @@
   </td></tr>
   <!-- /PAPER /TEMA /SEZIONE -->
 
-  <!-- FACOLTATIVO – RADAR DELLA SETTIMANA (solo se trend o segnali di adozione sono stati aggiornati da ≤ 2 giorni) -->
+  <!-- RADAR DEL GIORNO (ogni giorno): lun Aerospazio · mar Energia · mer LLM · gio Cybersecurity · ven Robotica · sab/dom Panoramica -->
   <tr><td style="padding:26px 28px 0 28px;">
-    <div style="font-size:12px;letter-spacing:1.5px;color:#5B6675;font-weight:700;border-bottom:1px solid #DDE3EA;padding-bottom:8px;">RADAR DELLA SETTIMANA</div>
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:8px;font-size:13px;">
-      <tr style="color:#5B6675;font-size:11px;font-weight:700;">
-        <td style="padding:6px 0;">AREA</td><td align="right" style="padding:6px 0;">RICERCA<br>(peso, 3 anni)</td><td align="right" style="padding:6px 0;">GITHUB<br>(anno su anno)</td><td align="right" style="padding:6px 0;">HACKER NEWS<br>(anno su anno)</td>
+    <div style="font-size:12px;letter-spacing:1.5px;color:#5B6675;font-weight:700;border-bottom:1px solid #DDE3EA;padding-bottom:8px;">RADAR DEL GIORNO · {{NOME VERTICALE IN MAIUSCOLO}}</div>
+    <div style="font-size:14px;line-height:1.55;color:#1B2430;background:#F6F8FA;border-radius:6px;padding:10px 12px;margin-top:10px;"><b style="color:#0F766E;">Di cosa si tratta.</b> {{2-3 frasi sul settore per chi non è esperto}}</div>
+    <!-- 3 cifre del verticale -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:10px;border:1px solid #DDE3EA;border-radius:8px;">
+      <tr>
+        <td align="center" style="padding:12px 6px;width:33%;"><div style="font-size:20px;font-weight:700;color:#0E1A2B;">{{peso_3_anni, es. +31%}}</div><div style="font-size:12px;color:#5B6675;">peso nella ricerca, 3 anni</div></td>
+        <td align="center" style="padding:12px 6px;width:33%;"><div style="font-size:20px;font-weight:700;color:#0E1A2B;">{{slancio_anno_in_corso}}</div><div style="font-size:12px;color:#5B6675;">slancio quest'anno rispetto al totale</div></td>
+        <td align="center" style="padding:12px 6px;width:33%;"><div style="font-size:20px;font-weight:700;color:#0E1A2B;">{{quota_finanziata o paper_ultimo_anno}}</div><div style="font-size:12px;color:#5B6675;">{{etichetta}}</div></td>
       </tr>
-      <!-- RIPETI per 5-8 aree; frecce ▲ #0F766E · ▼ #B42318 · ■ #5B6675; "—" se il dato manca -->
-      <tr style="border-top:1px solid #DDE3EA;">
-        <td style="padding:7px 0;border-top:1px solid #EEF1F5;">{{area}}</td>
-        <td align="right" style="padding:7px 0;border-top:1px solid #EEF1F5;color:{{colore}};">{{▲ +78%}}</td>
-        <td align="right" style="padding:7px 0;border-top:1px solid #EEF1F5;color:{{colore}};">{{▲ +120%}}</td>
-        <td align="right" style="padding:7px 0;border-top:1px solid #EEF1F5;color:{{colore}};">{{▼ −10%}}</td>
-      </tr>
+    </table>
+    <!-- Temi in crescita (3-5): nome tradotto, una riga di spiegazione, peso 3 anni -->
+    <div style="font-size:13px;font-weight:700;color:#0E1A2B;margin-top:12px;">Dove cresce la ricerca</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:4px;font-size:13px;">
+      <!-- RIPETI -->
+      <tr><td style="padding:6px 0;border-top:1px solid #EEF1F5;">{{tema in italiano}}<div style="font-size:12px;color:#5B6675;">{{cos'è in parole semplici}}</div></td><td align="right" valign="top" style="padding:6px 0 6px 8px;border-top:1px solid #EEF1F5;white-space:nowrap;color:#0F766E;">{{▲ +62%}}</td></tr>
       <!-- /RIPETI -->
     </table>
-    <div style="font-size:12px;color:#5B6675;margin-top:6px;">{{una riga: dove ricerca e adozione concordano, e dove no}}</div>
+    <!-- Adozione (se ci sono dati): query GitHub / Hacker News, trimestre contro stesso trimestre anno prima; frecce ▲ #0F766E · ▼ #B42318 · ■ #5B6675 -->
+    <div style="font-size:13px;font-weight:700;color:#0E1A2B;margin-top:12px;">Cosa fanno sviluppatori e pubblico</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:4px;font-size:13px;">
+      <tr style="color:#5B6675;font-size:11px;font-weight:700;"><td style="padding:6px 0;">SEGNALE</td><td align="right" style="padding:6px 0;">GITHUB<br>(anno su anno)</td><td align="right" style="padding:6px 0;">HACKER NEWS<br>(anno su anno)</td></tr>
+      <!-- RIPETI -->
+      <tr><td style="padding:6px 0;border-top:1px solid #EEF1F5;">«{{query}}»</td><td align="right" style="padding:6px 0;border-top:1px solid #EEF1F5;color:{{colore}};">{{▲ +120%}}</td><td align="right" style="padding:6px 0;border-top:1px solid #EEF1F5;color:{{colore}};">{{▼ −10%}}</td></tr>
+      <!-- /RIPETI -->
+    </table>
+    <div style="font-size:12px;color:#5B6675;margin-top:6px;line-height:1.5;">{{trimestre confrontato, controlli generici, data di aggiornamento; FACOLTATIVO: una riga su Wikipedia}}</div>
+    <div style="font-size:14px;line-height:1.55;margin-top:8px;"><b>In sintesi:</b> {{1-2 frasi: dove ricerca e adozione concordano e dove no, cosa significa}}</div>
   </td></tr>
+  <!-- WEEKEND – PANORAMICA: al posto del blocco sopra, una tabella con una riga per verticale
+       (nome · peso ricerca 3 anni · tema in maggiore crescita · GitHub mediana anno su anno) e 2-3 frasi di confronto. -->
 
   <!-- PAROLE DEL GIORNO: 3-5 termini tecnici usati nella mail, spiegati in una riga -->
   <tr><td style="padding:26px 28px 0 28px;">

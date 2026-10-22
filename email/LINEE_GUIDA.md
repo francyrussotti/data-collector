@@ -30,7 +30,25 @@ Deve poter decidere se aprire un paper.
      - **COSA FANNO**;
      - **RISULTATO:** solo se l'abstract lo riporta;
      - **PERCHÉ CONTA.**
-8. **Radar della settimana:** il lunedì, il mercoledì e il venerdì, con gli ultimi dati disponibili. I trend si aggiornano il lunedì, i segnali di adozione il martedì; nella sezione va indicata la data di aggiornamento. Sotto la tabella, una frase che spiega come leggerla.
+8. **Radar del giorno, ogni giorno**, dal campo `radar_del_giorno` di `daily.json`. Ogni giorno feriale ha un verticale:
+
+   | Giorno | Verticale |
+   |---|---|
+   | Lunedì | Aerospazio |
+   | Martedì | Energia |
+   | Mercoledì | LLM e IA generativa |
+   | Giovedì | Cybersecurity |
+   | Venerdì | Robotica e automazione |
+   | Sabato e domenica | Panoramica dei 5 verticali |
+
+   - **Contenuto nei giorni feriali:**
+     - riquadro "Di cosa si tratta";
+     - 3 cifre del verticale (peso nella ricerca in 3 anni, slancio di quest'anno, quota di paper finanziati);
+     - 3–5 temi in crescita, ognuno con una riga di spiegazione;
+     - segnali di adozione per query (GitHub e Hacker News, trimestre contro lo stesso trimestre dell'anno prima), con il trimestre confrontato e la data di aggiornamento;
+     - una frase finale "In sintesi".
+   - **Panoramica del weekend:** una riga per verticale e 2–3 frasi di confronto.
+   - **Senza dati di adozione** per un verticale, lo si dice in una riga.
 9. **Parole del giorno:** 3–5 termini tecnici usati nella mail, ognuno spiegato in una frase, con un esempio quotidiano quando possibile.
 10. **Da tenere d'occhio:** 2–3 frasi.
 11. **Piede:** come da template.
@@ -56,7 +74,7 @@ Deve poter decidere se aprire un paper.
 - **Analogie.** Quando aiutano, si usano paragoni con la vita quotidiana, per esempio: "come un antivirus che impara le abitudini del tuo computer".
 - **"Cosa fanno" e "Risultato" senza gergo:** acronimi e metriche (ROC-AUC, F1…) vanno spiegati o tradotti in parole, per esempio: "ROC-AUC 0,95 (un punteggio che va da 0,5, cioè tirare a caso, a 1, cioè perfetto)". Mai convertire una metrica in un'altra che l'abstract non riporta.
 - **Niente aggettivi da comunicato** (rivoluzionario, incredibile, game changer) e niente punti esclamativi.
-- **Massimo 1.300 parole** nel corpo. Se si sfora, meglio un paper in meno che il contesto più corto.
+- **Massimo 1.500 parole** nel corpo, radar compreso. Se si sfora, meglio un paper in meno che il contesto più corto.
 - **Colori solo dalla palette del template.** Niente emoji nei titoli; le frecce ▲ ▼ ■ solo nel radar.
 
 ## Controlli prima dell'invio

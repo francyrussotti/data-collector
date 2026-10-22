@@ -20,6 +20,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from emerging import TECH_FIELDS, suspicious  # noqa: E402
+import verticals  # noqa: E402
 
 RECENT_DAYS = 60
 FIRST_EDITION = date(2026, 10, 22)   # N. 1 della newsletter
@@ -172,6 +173,8 @@ def main() -> int:
     ap.add_argument("--topics")
     ap.add_argument("--trends")
     ap.add_argument("--signals", help="free_signals.sqlite (GitHub, Hacker News)")
+    ap.add_argument("--verticals", default=str(Path(__file__).resolve().parent.parent / "config" / "verticals.yaml"),
+                    help="verticali del radar del giorno")
     ap.add_argument("--date", default=datetime.now(timezone.utc).date().isoformat())
     ap.add_argument("--llm-top", type=int, default=12)
     ap.add_argument("--per-topic", type=int, default=3)
@@ -182,14 +185,18 @@ def main() -> int:
 
     exists = lambda p: p and Path(p).exists()
     topics = json.loads(Path(args.topics).read_text(encoding="utf-8")) if exists(args.topics) else []
+    trends = json.loads(Path(args.trends).read_text(encoding="utf-8")) if exists(args.trends) else None
     result = {
         "data": args.date,
         "edizione": (date.fromisoformat(args.date) - FIRST_EDITION).days + 1,
         "llm": llm_section(Path(args.papers), args.date, args.llm_top, args.abstract_chars) if exists(args.papers) else None,
         "emergenti": emerging_section(Path(args.daily), topics, args.date, args.per_topic, args.abstract_chars)
         if exists(args.daily) else None,
-        "trend": trend_section(json.loads(Path(args.trends).read_text(encoding="utf-8")), 8) if exists(args.trends) else None,
+        "trend": trend_section(trends, 8) if trends else None,
         "adozione": adoption_section(Path(args.signals)) if exists(args.signals) else None,
+        "radar_del_giorno": verticals.radar(date.fromisoformat(args.date), verticals.load_config(Path(args.verticals)),
+                                            trends, Path(args.signals) if exists(args.signals) else None)
+        if exists(args.verticals) else None,
     }
     text = json.dumps(result, ensure_ascii=False, separators=(",", ":"))
     if args.out:

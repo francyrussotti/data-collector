@@ -39,6 +39,13 @@ x-queries: &queries
   - {id: s9_materials, query: "materials machine learning", cluster: S9}
   - {id: s9_protein, query: "protein design", cluster: S9}
   - {id: s10_quantum, query: "quantum computing", cluster: S10}
+  - {id: v_aero_satellite, query: "satellite", cluster: V_AERO}
+  - {id: v_aero_drone, query: "drone", cluster: V_AERO}
+  - {id: v_aero_rocket, query: "rocket", cluster: V_AERO}
+  - {id: v_energy_battery, query: "battery", cluster: V_ENERGY}
+  - {id: v_energy_solar, query: "solar energy", cluster: V_ENERGY}
+  - {id: v_energy_grid, query: "smart grid", cluster: V_ENERGY}
+  - {id: v_energy_hydrogen, query: "hydrogen", cluster: V_ENERGY}
   - {id: base_ml, query: "machine learning", cluster: BASE}
 
 sources:
@@ -173,6 +180,17 @@ sources:
         - {article: Vector_database, cluster: S8}
         - {article: Quantum_computing, cluster: S10}
         - {article: Large_language_model, cluster: BASE}
+        - {article: Small_satellite, cluster: V_AERO}
+        - {article: Unmanned_aerial_vehicle, cluster: V_AERO}
+        - {article: Reusable_launch_vehicle, cluster: V_AERO}
+        - {article: Energy_storage, cluster: V_ENERGY}
+        - {article: Hydrogen_economy, cluster: V_ENERGY}
+        - {article: Fusion_power, cluster: V_ENERGY}
+        - {article: Perovskite_solar_cell, cluster: V_ENERGY}
+        - {article: Ransomware, cluster: S3}
+        - {article: Post-quantum_cryptography, cluster: S3}
+        - {article: Self-driving_car, cluster: S6}
+        - {article: Industrial_robot, cluster: S6}
         - {article: Artificial_intelligence, cluster: BASE}
       records_path: items
       id_template: "{article}|{timestamp}"

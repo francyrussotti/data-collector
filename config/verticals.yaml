@@ -1,0 +1,48 @@
+# Verticali del "Radar del giorno" nella newsletter: uno per giorno feriale, panoramica nel weekend.
+# Un tema OpenAlex appartiene al verticale se il suo sottocampo è in `sottocampi`,
+# oppure se il nome corrisponde a `nome` (regex) E la disciplina è in `discipline`; `escludi` toglie i falsi positivi.
+# `cluster` sono i cluster dei segnali di adozione (config/free_signals.yaml) e `wiki` le voci di Wikipedia.
+
+giorni: {0: aerospazio, 1: energia, 2: llm, 3: cyber, 4: robotica, 5: panoramica, 6: panoramica}
+
+verticali:
+  aerospazio:
+    nome: Aerospazio
+    sottocampi: []
+    nome_regex: "aircraft|aerospace|spacecraft|satellite|rocket|space debris|space exploration|uav|unmanned aerial|drone|propulsion|hypersonic|aviation|orbit determination|launch vehicle|gnss"
+    discipline: [Engineering, Computer Science, Physics and Astronomy, Earth and Planetary Sciences]
+    escludi: "orbital angular momentum|green space|banach|plasma|ocean waves"
+    cluster: [V_AERO]
+    wiki: [Small_satellite, Unmanned_aerial_vehicle, Reusable_launch_vehicle]
+  energia:
+    nome: Energia
+    sottocampi: []
+    nome_regex: "batter|photovoltaic|solar|perovskite|hydrogen|fuel cell|wind energy|wind turbine|smart grid|power system|microgrid|energy storage|electrocataly|nuclear fusion|fusion reactor|nuclear reactor|renewable energy|supercapacitor|thermoelectric|energy harvesting|electric vehicle|heat pump"
+    discipline: [Engineering, Materials Science, Chemistry, Energy, Chemical Engineering, Physics and Astronomy]
+    escludi: "economic growth|energy security and policy|solar and space plasma|solar radiation and climate|metalloenzymes|asymmetric hydrogenation|hydrogen embrittlement|magnetic and transport properties"
+    cluster: [V_ENERGY]
+    wiki: [Energy_storage, Hydrogen_economy, Fusion_power, Perovskite_solar_cell]
+  llm:
+    nome: Modelli linguistici (LLM) e IA generativa
+    sottocampi: []
+    nome_regex: "natural language|language model|topic model|sentiment analysis|speech recognition|machine translation|question answering|multimodal machine learning|text classification|named entity|generative adversarial|explainable artificial"
+    discipline: [Computer Science]
+    escludi: ""
+    cluster: [S1, S2, S4, S8]
+    wiki: [Large_language_model, Retrieval-augmented_generation, Model_Context_Protocol, AI_safety]
+  cyber:
+    nome: Cybersecurity
+    sottocampi: []
+    nome_regex: "security|intrusion|phishing|malware|cryptograph|privacy|adversarial robustness|adversarial attack|authentication|vulnerab|spam|forensic detection|blockchain"
+    discipline: [Computer Science, Engineering]
+    escludi: "food security|energy security|in education"
+    cluster: [S3]
+    wiki: [Prompt_injection, Ransomware, Post-quantum_cryptography]
+  robotica:
+    nome: Robotica e automazione
+    sottocampi: []
+    nome_regex: "robot|manipulat|exoskeleton|path planning|autonomous vehicle|legged|humanoid|grasp"
+    discipline: [Computer Science, Engineering]
+    escludi: "process automation"
+    cluster: [S6]
+    wiki: [Humanoid_robot, Self-driving_car, Industrial_robot]
