@@ -5,7 +5,7 @@ name: free_signals
 
 on:
   schedule:
-    - cron: "53 5 * * 2"   # martedì alle 05:53 UTC
+    - cron: "53 22 * * 1"  # lunedì alle 22:53 UTC, pronto per martedì mattina
   workflow_dispatch: {}
 
 permissions:

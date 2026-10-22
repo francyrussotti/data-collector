@@ -4,7 +4,7 @@ name: daily
 
 on:
   schedule:
-    - cron: "37 5 * * *"   # ogni giorno alle 05:37 UTC
+    - cron: "47 0 * * *"   # ogni giorno alle 00:47 UTC, dopo la raccolta
   workflow_dispatch: {}
 
 permissions:

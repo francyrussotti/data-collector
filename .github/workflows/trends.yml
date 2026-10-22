@@ -6,7 +6,7 @@ name: trends
 
 on:
   schedule:
-    - cron: "43 4 * * 1"   # lunedì alle 04:43 UTC
+    - cron: "13 22 * * 0"  # domenica alle 22:13 UTC, pronto per lunedì mattina
   workflow_dispatch: {}
 
 permissions:

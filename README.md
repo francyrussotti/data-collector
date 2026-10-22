@@ -67,7 +67,7 @@ Esecuzione periodica con cron, ogni giorno alle 6:
 
 ## Esecuzione automatica con GitHub Actions
 
-Il workflow `.github/workflows/collect.yml` lancia la raccolta ogni giorno alle 05:17 UTC. Si può anche avviare a mano da **Actions → collect → Run workflow**.
+Il workflow `.github/workflows/collect.yml` lancia la raccolta ogni giorno alle 00:07 UTC. Si può anche avviare a mano da **Actions → collect → Run workflow**.
 
 **Configurazione, una sola volta:** in **Settings → Secrets and variables → Actions → New repository secret** aggiungi:
 - `OPENALEX_API_KEY` (obbligatorio);
@@ -102,7 +102,7 @@ python scripts/trends.py -c config/tech_trends.yaml -o data/trends.json
 
 Le soglie sono in cima allo script.
 
-Il workflow `trends.yml` gira ogni lunedì, oppure a mano. Allega `trends.json` e `trends.sqlite.gz` alla release `data`.
+Il workflow `trends.yml` gira ogni domenica sera (22:13 UTC), oppure a mano. Allega `trends.json` e `trends.sqlite.gz` alla release `data`.
 
 **Paper dei temi emergenti.** Dopo i trend, `scripts/emerging.py select` sceglie fino a 50 temi delle discipline tecnologiche. Sono quelli in categoria emergente, nuovo o forte crescita, esclusi i salti sospetti. `config/emerging.yaml` scarica per ciascun tema due liste: i 200 paper più citati dal 2024 e i 200 più recenti. Usa il connettore `openalex_top`, circa 100 richieste. `emerging.py digest` produce una selezione di letture per tema. Tutto viene allegato alla release `data`: `emerging.parquet`, `emerging_digest.json` ed `emerging_topics.meta.json`.
 
@@ -120,11 +120,11 @@ Il connettore `openalex_groups` è generico: con un altro `group_by` (es. `prima
 | pypistats | `api_list` | download giornalieri delle librerie (180 giorni di storico: si accumulano) |
 | Wikimedia Pageviews | `api_list` | visualizzazioni mensili delle voci di Wikipedia |
 
-Il workflow `free_signals.yml` gira ogni martedì, oppure a mano, e tiene il database nella release `data`. I connettori `query_counts` e `api_list` sono generici: una nuova API JSON si aggiunge solo con la configurazione.
+Il workflow `free_signals.yml` gira ogni lunedì sera (22:53 UTC), oppure a mano, e tiene il database nella release `data`. I connettori `query_counts` e `api_list` sono generici: una nuova API JSON si aggiunge solo con la configurazione.
 
 ## Report giornaliero
 
-Il workflow `daily.yml` gira ogni mattina alle 05:37 UTC, dopo la raccolta. Svolge tre passi:
+Il workflow `daily.yml` gira ogni notte alle 00:47 UTC, dopo la raccolta. Svolge tre passi:
 1. Scarica dalla release `data` il database LLM, l'elenco dei temi emergenti e i trend.
 2. Cerca i paper usciti negli ultimi 14 giorni nei temi emergenti (`config/daily.yaml`, circa 50 richieste). Il database resta tra un giorno e l'altro, quindi conta come "nuovo" solo ciò che compare per la prima volta.
 3. Con `scripts/daily.py` produce `daily.json`, cioè le novità del giorno, e lo allega alla release.
