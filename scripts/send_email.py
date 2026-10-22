@@ -54,7 +54,9 @@ def main(argv: list[str]) -> int:
     default_to = [a.strip() for a in os.environ.get("NEWSLETTER_TO", "").split(",") if a.strip()]
     messages = [build(p, user, default_to) for p in paths]   # valida tutto prima di inviare
     host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
-    print(f"mittente {user} · password di {len(password)} caratteri (una password per le app Google ne ha 16)")
+    local, _, domain = user.partition("@")
+    print(f"mittente: {len(local)} caratteri @{domain or '(manca la @)'} · solo ASCII: {user.isascii()} · "
+          f"password di {len(password)} caratteri (una password per le app Google ne ha 16)")
     if not password.isascii():
         print("::error::SMTP_PASSWORD contiene caratteri non ASCII: ricopia la password per le app")
         return 2
@@ -82,6 +84,8 @@ def send_all(host: str, port: int, user: str, password: str, paths, messages) ->
             s.ehlo()
             s.starttls(context=ctx)
             s.ehlo()
+        s.ehlo_or_helo_if_needed()
+        print(f"porta {port}: il server offre AUTH {s.esmtp_features.get('auth', '(nessuno)')}")
         s.login(user, password)
         for p, m in zip(paths, messages):
             s.send_message(m)

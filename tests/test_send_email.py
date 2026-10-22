@@ -41,6 +41,9 @@ def test_main_sends_via_smtp(tmp_path, monkeypatch):
             return self
         def __exit__(self, *a):
             return False
+        esmtp_features = {"auth": "LOGIN PLAIN"}
+        def ehlo_or_helo_if_needed(self):
+            pass
         def login(self, u, p):
             assert (u, p) == ("s@example.com", "app-pass")
         def send_message(self, m):
