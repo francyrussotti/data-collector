@@ -30,7 +30,7 @@ Deve poter decidere se aprire un paper.
      - **COSA FANNO**;
      - **RISULTATO:** solo se l'abstract lo riporta;
      - **PERCHÉ CONTA.**
-8. **Radar della settimana:** solo il lunedì e il martedì, e solo quando trend o segnali di adozione sono stati aggiornati da al massimo 2 giorni. Sotto la tabella, una frase che spiega come leggerla.
+8. **Radar della settimana:** il lunedì, il mercoledì e il venerdì, con gli ultimi dati disponibili. I trend si aggiornano il lunedì, i segnali di adozione il martedì; nella sezione va indicata la data di aggiornamento. Sotto la tabella, una frase che spiega come leggerla.
 9. **Parole del giorno:** 3–5 termini tecnici usati nella mail, ognuno spiegato in una frase, con un esempio quotidiano quando possibile.
 10. **Da tenere d'occhio:** 2–3 frasi.
 11. **Piede:** come da template.
