@@ -71,7 +71,31 @@ def load(db: Path):
         d = json.loads(data)
         counts[d["topic_id"]][d["period"]] = int(d["count"] or 0)
         meta[d["period"]] = (d["period_type"], int(d["year"]))
-    return topics, counts, meta
+    funded = defaultdict(dict)   # stessi conteggi, solo paper con finanziamento (fonte facoltativa)
+    for (data,) in conn.execute("SELECT data FROM records WHERE source='funded_topic_counts'"):
+        d = json.loads(data)
+        funded[d["topic_id"]][d["period"]] = int(d["count"] or 0)
+    return topics, counts, meta, funded
+
+
+def funded_metrics(n: dict, f: dict, tot_f: dict, years: list[int]) -> dict:
+    """Paper finanziati del tema: quota sul tema, sua variazione, peso del tema tra tutti i finanziati.
+
+    I collegamenti paper→finanziamento in OpenAlex sono incompleti e arrivano in ritardo:
+    i valori assoluti sottostimano, i confronti tra temi nello stesso anno sono più affidabili.
+    """
+    last, base = years[-1], years[-4]
+    fl, fb = f.get(str(last), 0), f.get(str(base), 0)
+    nl, nb = n.get(str(last), 0), n.get(str(base), 0)
+    q_last = fl / nl if nl else None
+    q_base = fb / nb if nb else None
+    w_last = fl / tot_f[str(last)] if tot_f.get(str(last)) else None
+    w_base = fb / tot_f[str(base)] if tot_f.get(str(base)) else None
+    return {f"finanziati{last}": fl,
+            "quota_finanziata": rnd(q_last),
+            "quota_finanziata_base": rnd(q_base),
+            "var_quota_finanziata_3a": rnd(ratio(q_last, q_base) if q_base and fb >= MIN_BASE else None),
+            "crescita_peso_finanziamenti_3a": rnd(ratio(w_last, w_base) if w_base and fb >= MIN_BASE else None)}
 
 
 def metrics(n: dict, tot: dict, years: list[int], ytd: list[str]) -> dict:
@@ -98,7 +122,7 @@ def metrics(n: dict, tot: dict, years: list[int], ytd: list[str]) -> dict:
 
 
 def build(db: Path) -> dict:
-    topics, counts, meta = load(db)
+    topics, counts, meta, funded = load(db)
     years = sorted(y for t, y in meta.values() if t == "year")
     ytd = [p for p, _ in sorted(((p, y) for p, (t, y) in meta.items() if t == "ytd"), key=lambda x: x[1])]
     if len(years) < 4:
@@ -108,8 +132,14 @@ def build(db: Path) -> dict:
         for period, c in per_topic.items():
             tot[period] += c
 
+    tot_f = defaultdict(int)
+    for per_topic in funded.values():
+        for period, c in per_topic.items():
+            tot_f[period] += c
+
     rows = []
     by_field = defaultdict(lambda: defaultdict(int))
+    by_field_f = defaultdict(lambda: defaultdict(int))
     field_domain = {}
     for tid, n in counts.items():
         t = topics.get(tid, {})
@@ -117,19 +147,26 @@ def build(db: Path) -> dict:
         field_domain[field] = t.get("domain")
         for period, c in n.items():
             by_field[field][period] += c
+        for period, c in funded.get(tid, {}).items():
+            by_field_f[field][period] += c
         if n.get(str(years[-1]), 0) < MIN_LAST:
             continue
-        rows.append({"id": tid, "tema": t.get("name") or tid, "sottocampo": t.get("subfield"),
-                     "disciplina": field, "dominio": t.get("domain"),
-                     "parole_chiave": ", ".join(filter(None, map(keyword_text, (t.get("keywords") or [])[:6]))),
-                     **metrics(n, tot, years, ytd)})
-    fields = [{"disciplina": f, "dominio": field_domain.get(f), **metrics(n, tot, years, ytd)}
+        row = {"id": tid, "tema": t.get("name") or tid, "sottocampo": t.get("subfield"),
+               "disciplina": field, "dominio": t.get("domain"),
+               "parole_chiave": ", ".join(filter(None, map(keyword_text, (t.get("keywords") or [])[:6]))),
+               **metrics(n, tot, years, ytd)}
+        if funded:
+            row.update(funded_metrics(n, funded.get(tid, {}), tot_f, years))
+        rows.append(row)
+    fields = [{"disciplina": f, "dominio": field_domain.get(f), **metrics(n, tot, years, ytd),
+               **(funded_metrics(n, by_field_f.get(f, {}), tot_f, years) if funded else {})}
               for f, n in by_field.items()]
     totals = [{"periodo": p, "tipo": meta[p][0], "anno": meta[p][1], "paper": tot[p]} for p in sorted(tot)]
     return {"generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "years": years, "ytd_periods": ytd, "totals": totals,
             "topics": sorted(rows, key=lambda r: -(r[f"n{years[-1]}"])), "fields": fields,
-            "topics_in_db": len(topics), "topics_with_counts": len(counts)}
+            "topics_in_db": len(topics), "topics_with_counts": len(counts),
+            "funded_totals": {p: tot_f[p] for p in sorted(tot_f)}}
 
 
 def main() -> int:

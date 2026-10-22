@@ -63,3 +63,32 @@ sources:
       topic_id: "key | strip_prefix:https://openalex.org/"
       topic: key_display_name
       count: count
+
+  # Paper con finanziamento pubblico per tema e periodo (stessi periodi di topic_counts).
+  # ID OpenAlex dei finanziatori verificati con analysis/probe_sources.py il 22/10/2026:
+  #   F4320332161 NIH · F4320306076 NSF · F4320320300 Commissione Europea · F4320321001 NSFC (Cina)
+  #   F4320338335 H2020 ERC · F4320334678 ERC · F4320320879 DFG · F4320314731 UKRI · F4320334764 JSPS
+  # Un paper con più finanziatori conta una volta (il filtro è in OR). NSFC pesa circa metà del totale.
+  - name: funded_topic_counts
+    connector: openalex_groups
+    base_url: https://api.openalex.org
+    endpoint: /works
+    params:
+      api_key: ${OPENALEX_API_KEY:-}
+      mailto: ${OPENALEX_MAILTO:-}
+      filter: "type:article|preprint|review,awards.funder_id:F4320332161|F4320306076|F4320320300|F4320321001|F4320338335|F4320334678|F4320320879|F4320314731|F4320334764"
+      group_by: primary_topic.id
+      per-page: 200
+    options:
+      from_year: 2018
+      year_to_date: true
+      all_groups: true
+    max_requests_per_run: 600
+    id_field: id
+    fields:
+      period: period
+      period_type: period_type
+      year: year
+      topic_id: "key | strip_prefix:https://openalex.org/"
+      topic: key_display_name
+      count: count

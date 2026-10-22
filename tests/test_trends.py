@@ -93,3 +93,19 @@ def test_trends_end_to_end(server, tmp_path, monkeypatch):
     assert abs(t["T1"]["crescita_ytd"] - 1.0) < 0.01
     assert {f["disciplina"] for f in res["fields"]} == {"Computer Science", "Medicine"}
     assert t["T1"]["parole_chiave"] == "k1, k2"
+
+
+def test_funded_metrics():
+    sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+    from trends import funded_metrics
+    years = [2022, 2023, 2024, 2025]
+    n = {"2022": 1000, "2025": 2000}
+    f = {"2022": 100, "2025": 400}
+    tot_f = {"2022": 10_000, "2025": 20_000}
+    m = funded_metrics(n, f, tot_f, years)
+    assert m["finanziati2025"] == 400
+    assert m["quota_finanziata"] == 0.2
+    assert m["quota_finanziata_base"] == 0.1
+    assert m["var_quota_finanziata_3a"] == 1.0
+    assert m["crescita_peso_finanziamenti_3a"] == 1.0   # 2% del portafoglio contro 1%
+    assert funded_metrics(n, {}, tot_f, years)["var_quota_finanziata_3a"] is None
