@@ -68,6 +68,14 @@ for name in ["National Institutes of Health", "National Science Foundation", "Eu
     time.sleep(1)
 probe("openalex_group_by_funder", "https://api.openalex.org/works",
       {"filter": "primary_topic.id:T10028,publication_year:2024", "group_by": "awards.funder_id", "per-page": 5, "api_key": key})
+try:  # finanziatori con più paper nel 2024 (tutta OpenAlex): conferma gli ID trovati per nome
+    r = requests.get("https://api.openalex.org/works", headers=UA, timeout=60,
+                     params={"filter": "publication_year:2024", "group_by": "awards.funder_id", "per-page": 25, "api_key": key})
+    print(f"\n=== top funder 2024: HTTP {r.status_code}")
+    for g in (r.json().get("group_by") or [])[:25]:
+        print("   ", g.get("key"), "|", g.get("key_display_name"), "|", g.get("count"))
+except requests.RequestException as exc:
+    print(f"\n=== top funder 2024: ERRORE {exc}")
 aid, akey = os.environ.get("ADZUNA_APP_ID"), os.environ.get("ADZUNA_APP_KEY")
 if aid and akey:
     probe("adzuna_search", "https://api.adzuna.com/v1/api/jobs/gb/search/1",
