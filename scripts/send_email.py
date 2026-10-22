@@ -11,6 +11,7 @@ Uso: python scripts/send_email.py newsletter/outbox/2026-10-23.json [altro.json 
 """
 from __future__ import annotations
 
+import copy
 import json
 import os
 import smtplib
@@ -88,8 +89,12 @@ def send_all(host: str, port: int, user: str, password: str, paths, messages) ->
         print(f"porta {port}: il server offre AUTH {s.esmtp_features.get('auth', '(nessuno)')}")
         s.login(user, password)
         for p, m in zip(paths, messages):
-            s.send_message(m)
-            print(f"inviata: {p} → {m['To']} · {m['Subject']}")
+            # una copia per destinatario: nessuno vede gli indirizzi degli altri
+            for rcpt in [a.strip() for a in m["To"].split(",") if a.strip()]:
+                one = copy.deepcopy(m)
+                one.replace_header("To", rcpt)
+                s.send_message(one)
+                print(f"inviata: {p} → destinatario {rcpt.split('@')[-1]} · {m['Subject']}")
 
 
 if __name__ == "__main__":

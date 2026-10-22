@@ -54,7 +54,8 @@ def test_main_sends_via_smtp(tmp_path, monkeypatch):
     monkeypatch.setenv("SMTP_PASSWORD", " app- pass ")
     monkeypatch.setenv("NEWSLETTER_TO", "a@example.com, b@example.com")
     assert se.main([str(write(tmp_path))]) == 0
-    assert sent and sent[0]["To"] == "a@example.com, b@example.com"
+    assert [m["To"] for m in sent] == ["a@example.com", "b@example.com"]
+    assert sent[1].get_body(("html",)).get_content().strip() == "<p>ciao</p>"
 
 
 def test_main_without_secrets(tmp_path, monkeypatch):
