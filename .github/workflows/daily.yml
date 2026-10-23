@@ -33,7 +33,7 @@ jobs:
       - name: Scarica i dati dalla release
         run: |
           mkdir -p data
-          for f in papers.sqlite.gz daily.sqlite.gz free_signals.sqlite.gz emerging_topics.json emerging_topics.meta.json trends.json; do
+          for f in papers.sqlite.gz daily.sqlite.gz free_signals.sqlite.gz emerging_topics.json emerging_topics.meta.json trends.json quality_cache.json; do
             gh release download "$DATA_TAG" --pattern "$f" --dir data || echo "manca $f"
           done
           for f in data/*.gz; do [ -e "$f" ] && gunzip -f "$f"; done
@@ -50,15 +50,18 @@ jobs:
           python scripts/verticals.py --trends data/trends.json --date "$TODAY" \
             -o data/vertical_topics.json --meta data/vertical_topics.meta.json
           collector -c config/daily.yaml run
+          # qualità di riviste e autori dei paper visti oggi (non blocca il report se OpenAlex non risponde)
+          python scripts/quality.py --db data/daily.sqlite --db data/papers.sqlite --date "$TODAY" --cache data/quality_cache.json
       - name: Prepara il materiale del report
         run: |
           python scripts/daily.py --papers data/papers.sqlite --daily data/daily.sqlite \
             --topics data/emerging_topics.meta.json --trends data/trends.json --signals data/free_signals.sqlite \
-            --vertical-topics data/vertical_topics.meta.json \
+            --vertical-topics data/vertical_topics.meta.json --quality data/quality_cache.json \
             -o data/daily.json --chunks 3000
       - name: Salva nella release
         run: |
           files="data/daily.json"
+          if [ -f data/quality_cache.json ]; then files="$files data/quality_cache.json"; fi
           if [ -f data/daily.sqlite ]; then gzip -kf data/daily.sqlite; files="$files data/daily.sqlite.gz"; fi
           # shellcheck disable=SC2086
           gh release upload "$DATA_TAG" $files --clobber

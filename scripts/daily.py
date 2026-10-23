@@ -21,6 +21,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from emerging import TECH_FIELDS, suspicious  # noqa: E402
 import verticals  # noqa: E402
+import quality  # noqa: E402
+
+QUALITY: dict = {}   # cache di quality.py (riviste e autori); vuota = nessun punteggio
 
 RECENT_DAYS = 60
 FIRST_EDITION = date(2026, 10, 22)   # N. 1 della newsletter
@@ -46,9 +49,11 @@ def penalty(d: dict) -> int:
 
 
 def rank_recent(items: list[dict]) -> list[dict]:
-    """Prima le sedi migliori, poi i paper con abstract (servono per i takeaway), poi dal più recente."""
+    """Prima le sedi riconosciute, poi i paper con abstract (servono per i takeaway), poi la qualità
+    di rivista e autori (quality.py), infine dal più recente."""
     items = sorted(items, key=lambda d: d.get("published_date") or "", reverse=True)
-    return sorted(items, key=lambda d: (penalty(d), 0 if d.get("abstract") else 1))
+    score = (lambda d: quality.assess(d, QUALITY)["punteggio"]) if QUALITY else (lambda d: 0)
+    return sorted(items, key=lambda d: (penalty(d), 0 if d.get("abstract") else 1, -score(d)))
 
 
 def kind(d: dict) -> str:
@@ -69,6 +74,7 @@ def paper(d: dict, chars: int) -> dict:
             "venue": d.get("venue"), "lingua": d.get("language"), "autori": (d.get("authors") or [])[:4], "paesi": d.get("countries") or [],
             "link": d.get("landing_page_url") or (f"https://doi.org/{d['doi']}" if d.get("doi") else None),
             "tipo": kind(d), "pdf_gratuito": d.get("oa_url") or d.get("pdf_url"),
+            "qualita": quality.assess(d, QUALITY) if QUALITY else None,
             "estratto": abstract[:chars] + ("…" if len(abstract) > chars else "")}
 
 
@@ -174,6 +180,7 @@ def main() -> int:
     ap.add_argument("--daily")
     ap.add_argument("--topics")
     ap.add_argument("--trends")
+    ap.add_argument("--quality", help="cache di scripts/quality.py (qualità di riviste e autori)")
     ap.add_argument("--vertical-topics", help="temi del verticale del giorno (scripts/verticals.py --meta)")
     ap.add_argument("--signals", help="free_signals.sqlite (GitHub, Hacker News)")
     ap.add_argument("--verticals", default=str(Path(__file__).resolve().parent.parent / "config" / "verticals.yaml"),
@@ -187,6 +194,7 @@ def main() -> int:
     args = ap.parse_args()
 
     exists = lambda p: p and Path(p).exists()
+    QUALITY.update(quality.load_cache(args.quality) if exists(args.quality) else {})
     topics = json.loads(Path(args.topics).read_text(encoding="utf-8")) if exists(args.topics) else []
     trends = json.loads(Path(args.trends).read_text(encoding="utf-8")) if exists(args.trends) else None
     result = {

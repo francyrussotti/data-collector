@@ -65,8 +65,24 @@ Deve poter decidere se aprire un paper.
   - niente affermazioni incerte presentate come certe.
 - **I numeri si copiano dall'abstract**, con le unità. Non si arrotondano in modo da cambiarne il senso.
 - **"Perché conta"** è in corsivo e formulato come lettura ("può…", "suggerisce…"), mai attribuito agli autori.
+- **Chi lo firma.** Sotto il titolo, quando `autore_di_spicco.h_index` è almeno 20, una riga "Chi lo firma: {nome} ({istituzione}), h-index {n}". Se `livello_fonte` è `alta` si aggiunge il chip "Rivista di alto impatto" (colori #1E40AF/#DBEAFE). L'h-index si spiega in "Parole del giorno" la prima volta che compare.
 - **Etichetta del tipo sempre visibile.** Per i preprint va aggiunto che i risultati non sono ancora revisionati.
 - **Titoli dei paper in originale.** Nel "Segnale del giorno" si può usare un titolo breve in italiano, con il link all'originale.
+- **Qualità e autorevolezza.** Ogni paper ha il campo `qualita` (da `scripts/quality.py`, dati OpenAlex):
+  - **`livello_fonte`:**
+    - `alta`: articoli della rivista citati in media 3+ volte nei primi 2 anni;
+    - `buona`: almeno 1,5;
+    - `media`: almeno 0,5;
+    - `debole`: meno di 0,5;
+    - `preprint`: archivio senza revisione, valutato solo dagli autori.
+  - **`autore_di_spicco`:** l'autore con l'h-index più alto, con la sua istituzione.
+  - **`punteggio`:** da 0 a 5.
+
+  Come usarli:
+  - preferire le fonti `alta` e `buona` e gli autori affermati, con h-index almeno 20;
+  - una fonte `debole` solo se il contenuto è eccezionale, dicendolo;
+  - un preprint vale se gli autori sono affermati;
+  - il segnale del giorno va scelto tra i paper con punteggio più alto, a parità di interesse.
 - **Selezione dei paper.** Da scartare:
   - depositi senza contenuto scientifico (log, brevetti, materiale promozionale);
   - paper senza abstract, salvo eccezioni importanti;
