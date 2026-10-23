@@ -76,6 +76,26 @@ try:  # finanziatori con più paper nel 2024 (tutta OpenAlex): conferma gli ID t
         print("   ", g.get("key"), "|", g.get("key_display_name"), "|", g.get("count"))
 except requests.RequestException as exc:
     print(f"\n=== top funder 2024: ERRORE {exc}")
+# Qualità di riviste e autori (per la newsletter): campi e filtro per più id con "|"
+probe("openalex_sources_quality", "https://api.openalex.org/sources",
+      {"filter": "openalex:S137773608|S4210219209", "select": "id,display_name,type,is_core,is_in_doaj,summary_stats",
+       "per-page": 5, "api_key": key})
+try:
+    r = requests.get("https://api.openalex.org/sources", headers=UA, timeout=30,
+                     params={"filter": "openalex:S137773608|S4210219209", "select": "id,display_name,type,is_core,is_in_doaj,summary_stats", "api_key": key})
+    for s_ in r.json().get("results", []):
+        print("   SOURCE", json.dumps(s_, ensure_ascii=False)[:400])
+    r = requests.get("https://api.openalex.org/authors", headers=UA, timeout=30,
+                     params={"search": "Yoshua Bengio", "per-page": 1, "select": "id,display_name", "api_key": key})
+    aid_ = r.json()["results"][0]["id"].rsplit("/", 1)[-1]
+    r = requests.get("https://api.openalex.org/authors", headers=UA, timeout=30,
+                     params={"filter": f"openalex:{aid_}|A5000000000", "select": "id,display_name,summary_stats,last_known_institutions,works_count",
+                             "per-page": 100, "api_key": key})
+    print(f"\n=== openalex_authors_quality: HTTP {r.status_code}")
+    for a_ in r.json().get("results", []):
+        print("   AUTHOR", json.dumps(a_, ensure_ascii=False)[:500])
+except Exception as exc:  # noqa: BLE001 - è una sonda
+    print(f"\n=== quality probe: ERRORE {exc}")
 aid, akey = os.environ.get("ADZUNA_APP_ID"), os.environ.get("ADZUNA_APP_KEY")
 if aid and akey:
     probe("adzuna_search", "https://api.adzuna.com/v1/api/jobs/gb/search/1",
