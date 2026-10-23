@@ -97,9 +97,10 @@ def llm_section(db: Path, day: str, top: int, chars: int) -> dict:
             "selezione": [paper(d, chars) for d in new[:top]]}
 
 
-def emerging_section(db: Path, topics: list[dict], day: str, per_topic: int, chars: int) -> dict:
+def emerging_section(db: Path, topics: list[dict], day: str, per_topic: int, chars: int,
+                     source: str = "daily_emerging") -> dict:
     conn = sqlite3.connect(db)
-    new = new_today(conn, "daily_emerging", day)
+    new = new_today(conn, source, day)
     by_topic: dict[str, list[dict]] = {}
     for d in new:
         by_topic.setdefault(d.get("primary_topic_id"), []).append(d)
@@ -107,7 +108,8 @@ def emerging_section(db: Path, topics: list[dict], day: str, per_topic: int, cha
     for t in topics:
         items = rank_recent(by_topic.get(t["id"], []))
         if items:
-            out.append({"tema": t["tema"], "categoria": t.get("categoria"), "disciplina": t.get("disciplina"),
+            out.append({"tema": t["tema"], "verticale": t.get("verticale"),
+                        "categoria": t.get("categoria"), "disciplina": t.get("disciplina"),
                         "peso_3_anni": t.get("crescita_3a"), "paper_ultimo_anno": t.get("paper_ultimo_anno"),
                         "nuovi_oggi": len(items), "paper": [paper(d, chars) for d in items[:per_topic]]})
     out.sort(key=lambda x: -x["nuovi_oggi"])
@@ -172,6 +174,7 @@ def main() -> int:
     ap.add_argument("--daily")
     ap.add_argument("--topics")
     ap.add_argument("--trends")
+    ap.add_argument("--vertical-topics", help="temi del verticale del giorno (scripts/verticals.py --meta)")
     ap.add_argument("--signals", help="free_signals.sqlite (GitHub, Hacker News)")
     ap.add_argument("--verticals", default=str(Path(__file__).resolve().parent.parent / "config" / "verticals.yaml"),
                     help="verticali del radar del giorno")
@@ -192,6 +195,10 @@ def main() -> int:
         "llm": llm_section(Path(args.papers), args.date, args.llm_top, args.abstract_chars) if exists(args.papers) else None,
         "emergenti": emerging_section(Path(args.daily), topics, args.date, args.per_topic, args.abstract_chars)
         if exists(args.daily) else None,
+        "paper_verticale": emerging_section(Path(args.daily),
+                                            json.loads(Path(args.vertical_topics).read_text(encoding="utf-8")),
+                                            args.date, args.per_topic, args.abstract_chars, source="daily_vertical")
+        if exists(args.daily) and exists(args.vertical_topics) else None,
         "trend": trend_section(trends, 8) if trends else None,
         "adozione": adoption_section(Path(args.signals)) if exists(args.signals) else None,
         "radar_del_giorno": verticals.radar(date.fromisoformat(args.date), verticals.load_config(Path(args.verticals)),

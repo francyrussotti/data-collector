@@ -47,11 +47,14 @@ jobs:
           TODAY="$(date -u +%F)"
           SINCE="$(date -u -d '14 days ago' +%F)"
           export TODAY SINCE
+          python scripts/verticals.py --trends data/trends.json --date "$TODAY" \
+            -o data/vertical_topics.json --meta data/vertical_topics.meta.json
           collector -c config/daily.yaml run
       - name: Prepara il materiale del report
         run: |
           python scripts/daily.py --papers data/papers.sqlite --daily data/daily.sqlite \
             --topics data/emerging_topics.meta.json --trends data/trends.json --signals data/free_signals.sqlite \
+            --vertical-topics data/vertical_topics.meta.json \
             -o data/daily.json --chunks 3000
       - name: Salva nella release
         run: |

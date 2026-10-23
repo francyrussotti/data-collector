@@ -1,5 +1,6 @@
-# Novità quotidiane nei temi emergenti: per ciascun tema scelto da scripts/emerging.py
-# i 25 paper più recenti pubblicati da SINCE a TODAY (circa 50 richieste).
+# Novità quotidiane: per ciascun tema i 25 paper più recenti pubblicati da SINCE a TODAY.
+# daily_emerging = i 50 temi emergenti (circa 50 richieste); daily_vertical = i temi del verticale
+# del giorno (da 7 a ~120 richieste nel weekend).
 # Il database resta tra un giorno e l'altro: "nuovo" = visto per la prima volta oggi.
 # Variabili d'ambiente: OPENALEX_API_KEY, OPENALEX_MAILTO, SINCE e TODAY (YYYY-MM-DD)
 
@@ -33,6 +34,54 @@ sources:
       slice_filter: "primary_topic.id:{value}"
       max_pages: 1
     max_requests_per_run: 60
+    id_field: "id | strip_prefix:https://openalex.org/"
+    dedup_key: doi
+    fields:
+      doi: "doi | strip_prefix:https://doi.org/ | lower"
+      title: display_name
+      abstract: "abstract_inverted_index | inverted_index_text"
+      published_date: publication_date
+      year: publication_year
+      language: language
+      type: type
+      venue: primary_location.source.display_name
+      source_type: primary_location.source.type   # journal, repository, conference, ...
+      authors: authorships[].author.display_name
+      author_ids: "authorships[].author.id | strip_prefix:https://openalex.org/"
+      institutions: "authorships[].institutions[].display_name | flatten | unique"
+      countries: "authorships[].institutions[].country_code | flatten | unique"
+      primary_topic: primary_topic.display_name
+      subfield: primary_topic.subfield.display_name
+      field: primary_topic.field.display_name
+      domain: primary_topic.domain.display_name
+      topics: topics[].display_name
+      keywords: keywords[].display_name
+      cited_by_count: cited_by_count
+      citations_by_year: counts_by_year
+      is_oa: open_access.is_oa
+      oa_url: open_access.oa_url
+      landing_page_url: primary_location.landing_page_url
+      pdf_url: primary_location.pdf_url
+      source_updated_at: updated_date
+      primary_topic_id: "primary_topic.id | strip_prefix:https://openalex.org/"
+
+  # Paper del verticale del giorno (config/verticals.yaml): temi scelti da scripts/verticals.py
+  - name: daily_vertical
+    connector: openalex_top
+    base_url: https://api.openalex.org
+    endpoint: /works
+    params:
+      api_key: ${OPENALEX_API_KEY:-}
+      mailto: ${OPENALEX_MAILTO:-}
+      filter: "type:article|preprint|review,from_publication_date:${SINCE},to_publication_date:${TODAY}"
+      sort: "publication_date:desc"
+      per-page: 25
+      select: "id,doi,display_name,publication_date,publication_year,language,type,cited_by_count,counts_by_year,abstract_inverted_index,authorships,primary_location,primary_topic,topics,keywords,open_access,updated_date"
+    options:
+      values_file: data/vertical_topics.json
+      slice_filter: "primary_topic.id:{value}"
+      max_pages: 1
+    max_requests_per_run: 150
     id_field: "id | strip_prefix:https://openalex.org/"
     dedup_key: doi
     fields:

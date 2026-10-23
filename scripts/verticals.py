@@ -170,3 +170,48 @@ def radar(day: date, cfg: dict, trends: dict | None, signals_db: Path | None) ->
                          "github_mediana_anno_su_anno": gh_vals[len(gh_vals) // 2] if gh_vals else None})
         return {"tipo": "panoramica", "giorno": day.isoformat(), "verticali": rows}
     return {"tipo": "verticale", "giorno": day.isoformat(), **one(key)}
+
+
+def topic_list(trends: dict, spec: dict, vertical_id: str) -> list[dict]:
+    """Temi del verticale con i dati utili alla newsletter (id OpenAlex, nome, crescita)."""
+    last = trends["years"][-1]
+    return [{"id": t["id"], "tema": t["tema"], "categoria": t.get("categoria"), "disciplina": t.get("disciplina"),
+             "crescita_3a": t.get("crescita_3a"), "paper_ultimo_anno": t.get(f"n{last}"), "verticale": vertical_id}
+            for t in match_topics(trends["topics"], spec) if t.get("id")]
+
+
+def topics_for_day(day: date, cfg: dict, trends: dict) -> list[dict]:
+    """Temi da cui pescare i paper del giorno: il verticale del giorno, oppure tutti nel weekend."""
+    key = cfg["giorni"][day.weekday()]
+    keys = list(cfg["verticali"]) if key == "panoramica" else [key]
+    out, seen = [], set()
+    for k in keys:
+        for t in topic_list(trends, cfg["verticali"][k], k):
+            if t["id"] not in seen:
+                seen.add(t["id"])
+                out.append(t)
+    return out
+
+
+def main() -> int:
+    import argparse
+    ap = argparse.ArgumentParser(description="Temi del verticale del giorno (per config/daily.yaml)")
+    ap.add_argument("--trends", required=True)
+    ap.add_argument("--config", default=str(Path(__file__).resolve().parent.parent / "config" / "verticals.yaml"))
+    ap.add_argument("--date", required=True)
+    ap.add_argument("-o", "--out", required=True, help="lista degli id dei temi (JSON)")
+    ap.add_argument("--meta", required=True, help="temi con nome, verticale e crescita (JSON)")
+    args = ap.parse_args()
+    trends_path = Path(args.trends)
+    topics = []
+    if trends_path.exists():
+        topics = topics_for_day(date.fromisoformat(args.date), load_config(Path(args.config)),
+                                json.loads(trends_path.read_text(encoding="utf-8")))
+    Path(args.out).write_text(json.dumps([t["id"] for t in topics]), encoding="utf-8")
+    Path(args.meta).write_text(json.dumps(topics, ensure_ascii=False), encoding="utf-8")
+    print(f"{len(topics)} temi per {args.date}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -19,11 +19,15 @@ Deve poter decidere se aprire un paper.
 3. **Testata:** titolo del giorno (8–12 parole), numero dell'edizione, data, minuti di lettura (circa 200 parole al minuto).
 4. **In 30 secondi:** 3 frasi, ognuna con un fatto e il suo perché.
 5. **Numeri del giorno:** 3 cifre presenti nei dati, per esempio:
-   - nuovi paper nei temi seguiti;
-   - nuovi paper LLM;
-   - il tema con più novità.
-6. **Il segnale del giorno:** il paper più importante, raccontato in 3–4 frasi.
-7. **Temi emergenti** e **LLM:** 5–7 paper in tutto, raggruppati per tema.
+   - nuovi paper del verticale (`paper_verticale.nuovi_oggi`);
+   - una cifra del radar;
+   - nuovi paper LLM.
+6. **Il segnale del giorno:** il paper più importante del verticale del giorno, raccontato in 3–4 frasi.
+7. **Paper del giorno · {verticale}:** 4–6 paper, oltre al segnale, presi da `paper_verticale` di `daily.json`. Sono i temi del verticale del giorno, lo stesso del radar.
+   - **Raggruppamento:** per tema, massimo 2 paper per tema e, se possibile, almeno 2 temi.
+   - **Weekend:** un paper per ciascun verticale (aerospazio, energia, LLM, cybersecurity, robotica), raggruppati per verticale.
+   - **Facoltativo, "Anche oggi":** al massimo 1 paper fuori verticale, da `emergenti` o `llm`, solo se è davvero rilevante. Il mercoledì gli LLM sono il verticale.
+   - **Se il verticale oggi non ha paper adatti** (pochi, senza abstract, depositi), dirlo in una riga e usare "Anche oggi" per 2–3 paper da `emergenti`/`llm`.
    - **Per ogni tema:** chip della categoria, peso in 3 anni (da `trend`/radar) e un riquadro **"Di cosa si tratta"** di 2–3 frasi: che cos'è il campo, quale problema concreto affronta, dove lo si incontra nella vita reale o nelle aziende.
    - **Per ogni paper**, nell'ordine:
      - **IL CONTESTO:** 1–2 frasi sul problema di partenza e sul perché finora era difficile;

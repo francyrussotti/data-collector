@@ -62,3 +62,42 @@ def test_adoption_wiki_and_weekday(tmp_path):
 def test_real_config_loads():
     cfg = v.load_config(ROOT / "config" / "verticals.yaml")
     assert set(cfg["giorni"].values()) == set(cfg["verticali"]) | {"panoramica"}
+
+
+def test_topics_for_day_and_cli(tmp_path):
+    trends = dict(TRENDS, topics=[dict(t, id=f"T{i}") for i, t in enumerate(TRENDS["topics"])])
+    other = dict(SPEC, nome="Altro", nome_regex="satellite marketing", discipline=[], escludi="")
+    cfg = {"giorni": {0: "aero", 1: "altro", 2: "aero", 3: "aero", 4: "aero", 5: "panoramica", 6: "panoramica"},
+           "verticali": {"aero": SPEC, "altro": other}}
+    mon = v.topics_for_day(date(2026, 10, 26), cfg, trends)
+    assert [t["id"] for t in mon] == ["T0"] and mon[0]["verticale"] == "aero"
+    sat = v.topics_for_day(date(2026, 10, 24), cfg, trends)
+    assert {t["id"] for t in sat} == {"T0", "T2"}
+
+    import subprocess
+    tp = tmp_path / "trends.json"
+    tp.write_text(json.dumps(trends))
+    out, meta = tmp_path / "ids.json", tmp_path / "meta.json"
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "verticals.py"), "--trends", str(tp), "--date", "2026-10-23",
+                    "-o", str(out), "--meta", str(meta)], check=True, capture_output=True)
+    assert isinstance(json.loads(out.read_text()), list)
+    # senza trends.json: lista vuota, nessun errore
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "verticals.py"), "--trends", str(tmp_path / "manca.json"),
+                    "--date", "2026-10-23", "-o", str(out), "--meta", str(meta)], check=True, capture_output=True)
+    assert json.loads(out.read_text()) == []
+
+
+def test_daily_vertical_section(tmp_path):
+    import daily
+    db = tmp_path / "daily.sqlite"
+    con = sqlite3.connect(db)
+    con.execute("CREATE TABLE records (source TEXT, record_id TEXT, data TEXT, first_seen_at TEXT)")
+    rec = {"title": "Robot paper", "primary_topic_id": "T9", "venue": "Science Robotics", "language": "en",
+           "abstract": "x", "published_date": "2026-10-22", "doi": "10.1/x"}
+    con.execute("INSERT INTO records VALUES (?,?,?,?)", ("daily_vertical", "W1", json.dumps(rec), "2026-10-23T05:00:00"))
+    con.execute("INSERT INTO records VALUES (?,?,?,?)", ("daily_emerging", "W2", json.dumps(rec), "2026-10-23T05:00:00"))
+    con.commit()
+    con.close()
+    topics = [{"id": "T9", "tema": "Robot Manipulation", "verticale": "robotica", "crescita_3a": 0.6}]
+    s = daily.emerging_section(db, topics, "2026-10-23", 3, 500, source="daily_vertical")
+    assert s["nuovi_oggi"] == 1 and s["per_tema"][0]["verticale"] == "robotica"
