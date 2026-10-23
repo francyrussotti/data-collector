@@ -65,7 +65,13 @@ Deve poter decidere se aprire un paper.
   - niente affermazioni incerte presentate come certe.
 - **I numeri si copiano dall'abstract**, con le unità. Non si arrotondano in modo da cambiarne il senso.
 - **"Perché conta"** è in corsivo e formulato come lettura ("può…", "suggerisce…"), mai attribuito agli autori.
-- **Chi lo firma.** Sotto il titolo, quando `autore_di_spicco.h_index` è almeno 20, una riga "Chi lo firma: {nome} ({istituzione}), h-index {n}". Se `livello_fonte` è `alta` si aggiunge il chip "Rivista di alto impatto" (colori #1E40AF/#DBEAFE). L'h-index si spiega in "Parole del giorno" la prima volta che compare.
+- **Autori e istituzioni, sempre.** Sotto la riga fonte/data di ogni paper (e del segnale del giorno) c'è la riga "Chi lo firma":
+  - **Autori:** dai campi `autori` (primi 4) e `n_autori`. Con 1–3 autori tutti i nomi; con più di 3 il primo autore + "e altri N".
+  - **Istituzioni:** dal campo `istituzioni` (fino a 3) e dal paese (`paesi`, in italiano).
+  - **Autore di spicco:** se `qualita.autore_di_spicco.h_index` è almeno 20, va citato con istituzione e h-index, anche se non è il primo autore. Esempio: "Chi lo firma: Wang L. e altri 5 · Ningbo University of Technology (Cina) · tra gli autori Lin Wang, h-index 76".
+  - **Dati mancanti:** se mancano autori o istituzioni, si scrive solo ciò che c'è; non si inventa nulla.
+  - **Chip "Rivista di alto impatto"** (colori #1E40AF/#DBEAFE) se `livello_fonte` è `alta`.
+  - **H-index:** si spiega in "Parole del giorno" la prima volta che compare.
 - **Etichetta del tipo sempre visibile.** Per i preprint va aggiunto che i risultati non sono ancora revisionati.
 - **Titoli dei paper in originale.** Nel "Segnale del giorno" si può usare un titolo breve in italiano, con il link all'originale.
 - **Qualità e autorevolezza.** Ogni paper ha il campo `qualita` (da `scripts/quality.py`, dati OpenAlex):

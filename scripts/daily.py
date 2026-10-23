@@ -71,7 +71,9 @@ def kind(d: dict) -> str:
 def paper(d: dict, chars: int) -> dict:
     abstract = d.get("abstract") or ""
     return {"titolo": d.get("title"), "data": d.get("published_date"), "citazioni": d.get("cited_by_count"),
-            "venue": d.get("venue"), "lingua": d.get("language"), "autori": (d.get("authors") or [])[:4], "paesi": d.get("countries") or [],
+            "venue": d.get("venue"), "lingua": d.get("language"), "autori": (d.get("authors") or [])[:4],
+            "n_autori": len(d.get("authors") or []), "istituzioni": (d.get("institutions") or [])[:3],
+            "paesi": d.get("countries") or [],
             "link": d.get("landing_page_url") or (f"https://doi.org/{d['doi']}" if d.get("doi") else None),
             "tipo": kind(d), "pdf_gratuito": d.get("oa_url") or d.get("pdf_url"),
             "qualita": quality.assess(d, QUALITY) if QUALITY else None,
