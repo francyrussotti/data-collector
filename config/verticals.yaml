@@ -35,7 +35,7 @@ verticali:
     sottocampi: []
     nome_regex: "security|intrusion|phishing|malware|cryptograph|privacy|adversarial robustness|adversarial attack|authentication|vulnerab|spam|forensic detection|blockchain"
     discipline: [Computer Science, Engineering]
-    escludi: "food security|energy security|in education"
+    escludi: "food security|energy security|in education|quantum information"  # fisica quantistica, non sicurezza informatica
     cluster: [S3]
     wiki: [Prompt_injection, Ransomware, Post-quantum_cryptography]
   robotica:

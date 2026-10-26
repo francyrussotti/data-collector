@@ -62,6 +62,9 @@ def test_adoption_wiki_and_weekday(tmp_path):
 def test_real_config_loads():
     cfg = v.load_config(ROOT / "config" / "verticals.yaml")
     assert set(cfg["giorni"].values()) == set(cfg["verticali"]) | {"panoramica"}
+    topics = [{"tema": "Quantum Information and Cryptography", "disciplina": "Computer Science"},
+              {"tema": "Cryptography and Data Security", "disciplina": "Computer Science"}]
+    assert [t["tema"] for t in v.match_topics(topics, cfg["verticali"]["cyber"])] == ["Cryptography and Data Security"]
 
 
 def test_topics_for_day_and_cli(tmp_path):
