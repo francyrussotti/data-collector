@@ -101,7 +101,7 @@ if d.get("radar"):
                  f'<tr style="color:{MUT};font-size:11px;font-weight:700;"><td style="padding:6px 0;">AREA</td><td align="right" style="padding:6px 0;">RESEARCH<br>(share, 3 years)</td><td align="right" style="padding:6px 0;">GITHUB<br>(year on year)</td><td align="right" style="padding:6px 0;">HACKER NEWS<br>(year on year)</td></tr>'
                  f'{rows}</table><div style="font-size:12px;color:{MUT};margin-top:6px;line-height:1.5;">{E(r["nota"])}</div></td></tr>')
 def pct(v):
-    return f"{'+' if v >= 0 else '−'}{int(abs(v) * 100 + 0.5)}%"
+    return f"{'+' if v >= 0 else '−'}{int(abs(v) * 100 + 0.5):,}%"
 def arr(v):
     if v is None:
         return f'<span style="color:{MUT};">—</span>'
