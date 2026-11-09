@@ -141,8 +141,8 @@ def wiki(db: Path, articles: list[str], today: date) -> list[dict]:
     return out
 
 
-def radar(day: date, cfg: dict, trends: dict | None, signals_db: Path | None) -> dict:
-    key = cfg["giorni"][day.weekday()]
+def radar(day: date, cfg: dict, trends: dict | None, signals_db: Path | None, panoramica: bool = False) -> dict:
+    key = "panoramica" if panoramica else cfg["giorni"][day.weekday()]
     verts = cfg["verticali"]
 
     def one(k):
@@ -180,9 +180,9 @@ def topic_list(trends: dict, spec: dict, vertical_id: str) -> list[dict]:
             for t in match_topics(trends["topics"], spec) if t.get("id")]
 
 
-def topics_for_day(day: date, cfg: dict, trends: dict) -> list[dict]:
-    """Temi da cui pescare i paper del giorno: il verticale del giorno, oppure tutti nel weekend."""
-    key = cfg["giorni"][day.weekday()]
+def topics_for_day(day: date, cfg: dict, trends: dict, panoramica: bool = False) -> list[dict]:
+    """Temi da cui pescare i paper: il verticale del giorno, oppure tutti (weekend o edizione settimanale)."""
+    key = "panoramica" if panoramica else cfg["giorni"][day.weekday()]
     keys = list(cfg["verticali"]) if key == "panoramica" else [key]
     out, seen = [], set()
     for k in keys:
@@ -199,6 +199,7 @@ def main() -> int:
     ap.add_argument("--trends", required=True)
     ap.add_argument("--config", default=str(Path(__file__).resolve().parent.parent / "config" / "verticals.yaml"))
     ap.add_argument("--date", required=True)
+    ap.add_argument("--weekly", action="store_true", help="edizione settimanale: tutti i verticali")
     ap.add_argument("-o", "--out", required=True, help="lista degli id dei temi (JSON)")
     ap.add_argument("--meta", required=True, help="temi con nome, verticale e crescita (JSON)")
     args = ap.parse_args()
@@ -206,7 +207,7 @@ def main() -> int:
     topics = []
     if trends_path.exists():
         topics = topics_for_day(date.fromisoformat(args.date), load_config(Path(args.config)),
-                                json.loads(trends_path.read_text(encoding="utf-8")))
+                                json.loads(trends_path.read_text(encoding="utf-8")), args.weekly)
     Path(args.out).write_text(json.dumps([t["id"] for t in topics]), encoding="utf-8")
     Path(args.meta).write_text(json.dumps(topics, ensure_ascii=False), encoding="utf-8")
     print(f"{len(topics)} temi per {args.date}")

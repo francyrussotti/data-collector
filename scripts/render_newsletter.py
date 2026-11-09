@@ -51,6 +51,7 @@ def paper(p):
             + '</td></tr></table></td></tr>')
 
 d = json.load(open(sys.argv[1], encoding="utf-8"))
+PERIODO = "WEEK" if d.get("settimanale") else "DAY"   # edizione settimanale: etichette "OF THE WEEK"
 parts = [f'<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:{BG};">{E(d["anteprima"])}</div>',
          f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:{BG};"><tr><td align="center" style="padding:16px 8px;">',
          f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:960px;background:#FFFFFF;border:1px solid {BRD};border-radius:10px;overflow:hidden;font-family:{FONT};color:{TXT};">',
@@ -68,7 +69,7 @@ for n, lab in d["numeri"]:
 parts.append('</tr></table></td></tr>')
 s = d["segnale"]
 parts.append(f'<tr><td style="padding:18px 28px 4px 28px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F2FBF8;border-left:4px solid {SIG};border-radius:6px;"><tr><td style="padding:16px 18px;">'
-             f'<div style="font-size:12px;letter-spacing:1.5px;color:#0F766E;font-weight:700;">SIGNAL OF THE DAY</div>'
+             f'<div style="font-size:12px;letter-spacing:1.5px;color:#0F766E;font-weight:700;">SIGNAL OF THE {PERIODO}</div>'
              f'<div style="font-size:17px;font-weight:700;margin-top:6px;line-height:1.4;"><a href="{s["link"]}" style="color:{INK};text-decoration:none;">{E(s["titolo"])}</a></div>'
              f'<div style="font-size:13px;color:{MUT};margin-top:4px;">{E(s["meta"])} &nbsp;{chip(s["tipo"], TYPE[s["tipo"]])}' + (f' &nbsp;{chip("High-impact journal", ("#1E40AF", "#DBEAFE"))}' if s.get("alto_impatto") else "") + '</div>' +
              (f'<div style="font-size:12px;color:{MUT};margin-top:3px;line-height:1.5;"><b style="color:{TXT};">Who wrote it:</b> {E(s["firma"])}</div>' if s.get("firma") else '') +
@@ -112,7 +113,7 @@ def arr(v):
     return f'<span style="color:{MUT};">■ {pct(v)}</span>'
 if d.get("radar_v"):
     r = d["radar_v"]
-    parts.append(section("RADAR OF THE DAY · " + r["nome"].upper()))
+    parts.append(section(f"RADAR OF THE {PERIODO} · " + r["nome"].upper()))
     cells = "".join(f'<td align="center" style="padding:12px 6px;width:33%;"><div style="font-size:20px;font-weight:700;color:{INK};">{E(n)}</div><div style="font-size:12px;color:{MUT};line-height:1.4;">{E(l)}</div></td>' for n, l in r["cifre"])
     temi = "".join(f'<tr><td style="padding:6px 0;border-top:1px solid #EEF1F5;">{E(t)}<div style="font-size:12px;color:{MUT};">{E(x)}</div></td><td align="right" valign="top" style="padding:6px 0 6px 8px;border-top:1px solid #EEF1F5;white-space:nowrap;">{arr(v)}</td></tr>' for t, x, v in r["temi"])
     ad = "".join(f'<tr><td style="padding:6px 0;border-top:1px solid #EEF1F5;">«{E(q)}»</td><td align="right" style="padding:6px 0;border-top:1px solid #EEF1F5;">{arr(g)}</td><td align="right" style="padding:6px 0;border-top:1px solid #EEF1F5;">{arr(h)}</td></tr>' for q, g, h in r["adozione"])
@@ -127,7 +128,7 @@ if d.get("radar_v"):
                  f'<div style="font-size:14px;line-height:1.55;margin-top:10px;"><b>In short:</b> {E(r["sintesi"])}</div></td></tr>')
 if d.get("radar_w"):
     r = d["radar_w"]
-    parts.append(section("WEEKEND RADAR · THE 5 VERTICALS COMPARED"))
+    parts.append(section(("WEEKLY" if PERIODO == "WEEK" else "WEEKEND") + " RADAR · THE 5 VERTICALS COMPARED"))
     hdr = "".join(f'<td align="right" style="padding:6px 0 6px 6px;">{h}</td>' for h in r["colonne"])
     rows = ""
     for nome, tema, vals in r["righe"]:
@@ -138,7 +139,7 @@ if d.get("radar_w"):
                  f'<div style="font-size:12px;color:{MUT};margin-top:6px;line-height:1.5;">{E(r["nota"])}</div>'
                  f'<div style="font-size:14px;line-height:1.55;margin-top:10px;"><b>In short:</b> {E(r["sintesi"])}</div></td></tr>')
 if d.get("glossario"):
-    parts.append(section("WORDS OF THE DAY"))
+    parts.append(section(f"WORDS OF THE {PERIODO}"))
     rows = "".join(f'<tr><td style="padding:5px 0;font-size:14px;line-height:1.5;"><b>{E(t)}</b> — {E(x)}</td></tr>' for t, x in d["glossario"])
     parts.append(f'<tr><td style="padding:6px 28px 0 28px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table></td></tr>')
 parts.append(section("WORTH WATCHING"))

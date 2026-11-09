@@ -1,10 +1,10 @@
-# Materiale per il report giornaliero (lo legge Claude e lo manda via email).
-# Gira dopo la raccolta delle 05:17 UTC; si può avviare a mano da Actions → daily → Run workflow.
+# Materiale per il report SETTIMANALE (lo legge Claude e lo manda via email): paper dell'ultima settimana, tutti i verticali.
+# Gira il lunedì dopo la raccolta; si può avviare a mano da Actions → daily → Run workflow.
 name: daily
 
 on:
   schedule:
-    - cron: "47 0 * * *"   # ogni giorno alle 00:47 UTC, dopo la raccolta
+    - cron: "47 0 * * 1"   # ogni lunedì alle 00:47 UTC, dopo la raccolta
   workflow_dispatch: {}
 
 permissions:
@@ -45,9 +45,9 @@ jobs:
           fi
           if [ ! -f data/emerging_topics.json ]; then echo "Temi emergenti non ancora calcolati"; exit 0; fi
           TODAY="$(date -u +%F)"
-          SINCE="$(date -u -d '14 days ago' +%F)"
+          SINCE="$(date -u -d '8 days ago' +%F)"
           export TODAY SINCE
-          python scripts/verticals.py --trends data/trends.json --date "$TODAY" \
+          python scripts/verticals.py --trends data/trends.json --date "$TODAY" --weekly \
             -o data/vertical_topics.json --meta data/vertical_topics.meta.json
           collector -c config/daily.yaml run
           # qualità di riviste e autori dei paper visti oggi (non blocca il report se OpenAlex non risponde)
@@ -57,7 +57,7 @@ jobs:
           python scripts/daily.py --papers data/papers.sqlite --daily data/daily.sqlite \
             --topics data/emerging_topics.meta.json --trends data/trends.json --signals data/free_signals.sqlite \
             --vertical-topics data/vertical_topics.meta.json --quality data/quality_cache.json \
-            -o data/daily.json --chunks 3000
+            --days 7 -o data/daily.json --chunks 3000
       - name: Salva nella release
         run: |
           files="data/daily.json"

@@ -34,3 +34,13 @@ def test_render_is_english(tmp_path):
     for italian in ("Chi lo firma", "PERCHÉ CONTA", "Di cosa si tratta", "PAROLE DEL GIORNO", "In sintesi", "Rivista"):
         assert italian not in html, italian
     assert "{{" not in html
+
+
+def test_render_weekly_labels(tmp_path):
+    src, out = tmp_path / "content.json", tmp_path / "out.html"
+    src.write_text(json.dumps({**CONTENT, "settimanale": True}), encoding="utf-8")
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "render_newsletter.py"), str(src), str(out)], check=True)
+    html = out.read_text(encoding="utf-8")
+    for label in ("SIGNAL OF THE WEEK", "RADAR OF THE WEEK · ENERGY", "WEEKLY RADAR · THE 5 VERTICALS COMPARED", "WORDS OF THE WEEK"):
+        assert label in html
+    assert "SIGNAL OF THE DAY" not in html and "RADAR OF THE DAY" not in html and "WEEKEND RADAR" not in html
