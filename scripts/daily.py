@@ -80,15 +80,17 @@ def paper(d: dict, chars: int) -> dict:
             "estratto": abstract[:chars] + ("…" if len(abstract) > chars else "")}
 
 
-def new_today(conn, source: str, day: str) -> list[dict]:
-    rows = conn.execute("SELECT data FROM records WHERE source=? AND substr(first_seen_at,1,10)=?",
-                        (source, day)).fetchall()
+def new_today(conn, source: str, day: str, days: int = 1) -> list[dict]:
+    """Record visti per la prima volta negli ultimi `days` giorni, `day` incluso (1 = solo oggi)."""
+    start = (date.fromisoformat(day) - timedelta(days=days - 1)).isoformat()
+    rows = conn.execute("SELECT data FROM records WHERE source=? AND substr(first_seen_at,1,10) BETWEEN ? AND ?",
+                        (source, start, day)).fetchall()
     return [json.loads(r[0]) for r in rows]
 
 
-def llm_section(db: Path, day: str, top: int, chars: int) -> dict:
+def llm_section(db: Path, day: str, top: int, chars: int, days: int = 1) -> dict:
     conn = sqlite3.connect(db)
-    new = new_today(conn, "openalex_llm", day)
+    new = new_today(conn, "openalex_llm", day, days)
     # Prima i paper usciti negli ultimi RECENT_DAYS giorni (dal più recente), poi gli altri per citazioni:
     # così il primo giorno o un recupero di storico non riempiono il report di paper vecchi.
     cutoff = (date.fromisoformat(day) - timedelta(days=RECENT_DAYS)).isoformat()
@@ -106,9 +108,9 @@ def llm_section(db: Path, day: str, top: int, chars: int) -> dict:
 
 
 def emerging_section(db: Path, topics: list[dict], day: str, per_topic: int, chars: int,
-                     source: str = "daily_emerging") -> dict:
+                     source: str = "daily_emerging", days: int = 1) -> dict:
     conn = sqlite3.connect(db)
-    new = new_today(conn, source, day)
+    new = new_today(conn, source, day, days)
     by_topic: dict[str, list[dict]] = {}
     for d in new:
         by_topic.setdefault(d.get("primary_topic_id"), []).append(d)
@@ -122,6 +124,24 @@ def emerging_section(db: Path, topics: list[dict], day: str, per_topic: int, cha
                         "nuovi_oggi": len(items), "paper": [paper(d, chars) for d in items[:per_topic]]})
     out.sort(key=lambda x: -x["nuovi_oggi"])
     return {"temi_seguiti": len(topics), "nuovi_oggi": len(new), "per_tema": out}
+
+
+def best_per_vertical(section: dict | None, top: int) -> dict:
+    """Edizione settimanale: per ogni verticale i paper migliori tra quelli di tutti i suoi temi.
+    Ordine: sede riconosciuta, abstract presente, punteggio di qualità (quality.py), poi data."""
+    out: dict[str, dict] = {}
+    for t in (section or {}).get("per_tema", []):
+        v = out.setdefault(t.get("verticale") or "altro", {"nuovi": 0, "paper": []})
+        v["nuovi"] += t["nuovi_oggi"]
+        v["paper"] += [{**p, "tema": t["tema"], "categoria_tema": t.get("categoria"),
+                        "peso_3_anni_tema": t.get("peso_3_anni")} for p in t["paper"]]
+
+    def key(p):
+        q = (p.get("qualita") or {}).get("punteggio") or 0
+        return (0 if p.get("estratto") else 1, -q, -(p.get("citazioni") or 0))
+    for v in out.values():
+        v["paper"] = sorted(v["paper"], key=key)[:top]
+    return out
 
 
 def _prev_year_period(period: str) -> str:
@@ -188,6 +208,9 @@ def main() -> int:
     ap.add_argument("--verticals", default=str(Path(__file__).resolve().parent.parent / "config" / "verticals.yaml"),
                     help="verticali del radar del giorno")
     ap.add_argument("--date", default=datetime.now(timezone.utc).date().isoformat())
+    ap.add_argument("--days", type=int, default=1,
+                    help="finestra in giorni dei paper nuovi (7 = edizione settimanale)")
+    ap.add_argument("--per-vertical", type=int, default=3, help="paper migliori per verticale (edizione settimanale)")
     ap.add_argument("--llm-top", type=int, default=12)
     ap.add_argument("--per-topic", type=int, default=3)
     ap.add_argument("--abstract-chars", type=int, default=1500, help="abstract quasi interi: servono per i takeaway")
@@ -202,19 +225,23 @@ def main() -> int:
     result = {
         "data": args.date,
         "edizione": (date.fromisoformat(args.date) - FIRST_EDITION).days + 1,
-        "llm": llm_section(Path(args.papers), args.date, args.llm_top, args.abstract_chars) if exists(args.papers) else None,
-        "emergenti": emerging_section(Path(args.daily), topics, args.date, args.per_topic, args.abstract_chars)
+        "llm": llm_section(Path(args.papers), args.date, args.llm_top, args.abstract_chars, args.days) if exists(args.papers) else None,
+        "emergenti": emerging_section(Path(args.daily), topics, args.date, args.per_topic, args.abstract_chars,
+                                  days=args.days)
         if exists(args.daily) else None,
         "paper_verticale": emerging_section(Path(args.daily),
                                             json.loads(Path(args.vertical_topics).read_text(encoding="utf-8")),
-                                            args.date, args.per_topic, args.abstract_chars, source="daily_vertical")
+                                            args.date, args.per_topic, args.abstract_chars, source="daily_vertical", days=args.days)
         if exists(args.daily) and exists(args.vertical_topics) else None,
         "trend": trend_section(trends, 8) if trends else None,
         "adozione": adoption_section(Path(args.signals)) if exists(args.signals) else None,
         "radar_del_giorno": verticals.radar(date.fromisoformat(args.date), verticals.load_config(Path(args.verticals)),
-                                            trends, Path(args.signals) if exists(args.signals) else None)
+                                            trends, Path(args.signals) if exists(args.signals) else None,
+                                            panoramica=args.days > 1)
         if exists(args.verticals) else None,
     }
+    result["giorni"] = args.days
+    result["paper_per_verticale"] = best_per_vertical(result["paper_verticale"], args.per_vertical)
     text = json.dumps(result, ensure_ascii=False, separators=(",", ":"))
     if args.out:
         Path(args.out).write_text(text, encoding="utf-8")

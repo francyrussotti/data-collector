@@ -104,3 +104,29 @@ def test_daily_vertical_section(tmp_path):
     topics = [{"id": "T9", "tema": "Robot Manipulation", "verticale": "robotica", "crescita_3a": 0.6}]
     s = daily.emerging_section(db, topics, "2026-10-23", 3, 500, source="daily_vertical")
     assert s["nuovi_oggi"] == 1 and s["per_tema"][0]["verticale"] == "robotica"
+
+
+def test_weekly_window_and_best_per_vertical(tmp_path):
+    import daily
+    db = tmp_path / "daily.sqlite"
+    con = sqlite3.connect(db)
+    con.execute("CREATE TABLE records (source TEXT, record_id TEXT, data TEXT, first_seen_at TEXT)")
+
+    def rec(i, topic, abstract="x"):
+        return {"title": f"P{i}", "primary_topic_id": topic, "venue": "Journal", "language": "en",
+                "abstract": abstract, "published_date": "2026-11-05", "doi": f"10.1/{i}"}
+    rows = [("daily_vertical", "A", rec(1, "T1"), "2026-11-03T05:00:00"),    # dentro la settimana
+            ("daily_vertical", "B", rec(2, "T2"), "2026-11-09T05:00:00"),    # oggi
+            ("daily_vertical", "C", rec(3, "T1"), "2026-11-02T05:00:00")]    # 7 giorni fa: fuori
+    for src, rid, d, seen in rows:
+        con.execute("INSERT INTO records VALUES (?,?,?,?)", (src, rid, json.dumps(d), seen))
+    con.commit()
+    con.close()
+    topics = [{"id": "T1", "tema": "Satellites", "verticale": "aerospazio", "crescita_3a": 0.5},
+              {"id": "T2", "tema": "Batteries", "verticale": "energia", "crescita_3a": 0.2}]
+    one_day = daily.emerging_section(db, topics, "2026-11-09", 3, 500, source="daily_vertical")
+    week = daily.emerging_section(db, topics, "2026-11-09", 3, 500, source="daily_vertical", days=7)
+    assert one_day["nuovi_oggi"] == 1 and week["nuovi_oggi"] == 2
+    best = daily.best_per_vertical(week, 3)
+    assert set(best) == {"aerospazio", "energia"}
+    assert best["aerospazio"]["paper"][0]["titolo"] == "P1" and best["energia"]["nuovi"] == 1

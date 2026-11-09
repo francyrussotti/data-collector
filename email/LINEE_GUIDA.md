@@ -1,6 +1,20 @@
 # Linee guida della newsletter "Radar tecnologico"
 
-Valgono per chi scrive la newsletter ogni giorno (Claude, routine "Report giornaliero Radar tecnologico"). Il layout è in `email/template.html`.
+Valgono per chi scrive la newsletter (Claude, routine "Report settimanale Radar tecnologico"). Il layout è in `email/template.html`.
+
+## Cadenza: settimanale (dal 9 novembre 2026)
+Su richiesta dell'utente la newsletter esce **una volta a settimana, il lunedì mattina** (prima era giornaliera), con **un paper importante per verticale**. Dove il testo sotto parla di "giorno" o "oggi", leggi "settimana" e "ultimi 7 giorni"; dove distingue feriali e weekend, vale sempre la versione **panoramica** (tutti i verticali). Cosa cambia:
+- **Dati:** `daily.json` (workflow `daily.yml`, lunedì 00:47 UTC) copre gli ultimi 7 giorni (`giorni` = 7) e contiene `paper_per_verticale`: per ogni verticale (aerospace, energia, llm, cyber, robotica) i paper migliori, già ordinati per abstract presente, punteggio di qualità e citazioni (`nuovi` = quanti paper nuovi ha il verticale). Il campo `radar_del_giorno` è sempre la panoramica dei 5 verticali. `paper_verticale`, `emergenti` e `llm` sono sulla stessa finestra di 7 giorni.
+- **Oggetto:** `Radar · {main signal of the week in 4-6 words} · Week of {d Mon}`.
+- **Struttura:** come sotto, con queste differenze:
+  - **SIGNAL OF THE WEEK:** il paper con il punteggio più alto tra i primi di ogni verticale.
+  - **Un paper importante per verticale:** una sezione per ciascuno dei 5 verticali, in quest'ordine: Aerospace, Energy, LLMs and generative AI, Cybersecurity, Robotics and automation. In ognuna **il paper principale** (il primo di `paper_per_verticale[verticale].paper`, a meno che sia un deposito o senza abstract: allora il successivo) con tutta la scheda (CONTEXT / WHAT THEY DO / RESULT / WHY IT MATTERS, "Who wrote it:", chip di qualità) e, se ce ne sono, **al massimo 2 paper in più** in breve (titolo con link, fonte, una riga). Il segnale della settimana non si ripete: se coincide con il paper principale di un verticale, lì si scrive solo "See Signal of the week" e si usa il secondo paper.
+  - **Verticale senza paper adatti** (`nuovi` = 0 o solo depositi): una riga che lo dice, senza riempire con paper vecchi.
+  - **Radar:** solo il confronto dei 5 verticali (`WEEKLY RADAR · THE 5 VERTICALS COMPARED`), non il radar di un singolo verticale.
+  - **Etichette:** nel JSON del contenuto metti `"settimanale": true`: il renderer usa SIGNAL OF THE WEEK, WEEKLY RADAR, WORDS OF THE WEEK.
+  - **Lunghezza:** massimo circa 2.200 parole (5 schede complete).
+  - **Piede / numeri:** "nuovi paper" = nuovi nella settimana; nel piede dici che la prossima edizione esce lunedì prossimo.
+- Se in una settimana non arriva nessun paper nuovo in nessun verticale, esci con un'edizione breve (numeri e radar) dichiarandolo in apertura.
 
 ## Lingua: inglese
 Dal 26 ottobre 2026 la newsletter si scrive **interamente in inglese** (richiesta dell'utente): oggetto, testi, etichette, nomi dei temi, parole del giorno. Non si traduce nulla in italiano; i titoli dei paper restano in originale. Queste linee guida restano in italiano, ma i nomi delle sezioni nella mail sono quelli inglesi:
