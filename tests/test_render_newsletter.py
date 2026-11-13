@@ -44,3 +44,11 @@ def test_render_weekly_labels(tmp_path):
     for label in ("SIGNAL OF THE WEEK", "RADAR OF THE WEEK · ENERGY", "WEEKLY RADAR · THE 5 VERTICALS COMPARED", "WORDS OF THE WEEK"):
         assert label in html
     assert "SIGNAL OF THE DAY" not in html and "RADAR OF THE DAY" not in html and "WEEKEND RADAR" not in html
+
+
+def test_render_shows_publication_date(tmp_path):
+    src, out = tmp_path / "content.json", tmp_path / "out.html"
+    sec = {**CONTENT["sezioni"][0], "temi": [{**CONTENT["sezioni"][0]["temi"][0], "paper": [{**PAPER, "data": "2026-11-10"}]}]}
+    src.write_text(json.dumps({**CONTENT, "settimanale": True, "sezioni": [sec]}), encoding="utf-8")
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "render_newsletter.py"), str(src), str(out)], check=True)
+    assert "Published 10 Nov 2026" in out.read_text(encoding="utf-8")
