@@ -52,3 +52,15 @@ def test_render_shows_publication_date(tmp_path):
     src.write_text(json.dumps({**CONTENT, "settimanale": True, "sezioni": [sec]}), encoding="utf-8")
     subprocess.run([sys.executable, str(ROOT / "scripts" / "render_newsletter.py"), str(src), str(out)], check=True)
     assert "Published 10 Nov 2026" in out.read_text(encoding="utf-8")
+
+
+def test_render_brief_papers(tmp_path):
+    src, out = tmp_path / "content.json", tmp_path / "out.html"
+    brief = {"breve": True, "titolo": "Short one", "link": "https://doi.org/10.1/b", "fonte": "IEEE",
+             "data": "2026-11-11", "tipo": "Journal", "riga": "One line."}
+    sec = {**CONTENT["sezioni"][0], "temi": [{**CONTENT["sezioni"][0]["temi"][0], "paper": [PAPER, brief]}]}
+    src.write_text(json.dumps({**CONTENT, "settimanale": True, "sezioni": [sec]}), encoding="utf-8")
+    subprocess.run([sys.executable, str(ROOT / "scripts" / "render_newsletter.py"), str(src), str(out)], check=True)
+    html = out.read_text(encoding="utf-8")
+    assert "Short one" in html and "Published 11 Nov 2026" in html and "One line." in html
+    assert html.count("WHAT THEY DO") == 1

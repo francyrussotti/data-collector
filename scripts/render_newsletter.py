@@ -46,7 +46,18 @@ def row(label, text, color=MUT, italic=False):
     return (f'<tr><td valign="top" style="width:96px;font-size:12px;font-weight:700;color:{color};padding:3px 0;">{label}</td>'
             f'<td style="font-size:14px;line-height:1.5;padding:3px 0;">{t}</td></tr>')
 
+def paper_brief(p):
+    """Paper in breve (edizione settimanale, "breve": true): titolo con link, fonte, data di pubblicazione, una riga."""
+    return (f'<tr><td style="padding:8px 28px 0 44px;">'
+            f'<div style="font-size:14px;font-weight:700;line-height:1.4;"><a href="{p["link"]}" style="color:{TXT};text-decoration:none;">{E(p["titolo"])}</a></div>'
+            f'<div style="font-size:12px;color:{MUT};margin-top:3px;">{E(p["fonte"])} · <b style="color:{TXT};">{E(pubdate(p.get("data")))}</b>'
+            + (f' &nbsp;{chip(p["tipo"], TYPE[p["tipo"]])}' if p.get("tipo") in TYPE else "") + '</div>'
+            f'<div style="font-size:14px;line-height:1.5;margin-top:4px;">{E(p["riga"])}</div></td></tr>')
+
+
 def paper(p):
+    if p.get("breve"):
+        return paper_brief(p)
     rows = row("CONTEXT", p["contesto"]) if p.get("contesto") else ""
     rows += row("WHAT THEY DO", p["cosa"])
     if p.get("risultato"):
