@@ -126,20 +126,27 @@ def emerging_section(db: Path, topics: list[dict], day: str, per_topic: int, cha
     return {"temi_seguiti": len(topics), "nuovi_oggi": len(new), "per_tema": out}
 
 
-def best_per_vertical(section: dict | None, top: int) -> dict:
+def best_per_vertical(section: dict | None, top: int, day: str | None = None, days: int = 7) -> dict:
     """Edizione settimanale: per ogni verticale i paper migliori tra quelli di tutti i suoi temi.
-    Ordine: sede riconosciuta, abstract presente, punteggio di qualità (quality.py), poi data."""
+    Ordine: prima i paper PUBBLICATI nella settimana (data di pubblicazione tra `day`-`days`+1 e `day`;
+    OpenAlex indicizza anche paper usciti mesi prima), poi abstract presente, punteggio di qualità
+    (quality.py), citazioni. Ogni paper porta `pubblicato_in_settimana`."""
+    start = (date.fromisoformat(day) - timedelta(days=days - 1)).isoformat() if day else None
+    in_week = lambda p: bool(start) and start <= (p.get("data") or "") <= day
     out: dict[str, dict] = {}
     for t in (section or {}).get("per_tema", []):
         v = out.setdefault(t.get("verticale") or "altro", {"nuovi": 0, "paper": []})
         v["nuovi"] += t["nuovi_oggi"]
         v["paper"] += [{**p, "tema": t["tema"], "categoria_tema": t.get("categoria"),
-                        "peso_3_anni_tema": t.get("peso_3_anni")} for p in t["paper"]]
+                        "peso_3_anni_tema": t.get("peso_3_anni"), "pubblicato_in_settimana": in_week(p)}
+                       for p in t["paper"]]
 
     def key(p):
         q = (p.get("qualita") or {}).get("punteggio") or 0
-        return (0 if p.get("estratto") else 1, -q, -(p.get("citazioni") or 0))
+        return (0 if p["pubblicato_in_settimana"] else 1, 0 if p.get("estratto") else 1, -q,
+                -(p.get("citazioni") or 0))
     for v in out.values():
+        v["pubblicati_in_settimana"] = sum(p["pubblicato_in_settimana"] for p in v["paper"])
         v["paper"] = sorted(v["paper"], key=key)[:top]
     return out
 
@@ -241,7 +248,8 @@ def main() -> int:
         if exists(args.verticals) else None,
     }
     result["giorni"] = args.days
-    result["paper_per_verticale"] = best_per_vertical(result["paper_verticale"], args.per_vertical)
+    result["paper_per_verticale"] = best_per_vertical(result["paper_verticale"], args.per_vertical,
+                                                     args.date, args.days)
     text = json.dumps(result, ensure_ascii=False, separators=(",", ":"))
     if args.out:
         Path(args.out).write_text(text, encoding="utf-8")

@@ -3,7 +3,19 @@
 Uso: python scripts/render_newsletter.py content.json newsletter.html
 """
 import html, json, sys
+from datetime import date
 E = html.escape
+
+
+def pubdate(v):
+    """Data di pubblicazione leggibile: "Published 9 Nov 2026" (le date non ISO restano come sono)."""
+    if not v:
+        return "Publication date n/a"
+    try:
+        d = date.fromisoformat(str(v)[:10])
+    except ValueError:
+        return str(v)
+    return f"Published {d.day} {d.strftime('%b %Y')}"
 INK, SIG, TXT, MUT, BG, BRD = "#0E1A2B", "#19C39C", "#1B2430", "#5B6675", "#EEF1F5", "#DDE3EA"
 TYPE = {"Journal": ("#166534", "#DCFCE7"), "Review": ("#166534", "#DCFCE7"), "Preprint – not peer reviewed": ("#92400E", "#FEF3C7")}
 CAT = {"emerging": ("#6D28D9", "#EFE7FF"), "strong growth": ("#0F766E", "#DDF5F1"),
@@ -34,7 +46,18 @@ def row(label, text, color=MUT, italic=False):
     return (f'<tr><td valign="top" style="width:96px;font-size:12px;font-weight:700;color:{color};padding:3px 0;">{label}</td>'
             f'<td style="font-size:14px;line-height:1.5;padding:3px 0;">{t}</td></tr>')
 
+def paper_brief(p):
+    """Paper in breve (edizione settimanale, "breve": true): titolo con link, fonte, data di pubblicazione, una riga."""
+    return (f'<tr><td style="padding:8px 28px 0 44px;">'
+            f'<div style="font-size:14px;font-weight:700;line-height:1.4;"><a href="{p["link"]}" style="color:{TXT};text-decoration:none;">{E(p["titolo"])}</a></div>'
+            f'<div style="font-size:12px;color:{MUT};margin-top:3px;">{E(p["fonte"])} · <b style="color:{TXT};">{E(pubdate(p.get("data")))}</b>'
+            + (f' &nbsp;{chip(p["tipo"], TYPE[p["tipo"]])}' if p.get("tipo") in TYPE else "") + '</div>'
+            f'<div style="font-size:14px;line-height:1.5;margin-top:4px;">{E(p["riga"])}</div></td></tr>')
+
+
 def paper(p):
+    if p.get("breve"):
+        return paper_brief(p)
     rows = row("CONTEXT", p["contesto"]) if p.get("contesto") else ""
     rows += row("WHAT THEY DO", p["cosa"])
     if p.get("risultato"):
@@ -42,7 +65,7 @@ def paper(p):
     rows += row("WHY IT MATTERS", p["perche"], "#0F766E", True)
     return (f'<tr><td style="padding:10px 28px 0 28px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid {BRD};border-radius:8px;"><tr><td style="padding:14px 16px;">'
             f'<div style="font-size:15px;font-weight:700;line-height:1.4;"><a href="{p["link"]}" style="color:{TXT};text-decoration:none;">{E(p["titolo"])}</a></div>'
-            f'<div style="font-size:12px;color:{MUT};margin-top:5px;">{E(p["fonte"])} · {E(p["data"])} &nbsp;{chip(p["tipo"], TYPE[p["tipo"]])}'
+            f'<div style="font-size:12px;color:{MUT};margin-top:5px;">{E(p["fonte"])} · <b style="color:{TXT};">{E(pubdate(p.get("data")))}</b> &nbsp;{chip(p["tipo"], TYPE[p["tipo"]])}'
             + (f' &nbsp;{chip("High-impact journal", ("#1E40AF", "#DBEAFE"))}' if p.get("alto_impatto") else "")
             + (f' &nbsp;<a href="{p["pdf"]}" style="color:#0F766E;font-weight:700;text-decoration:none;">Free PDF ↗</a>' if p.get("pdf") else "")
             + '</div>'

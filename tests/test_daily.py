@@ -116,3 +116,19 @@ def test_adoption_section(tmp_path):
     assert g["trimestre"] == "2026-Q3" and g["confronto_con"] == "2025-Q3" and g["controllo_anno_su_anno"] == 0.5
     s1 = g["aree"][0]
     assert s1["area"] == "IA agentica e multi-agente" and s1["anno_su_anno"] == 2.0 and s1["rispetto_al_controllo"] == 1.0
+
+
+def test_best_per_vertical_prefers_papers_published_in_week():
+    sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+    from daily import best_per_vertical
+    old_great = {"titolo": "old", "data": "2026-08-01", "estratto": "x", "citazioni": 500,
+                 "qualita": {"punteggio": 9}}
+    new_ok = {"titolo": "new", "data": "2026-11-12", "estratto": "x", "citazioni": 0,
+              "qualita": {"punteggio": 2}}
+    section = {"per_tema": [{"tema": "T", "verticale": "energia", "nuovi_oggi": 2,
+                             "paper": [old_great, new_ok]}]}
+    out = best_per_vertical(section, 3, "2026-11-16", 7)["energia"]
+    assert [p["titolo"] for p in out["paper"]] == ["new", "old"]
+    assert out["paper"][0]["pubblicato_in_settimana"] is True
+    assert out["paper"][1]["pubblicato_in_settimana"] is False
+    assert out["pubblicati_in_settimana"] == 1
